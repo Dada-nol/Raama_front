@@ -1,7 +1,12 @@
-import React from "react";
-
 function Nav() {
-  return <div>Nav</div>;
+  return (
+    <header>
+      <nav>
+        <a href="/register">register</a>
+        <a href="/login">login</a>
+      </nav>
+    </header>
+  );
 }
 
 export default Nav;
