@@ -10,13 +10,17 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const res = await axios.post("http://localhost:8000/api/login", {
-      email,
-      password,
-    });
+    try {
+      const res = await axios.post("http://localhost:8000/api/login", {
+        email,
+        password,
+      });
 
-    localStorage.setItem("token", res.data.token);
-    navigate("/profil");
+      localStorage.setItem("token", res.data.token);
+      navigate("/profil");
+    } catch (e) {
+      console.error("Les informations données sont incorrect");
+    }
   };
   return (
     <form className="form" onSubmit={handleLogin}>
