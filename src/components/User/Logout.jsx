@@ -1,0 +1,27 @@
+import axios from "axios";
+
+function Logout() {
+  const handleRemoveUser = async (e) => {
+    try {
+      await axios.post(
+        "http://localhost:8000/api/logout",
+        {},
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+
+      localStorage.removeItem("token");
+      window.location.href = "/";
+    } catch (e) {
+      console.error("Erreur lors de la déconnexion de l'utilisateur :", e);
+    }
+  };
+  return (
+    <>
+      <button onClick={handleRemoveUser}>Déconnexion</button>
+    </>
+  );
+}
+
+export default Logout;
