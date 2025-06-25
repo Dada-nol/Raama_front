@@ -70,6 +70,8 @@ function Profil() {
         <p>{user.email}</p>
       </div>
 
+      <a href="/">Home</a>
+
       <div>
         <Logout></Logout>
       </div>

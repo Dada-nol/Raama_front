@@ -1,10 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
-import Home from "./pages/Home";
-import Register from "./components/User/Register";
+import Create from "./components/Souvenirs/Create";
 import Login from "./components/User/Login";
 import Logout from "./components/User/Logout";
+import Register from "./components/User/Register";
+import Home from "./pages/Home";
 import Profil from "./pages/Profil";
+import Souvenirs from "./pages/Souvenirs";
 
 function Router() {
   /* const staticRoutes = [
@@ -30,6 +32,8 @@ function Router() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/logout" element={<Logout />}></Route>
           <Route path="/profil" element={<Profil />}></Route>
+          <Route path="souvenirs" element={<Souvenirs></Souvenirs>}></Route>
+          <Route path="souvenir-create" element={<Create></Create>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
