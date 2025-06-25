@@ -1,10 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Logout from "../components/User/Logout";
 
 function Profil() {
   const [user, setUser] = useState(null); // initialiser un user avec un appel API
   const [show, setShow] = useState(false); // afficher les données d'un user mais avec setTimeOut
   const [error, setError] = useState(null); //afficher un message d'erreur s'il n'y a pas de user
+
+  const navigate = useNavigate();
 
   // obtenir les info du user connecté
   useEffect(() => {
@@ -31,7 +35,11 @@ function Profil() {
         setError(
           <>
             <p>Veuillez vous connecter !</p>
-            <a href="/login">Se connecter</a>
+            <div className="flex-row">
+              <a href="/login">Se connecter</a>
+              <>Ou</>
+              <a href="/register">Créer un compte</a>
+            </div>
           </>
         );
       }
@@ -46,11 +54,13 @@ function Profil() {
 
   // Method de suppression de compte
   const deleteAccount = async () => {
-    await axios.delete("http://localhost:8000/api/delete", {
+    await axios.delete("http://localhost:8000/api/user", {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
 
-    alert("Compte supprimé !");
+    localStorage.removeItem("token");
+
+    navigate("/");
   };
 
   return (
@@ -60,6 +70,9 @@ function Profil() {
         <p>{user.email}</p>
       </div>
 
+      <div>
+        <Logout></Logout>
+      </div>
       <button onClick={deleteAccount}>Supprimer le compte</button>
     </>
   );

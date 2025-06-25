@@ -1,11 +1,14 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password_confirmation, setPassword_confirmation] = useState("");
+
+  const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -17,8 +20,10 @@ function Register() {
       password_confirmation,
     });
 
-    localStorage.setItem("token", res.data.token);
-    alert("Compte créée");
+    const token = res.data.token;
+
+    localStorage.setItem("token", token);
+    navigate("/profil");
   };
 
   return (
