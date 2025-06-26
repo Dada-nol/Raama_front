@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Delete from "./Delete";
 
 function Show() {
   const [name, setName] = useState("");
@@ -32,14 +33,20 @@ function Show() {
     fetchData();
   }, [id]);
   return (
-    <ul>
-      <li>{name}</li>
-      <li>{description}</li>
-      <li>{coverImage}</li>
-      <li style={{ color: isClosed ? "red" : "green" }}>
-        {isClosed ? "Fermé" : "Ouvert"}
-      </li>
-    </ul>
+    <>
+      <ul>
+        <li>{name}</li>
+        <li>{description}</li>
+        <li>{coverImage}</li>
+        <li style={{ color: isClosed ? "red" : "green" }}>
+          {isClosed ? "Fermé" : "Ouvert"}
+        </li>
+      </ul>
+
+      <div>
+        <Delete></Delete>
+      </div>
+    </>
   );
 }
 
