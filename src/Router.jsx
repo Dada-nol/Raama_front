@@ -1,10 +1,14 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Layout from "./components/Layout";
+import Logout from "./components/Logout";
+import Layout from "./layouts/Layout";
+import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
 import Home from "./pages/Home";
-import Register from "./components/User/Register";
-import Login from "./components/User/Login";
-import Logout from "./components/User/Logout";
 import Profil from "./pages/Profil";
+import Create from "./pages/Souvenirs/Create";
+import List from "./pages/Souvenirs/List";
+import Show from "./pages/Souvenirs/Show";
+import Update from "./pages/Souvenirs/Update";
 
 function Router() {
   /* const staticRoutes = [
@@ -25,11 +29,18 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />}></Route>
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/logout" element={<Logout />}></Route>
-          <Route path="/profil" element={<Profil />}></Route>
+          <Route index element={<Home />} />
+          <Route path="register" element={<Register />} />
+          <Route path="login" element={<Login />} />
+          <Route path="logout" element={<Logout />} />
+          <Route path="profil" element={<Profil />} />
+
+          <Route path="souvenirs">
+            <Route index element={<List></List>} />
+            <Route path=":id" element={<Show></Show>} />
+            <Route path="create" element={<Create></Create>} />
+            <Route path=":id/update" element={<Update></Update>} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
