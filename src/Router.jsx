@@ -8,6 +8,7 @@ import Register from "./components/User/Register";
 import Home from "./pages/Home";
 import Profil from "./pages/Profil";
 import Souvenirs from "./pages/Souvenirs";
+import Show from "./components/Souvenirs/Show";
 
 function Router() {
   /* const staticRoutes = [
@@ -34,7 +35,8 @@ function Router() {
           <Route path="/logout" element={<Logout />}></Route>
           <Route path="/profil" element={<Profil />}></Route>
           <Route path="souvenirs" element={<Souvenirs></Souvenirs>}></Route>
-          <Route path="souvenir-create" element={<Create></Create>}></Route>
+          <Route path="souvenir/:id" element={<Show></Show>}></Route>
+          <Route path="souvenir/create" element={<Create></Create>}></Route>
           <Route path="souvenir/:id/update" element={<Update></Update>}></Route>
         </Route>
       </Routes>
