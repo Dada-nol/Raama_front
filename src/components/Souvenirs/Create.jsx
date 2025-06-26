@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 function Create() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [cover_image, setCover_image] = useState("");
+  const [coverImage, setCover_image] = useState("");
 
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ function Create() {
         {
           name,
           description,
-          cover_image,
+          coverImage,
         },
         {
           headers: {
@@ -47,7 +47,7 @@ function Create() {
       />
       <input
         type="text"
-        value={cover_image}
+        value={coverImage}
         onChange={(e) => setCover_image(e.target.value)}
       />
 

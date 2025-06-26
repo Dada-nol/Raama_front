@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import Create from "./components/Souvenirs/Create";
+import Update from "./components/Souvenirs/Update";
 import Login from "./components/User/Login";
 import Logout from "./components/User/Logout";
 import Register from "./components/User/Register";
@@ -34,6 +35,7 @@ function Router() {
           <Route path="/profil" element={<Profil />}></Route>
           <Route path="souvenirs" element={<Souvenirs></Souvenirs>}></Route>
           <Route path="souvenir-create" element={<Create></Create>}></Route>
+          <Route path="souvenir/:id/update" element={<Update></Update>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
