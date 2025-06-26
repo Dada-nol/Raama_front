@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Logout from "../components/User/Logout";
+import Logout from "../components/Logout";
 
 function Profil() {
   const [user, setUser] = useState(null); // initialiser un user avec un appel API

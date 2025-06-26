@@ -1,4 +1,4 @@
-import Souvenirs from "../pages/Souvenirs";
+import Souvenirs from "./Souvenirs/List";
 
 function Home() {
   return (

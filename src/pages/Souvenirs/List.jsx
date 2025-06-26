@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function Souvenirs() {
+function List() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -28,4 +28,4 @@ function Souvenirs() {
   );
 }
 
-export default Souvenirs;
+export default List;
