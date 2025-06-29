@@ -30,9 +30,9 @@ function Router() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<LandingPage />} />
-          <Route path="register" element={<Register />} />
-          <Route path="login" element={<Login />} />
         </Route>
+        <Route path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
 
         <Route path="profil" element={<Profil />} />
         <Route path="home" element={<Home />} />

@@ -33,10 +33,10 @@ a {
   font-size: 14px;
 }
 
-a:hover {
+/* a:hover {
   text-decoration: underline;
   text-underline-offset: 2px;
-}
+} */
 
 .flex-row {
   display: flex;
@@ -60,13 +60,15 @@ a:hover {
   gap: 10px;
 }
 
-.background-video {
+.background-video,
+.background-img {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   z-index: -1;
 }
 
@@ -109,21 +111,22 @@ footer {
   height: 30px;
 }
 
-.text {
+.header-content {
   position: absolute;
-  bottom: 50%;
-  transform: translateX(130%) translateY(40%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.header-content-items {
+  z-index: 1;
+  color: #fff;
 }
 
 header {
   position: relative;
   height: 100vh;
   overflow: hidden;
-}
-
-.header-content {
-  z-index: 1;
-  color: #fff;
 }
 
 .logo {

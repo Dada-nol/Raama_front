@@ -1,24 +1,46 @@
-import loop1 from "../assets/video/loop1.mp4";
+import { useState } from "react";
+import img_panda2 from "../assets/img/panda2.png";
+import video_loop1 from "../assets/video/loop1.mp4";
 import Button from "./Button";
 import Logo from "./Logo";
 
 function Nav() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  const handleSize = () => {
+    setIsMobile(window.innerWidth <= 768);
+  };
+
+  window.addEventListener("resize", handleSize);
+
   return (
     <header>
       <nav className="nav">
         <Logo href="/" src="" alt="PANDA ~ RAAMA" />
 
         <div className="nav-links">
-          <Button className="login" name="Log in" />
-          <Button className="get-started" name="Get started" />
+          <a href="/login">
+            <Button className="login" name="Log in" />
+          </a>
+          <a href="/register">
+            <Button className="get-started" name="Get started" />
+          </a>
         </div>
       </nav>
-      <video autoPlay muted loop playsInline className="background-video">
-        <source src={loop1} type="video/mp4" />
-      </video>
+      {isMobile ? (
+        <img
+          src={img_panda2}
+          alt="Le panda suprême !"
+          className="background-img"
+        ></img>
+      ) : (
+        <video autoPlay muted loop playsInline className="background-video">
+          <source src={video_loop1} type="video/mp4" />
+        </video>
+      )}
 
-      <div className="text">
-        <div class="header-content">
+      <div className="header-content">
+        <div class="header-content-items">
           <Logo href="/" src="" alt="PANDA ~ RAAMA" />
 
           <div class="slogan">Un souvenir par jour, pour toujours</div>
