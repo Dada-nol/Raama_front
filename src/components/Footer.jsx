@@ -1,5 +1,6 @@
 import Button from "./Button";
 import SocialIcons from "./SocialIcons";
+import "../css/footer.css";
 
 function Footer() {
   return (

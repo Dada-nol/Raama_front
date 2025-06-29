@@ -1,21 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import img_panda2 from "../assets/img/panda2.png";
 import video_loop1 from "../assets/video/loop1.mp4";
+import "../css/header.css";
 import Button from "./Button";
 import Logo from "./Logo";
 
 function Nav() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [colorNav, setColorNav] = useState("transparent");
 
-  const handleSize = () => {
-    setIsMobile(window.innerWidth <= 768);
-  };
+  useEffect(() => {
+    const handleSize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
 
-  window.addEventListener("resize", handleSize);
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setColorNav("#2f2f2f");
+      } else {
+        setColorNav("transparent");
+      }
+    };
+
+    window.addEventListener("resize", handleSize);
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleSize);
+    };
+  }, []);
 
   return (
     <header>
-      <nav className="nav">
+      <nav className="nav" style={{ backgroundColor: colorNav }}>
         <Logo href="/" src="" alt="PANDA ~ RAAMA" />
 
         <div className="nav-links">

@@ -1,0 +1,20 @@
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f9f9;
+  border-top: #b7b7b7 1px solid;
+  color: #4a4a4a;
+  padding: 10px 100px;
+}
+
+.footer-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-item ul {
+  padding: 0;
+}
