@@ -18,7 +18,7 @@ header {
 }
 
 .nav {
-  transition: background-color 1s ease-out;
+  transition: background-color 1s ease;
   position: fixed;
   width: 100%;
   top: 0;
@@ -28,6 +28,7 @@ header {
   justify-content: space-between;
   align-items: center;
   background-color: transparent;
+  z-index: 2;
 }
 
 .nav-links {

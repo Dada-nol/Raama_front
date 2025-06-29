@@ -1,11 +1,10 @@
 footer {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   background-color: #f9f9f9;
   border-top: #b7b7b7 1px solid;
   color: #4a4a4a;
-  padding: 10px 100px;
+  padding: 10px 0;
 }
 
 .footer-item {
@@ -17,4 +16,13 @@ footer {
 
 .footer-item ul {
   padding: 0;
+}
+
+@media screen and (min-width: 768px) {
+  footer {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+    padding: 10px 100px;
+  }
 }
