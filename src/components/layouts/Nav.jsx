@@ -16,7 +16,7 @@ function Nav() {
     };
 
     const handleScroll = () => {
-      const vh100 = window.innerHeight;
+      const vh100 = window.innerHeight - 100;
       if (window.scrollY > vh100) {
         setColorNav("#1e1e1e");
         setSizeLogo("80px");

@@ -4,18 +4,37 @@ $color-secondary: #1e1e1e;
 $color-text: #d1d0c5;
 $color-danger: #d67229;
 
-@mixin flex-center($gap: null, $direction: row, $wrap: nowrap) {
+@mixin flex-center($direction: row, $gap: null, $wrap: nowrap) {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: $direction;
+  gap: $gap;
+  flex-wrap: $wrap;
 }
 
-@mixin flex($gap: null, $direction: row, $justifyContent: space-between) {
+@mixin flex(
+  $direction: row,
+  $gap: null,
+  $justifyContent: space-between,
+  $wrap: nowrap
+) {
   display: flex;
+  justify-content: $justifyContent;
   align-items: center;
+  flex-direction: $direction;
+  gap: $gap;
+  flex-wrap: $wrap;
 }
 
-@mixin grid {
+@mixin grid2 {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin grid-phone {
+  display: grid;
+  grid-template-columns: 1fr;
 }

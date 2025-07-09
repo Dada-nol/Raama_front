@@ -37,7 +37,7 @@ header {
 .nav-links {
   display: flex;
   gap: 10px;
-  padding-right: 40px;
+  padding-right: 100px;
 }
 
 .background-video,
@@ -52,12 +52,6 @@ header {
   z-index: 2;
 }
 
-/* .nav-center {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-42%) translateY(13%);
-} */
-
 .header-content {
   position: absolute;
   top: 50%;
@@ -69,5 +63,5 @@ header {
 
 nav .logo {
   font-size: 1rem;
-  padding-left: 40px;
+  margin-left: 100px;
 }
