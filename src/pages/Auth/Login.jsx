@@ -25,30 +25,31 @@ function Login() {
   };
   return (
     <div className="container-form">
+      <Logo></Logo>
       <form className="form" onSubmit={handleLogin}>
-        <Logo></Logo>
+        <h2>Login</h2>
         <div className="form-item">
-          <div>
-            <label htmlFor="">Email</label>
-          </div>
           <input
             type="text"
             value={email}
+            placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="form-item">
-          <div>
-            <label htmlFor="">Password</label>
-          </div>
           <input
             type="password"
             value={password}
+            placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
+          <a href="/reset-password">Forget password ?</a>
         </div>
 
         <button type="submit">Se connecter</button>
+        <p>
+          <a href="/register">Sign up</a> if you don't have an account yet.
+        </p>
       </form>
     </div>
   );
