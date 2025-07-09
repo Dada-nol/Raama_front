@@ -1,6 +1,9 @@
+@use "variables" as *;
+
 .App {
   text-align: center;
-  background-color: #2c2c2c;
+  background-color: $color-bg;
+  color: $color-text;
 }
 
 .title {
@@ -13,9 +16,9 @@ li {
 
 button {
   background-color: transparent;
-  border: solid #d67229 3px;
+  border: solid #fff 3px;
   padding: 0 16px;
-  border-radius: 100px;
+  border-radius: 15px;
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
@@ -25,23 +28,23 @@ button {
   height: 40px;
   font-family: inherit;
   box-sizing: border-box;
-  color: #f2f2ec;
+  color: #fff;
 }
 
 button:hover {
-  background-color: #c75c30;
-  color: #f6f4f1;
+  border: solid $color-primary 3px;
+  color: #fff;
 }
 
 a {
   text-decoration: none;
-  color: #f6f4f1;
+  color: $color-text;
 }
 
 a:hover {
   text-decoration: underline;
   text-underline-offset: 2px;
-  color: #daa520;
+  color: $color-primary;
 }
 
 .flex-row {
@@ -62,7 +65,7 @@ a:hover {
 .icon {
   width: 30px;
   height: 30px;
-  color: #f2f2ec;
+  color: $color-text;
 }
 
 .logo {

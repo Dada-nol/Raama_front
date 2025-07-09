@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import img_panda2 from "../assets/img/panda2.png";
-import video_loop1 from "../assets/video/loop1.mp4";
-import "../css/header.css";
-import Button from "./Button";
-import Logo from "./Logo";
+import logo from "../../assets/img/logo.png";
+import img_panda1 from "../../assets/img/panda1.png";
+import video_loop1 from "../../assets/video/loop1.mp4";
+import "../../styles/scss/header.scss";
+import Button from "../ui/Button";
 
 function Nav() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [colorNav, setColorNav] = useState("transparent");
+  const [sizeLogo, setSizeLogo] = useState("156.5px");
 
   useEffect(() => {
     const handleSize = () => {
@@ -15,10 +16,13 @@ function Nav() {
     };
 
     const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setColorNav("#2f2f2f");
+      const vh100 = window.innerHeight;
+      if (window.scrollY > vh100) {
+        setColorNav("#1e1e1e");
+        setSizeLogo("80px");
       } else {
         setColorNav("transparent");
+        setSizeLogo("156.5px");
       }
     };
 
@@ -33,21 +37,33 @@ function Nav() {
 
   return (
     <header>
-      <nav className="nav" style={{ backgroundColor: colorNav }}>
-        <Logo href="/" src="" alt="PANDA ~ RAAMA" />
+      <nav
+        className="nav"
+        style={{
+          backgroundColor: colorNav,
+        }}
+      >
+        <div>
+          <img
+            src={logo}
+            alt="Pandaraama"
+            className="logo"
+            style={{ width: sizeLogo }}
+          />
+        </div>
 
         <div className="nav-links">
           <a href="/login">
-            <Button className="login" name="Log in" />
+            <Button name="Log in" />
           </a>
           <a href="/register">
-            <Button className="get-started" name="Get started" />
+            <Button name="Register" />
           </a>
         </div>
       </nav>
       {isMobile ? (
         <img
-          src={img_panda2}
+          src={img_panda1}
           alt="Le panda suprême !"
           className="background-img"
         ></img>
@@ -58,11 +74,12 @@ function Nav() {
       )}
 
       <div className="header-content">
-        <div class="header-content-items">
-          <Logo href="/" src="" alt="PANDA ~ RAAMA" />
-
-          <div class="slogan">Un souvenir par jour, pour toujours</div>
-        </div>
+        <h1>
+          Chaque jour une mémoire, <br></br>chaque mémoire un lien
+        </h1>
+        <a href="/register">
+          <button>Get started</button>
+        </a>
       </div>
     </header>
   );

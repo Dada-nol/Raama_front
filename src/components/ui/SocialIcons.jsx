@@ -1,6 +1,6 @@
-import facebookIcon from "../assets/img/facebook.png";
-import instagramIcon from "../assets/img/instagram.png";
-import linkedinIcon from "../assets/img/linkedin.png";
+import facebookIcon from "../../assets/img/facebook.png";
+import instagramIcon from "../../assets/img/instagram.png";
+import linkedinIcon from "../../assets/img/linkedin.png";
 import Icon from "./Icon";
 
 function SocialIcons() {

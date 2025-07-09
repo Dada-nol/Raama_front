@@ -1,0 +1,21 @@
+$color-bg: #2c2c2c;
+$color-primary: #64b000;
+$color-secondary: #1e1e1e;
+$color-text: #d1d0c5;
+$color-danger: #d67229;
+
+@mixin flex-center($gap: null, $direction: row, $wrap: nowrap) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex($gap: null, $direction: row, $justifyContent: space-between) {
+  display: flex;
+  align-items: center;
+}
+
+@mixin grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}

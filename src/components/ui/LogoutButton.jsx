@@ -1,6 +1,6 @@
 import axios from "axios";
 
-function Logout() {
+function LogoutButton() {
   const handleRemoveUser = async (e) => {
     try {
       await axios.post(
@@ -24,4 +24,4 @@ function Logout() {
   );
 }
 
-export default Logout;
+export default LogoutButton;

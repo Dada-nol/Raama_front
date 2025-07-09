@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Logout from "../components/Logout";
+import LogoutButton from "../components/ui/LogoutButton";
 
 function Profil() {
   const [user, setUser] = useState(null); // initialiser un user avec un appel API
@@ -73,7 +73,7 @@ function Profil() {
       <a href="/">Home</a>
 
       <div>
-        <Logout></Logout>
+        <LogoutButton></LogoutButton>
       </div>
       <button onClick={deleteAccount}>Supprimer le compte</button>
     </>
