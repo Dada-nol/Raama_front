@@ -5,6 +5,7 @@ import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Home from "./pages/Home";
 import LandingPage from "./pages/LandingPage";
+import NotFound from "./pages/NotFound";
 import Profil from "./pages/Profil";
 import Create from "./pages/Souvenirs/Create";
 import List from "./pages/Souvenirs/List";
@@ -45,6 +46,8 @@ function Router() {
           <Route path="create" element={<Create></Create>} />
           <Route path=":id/update" element={<Update></Update>} />
         </Route>
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
