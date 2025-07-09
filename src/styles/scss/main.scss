@@ -59,7 +59,6 @@ a:hover {
   display: flex;
   flex-direction: row;
   gap: 5px;
-  margin: 10px;
 }
 
 .icon {
@@ -76,4 +75,12 @@ a:hover {
 svg {
   width: 40px;
   height: 40px;
+}
+
+hr {
+  height: 2px;
+  width: 280px;
+  background-color: #d1d0c5;
+  margin: 2rem 0;
+  z-index: 5;
 }

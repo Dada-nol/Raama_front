@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Layout from "./components/layouts/Layout";
+import Layout from "./components/layouts/LandingPage/Layout";
+import LayoutAuth from "./components/layouts/LayoutAuth";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Home from "./pages/Home";
@@ -31,8 +32,10 @@ function Router() {
         <Route path="/" element={<Layout />}>
           <Route index element={<LandingPage />} />
         </Route>
-        <Route path="register" element={<Register />} />
-        <Route path="login" element={<Login />} />
+        <Route element={<LayoutAuth />}>
+          <Route path="register" element={<Register />} />
+          <Route path="login" element={<Login />} />
+        </Route>
 
         <Route path="profil" element={<Profil />} />
         <Route path="home" element={<Home />} />
