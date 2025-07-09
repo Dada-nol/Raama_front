@@ -1,0 +1,40 @@
+$color-bg: #2c2c2c;
+$color-primary: #64b000;
+$color-secondary: #1e1e1e;
+$color-text: #d1d0c5;
+$color-danger: #d67229;
+
+@mixin flex-center($direction: row, $gap: null, $wrap: nowrap) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
+  gap: $gap;
+  flex-wrap: $wrap;
+}
+
+@mixin flex(
+  $direction: row,
+  $gap: null,
+  $justifyContent: space-between,
+  $wrap: nowrap
+) {
+  display: flex;
+  justify-content: $justifyContent;
+  align-items: center;
+  flex-direction: $direction;
+  gap: $gap;
+  flex-wrap: $wrap;
+}
+
+@mixin grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin grid-phone {
+  display: grid;
+  grid-template-columns: 1fr;
+}

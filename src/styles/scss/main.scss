@@ -1,0 +1,79 @@
+@use "variables" as *;
+
+.App {
+  text-align: center;
+  background-color: $color-bg;
+  color: $color-text;
+}
+
+.title {
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
+
+button {
+  background-color: transparent;
+  border: solid #fff 3px;
+  padding: 0 16px;
+  border-radius: 15px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  font-family: inherit;
+  box-sizing: border-box;
+  color: #fff;
+}
+
+button:hover {
+  border: solid $color-primary 3px;
+  color: #fff;
+}
+
+a {
+  text-decoration: none;
+  color: $color-text;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  color: $color-primary;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+  margin: 5px;
+}
+
+.social-icons {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  margin: 10px;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  color: $color-text;
+}
+
+.logo {
+  width: 156.5px;
+  margin-right: 30px;
+}
+
+svg {
+  width: 40px;
+  height: 40px;
+}

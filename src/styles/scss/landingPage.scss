@@ -1,0 +1,45 @@
+@use "variables" as *;
+
+section {
+  margin: 50px 0;
+}
+
+.container {
+  background-color: $color-secondary;
+  padding: 15px 0 10px 0;
+  margin: 15px 100px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.card-feature {
+  @include flex-center(column, 0);
+}
+
+.grid {
+  @include grid2;
+
+  @media (max-width: 768px) {
+    @include grid-phone;
+  }
+}
+
+.photo1 {
+  width: 400px;
+  height: auto;
+}
+
+.photo2 {
+  width: 500px;
+  height: auto;
+}
+
+.text {
+  font-weight: 500;
+  font-size: larger;
+}

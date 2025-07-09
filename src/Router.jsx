@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Logout from "./components/Logout";
-import Layout from "./layouts/Layout";
+import Layout from "./components/layouts/Layout";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Home from "./pages/Home";
+import LandingPage from "./pages/LandingPage";
 import Profil from "./pages/Profil";
 import Create from "./pages/Souvenirs/Create";
 import List from "./pages/Souvenirs/List";
@@ -29,18 +29,18 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="register" element={<Register />} />
-          <Route path="login" element={<Login />} />
-          <Route path="logout" element={<Logout />} />
-          <Route path="profil" element={<Profil />} />
+          <Route index element={<LandingPage />} />
+        </Route>
+        <Route path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
 
-          <Route path="souvenirs">
-            <Route index element={<List></List>} />
-            <Route path=":id" element={<Show></Show>} />
-            <Route path="create" element={<Create></Create>} />
-            <Route path=":id/update" element={<Update></Update>} />
-          </Route>
+        <Route path="profil" element={<Profil />} />
+        <Route path="home" element={<Home />} />
+        <Route path="souvenirs">
+          <Route index element={<List></List>} />
+          <Route path=":id" element={<Show></Show>} />
+          <Route path="create" element={<Create></Create>} />
+          <Route path=":id/update" element={<Update></Update>} />
         </Route>
       </Routes>
     </BrowserRouter>

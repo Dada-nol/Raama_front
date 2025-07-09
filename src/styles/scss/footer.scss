@@ -1,0 +1,29 @@
+@use "variables" as *;
+
+footer {
+  display: flex;
+  flex-direction: column;
+  background-color: #1e1e1e;
+  border-top: $color-text 3px solid;
+  padding: 10px 0;
+}
+
+.footer-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-item ul {
+  padding: 0;
+}
+
+@media screen and (min-width: 768px) {
+  footer {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+    padding: 10px 100px;
+  }
+}
