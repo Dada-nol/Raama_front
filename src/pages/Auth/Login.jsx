@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Logo from "../../components/ui/Logo";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -17,36 +18,40 @@ function Login() {
       });
 
       localStorage.setItem("token", res.data.token);
-      navigate("/profil");
+      navigate("/home");
     } catch (e) {
       console.error("Les informations données sont incorrect");
     }
   };
   return (
-    <form className="form" onSubmit={handleLogin}>
-      <div className="form-item">
-        <div>
-          <label htmlFor="">Email</label>
+    <div className="container-form">
+      <Logo></Logo>
+      <form className="form" onSubmit={handleLogin}>
+        <h2>Login</h2>
+        <div className="form-item">
+          <input
+            type="text"
+            value={email}
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-      <div className="form-item">
-        <div>
-          <label htmlFor="">Password</label>
+        <div className="form-item">
+          <input
+            type="password"
+            value={password}
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <a href="/reset-password">Forget password ?</a>
         </div>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
 
-      <button type="submit">Se connecter</button>
-    </form>
+        <button type="submit">Se connecter</button>
+        <p>
+          <a href="/register">Sign up</a> if you don't have an account yet.
+        </p>
+      </form>
+    </div>
   );
 }
 

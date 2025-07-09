@@ -1,9 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Layout from "./components/layouts/Layout";
+import Layout from "./components/layouts/LandingPage/Layout";
+import LayoutAuth from "./components/layouts/LayoutAuth";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Home from "./pages/Home";
 import LandingPage from "./pages/LandingPage";
+import NotFound from "./pages/NotFound";
 import Profil from "./pages/Profil";
 import Create from "./pages/Souvenirs/Create";
 import List from "./pages/Souvenirs/List";
@@ -31,8 +33,10 @@ function Router() {
         <Route path="/" element={<Layout />}>
           <Route index element={<LandingPage />} />
         </Route>
-        <Route path="register" element={<Register />} />
-        <Route path="login" element={<Login />} />
+        <Route element={<LayoutAuth />}>
+          <Route path="register" element={<Register />} />
+          <Route path="login" element={<Login />} />
+        </Route>
 
         <Route path="profil" element={<Profil />} />
         <Route path="home" element={<Home />} />
@@ -42,6 +46,8 @@ function Router() {
           <Route path="create" element={<Create></Create>} />
           <Route path=":id/update" element={<Update></Update>} />
         </Route>
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
