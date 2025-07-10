@@ -6,8 +6,8 @@ import "../../styles/scss/auth.scss";
 
 function Register() {
   const [name, setName] = useState("");
-  const [firstname, setFirstName] = useState(""); // a faire
-  const [pseudo, setPseudo] = useState(""); // a faire
+  const [firstname, setFirstName] = useState("");
+  const [pseudo, setPseudo] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password_confirmation, setPassword_confirmation] = useState("");
@@ -19,6 +19,8 @@ function Register() {
 
     const res = await axios.post("http://localhost:8000/api/register", {
       name,
+      firstname,
+      pseudo,
       email,
       password,
       password_confirmation,

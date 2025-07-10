@@ -1,16 +1,14 @@
-import Souvenirs from "./Souvenirs/List";
+import { useAuth } from "../context/AuthContext";
 
 function Home() {
+  const { user } = useAuth();
   return (
     <>
       <div>
-        <h1>Ma page d'accueil !</h1>
-        <p>Bienvenue sur (Panda)Raama !</p>
+        <h1>Bienvenue {user.pseudo} !</h1>
       </div>
 
-      <div>
-        <Souvenirs></Souvenirs>
-      </div>
+      <div>{/* <Souvenirs></Souvenirs> */}</div>
     </>
   );
 }

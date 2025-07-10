@@ -1,4 +1,4 @@
-import "../../styles/css/footer.css";
+import "../../../styles/css/footer.css";
 /* import Button from "./Button"; */
 import SocialIcons from "../../ui/SocialIcons";
 
