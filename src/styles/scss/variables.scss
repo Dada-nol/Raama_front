@@ -32,3 +32,12 @@ $color-danger: #d67229;
   display: grid;
   grid-template-columns: 1fr;
 }
+
+@mixin main-content {
+  margin-top: 140px; // hauteur de la navbar
+  margin-left: 80px; // largeur de la sidebar
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

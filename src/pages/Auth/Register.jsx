@@ -2,9 +2,12 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../components/ui/Logo";
+import { useAuth } from "../../context/AuthContext";
 import "../../styles/scss/auth.scss";
 
 function Register() {
+  const { setUser } = useAuth();
+
   const [name, setName] = useState("");
   const [firstname, setFirstName] = useState("");
   const [pseudo, setPseudo] = useState("");
@@ -29,11 +32,20 @@ function Register() {
     const token = res.data.token;
 
     localStorage.setItem("token", token);
+
+    // 🔥 Appelle manuellement l'API pour remplir le context directement
+    const userRes = await axios.get("http://localhost:8000/api/user", {
+      headers: {
+        Authorization: `Bearer ${res.data.token}`,
+      },
+    });
+
+    setUser(userRes.data);
     navigate("/home");
   };
 
   return (
-    <div className="container-form">
+    <main className="container-form">
       <Logo></Logo>
       <div>
         <form onSubmit={handleRegister}>
@@ -105,7 +117,7 @@ function Register() {
           </div>
         </form>
       </div>
-    </div>
+    </main>
   );
 }
 

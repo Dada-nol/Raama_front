@@ -16,6 +16,15 @@
     object-position: center;
     z-index: 2;
   }
+
+  .header-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    color: #fff;
+  }
 }
 
 .nav {
@@ -41,21 +50,16 @@
     gap: 10px;
     padding-right: 100px;
   }
-
-  .header-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 5;
-    color: #fff;
-  }
 }
 
 .navbar {
   @include flex;
   width: 100%;
+  top: 0;
   position: fixed;
+  border-bottom: 3px solid $color-text;
+  background-color: $color-bg;
+  z-index: 1000;
 
   .navbar-left {
     display: flex;
@@ -92,6 +96,15 @@
       background-color: #d1d0c5;
       margin: 10px 0;
     }
+
+    .logout {
+      border: none;
+      color: $color-danger;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   .btn-circle {
@@ -114,13 +127,13 @@
   background-color: $color-bg;
   width: 60px;
   padding-top: 100px;
-  margin-top: 100px;
+  margin-top: 87px;
   transition: width 0.8s ease;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 20px;
-  z-index: 1000;
+  z-index: 10;
 
   a {
     display: flex;

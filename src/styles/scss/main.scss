@@ -2,8 +2,16 @@
 
 .App {
   text-align: center;
-  background-color: $color-bg;
   color: $color-text;
+}
+
+html,
+body {
+  background-color: $color-bg;
+
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
 .title {

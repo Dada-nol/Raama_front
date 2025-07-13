@@ -3,6 +3,7 @@ import PrivateRoute from "./components/PivateRoute";
 import Layout from "./components/layouts/LandingPage/Layout";
 import LayoutAuth from "./components/layouts/auth/LayoutAuth";
 import MainLayout from "./components/layouts/main/Layout";
+import AccountSettings from "./pages/AccountSettings";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Home from "./pages/Home";
@@ -54,6 +55,14 @@ function Router() {
             element={
               <PrivateRoute>
                 <Profil />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="account-setting"
+            element={
+              <PrivateRoute>
+                <AccountSettings />
               </PrivateRoute>
             }
           />

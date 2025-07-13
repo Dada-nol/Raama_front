@@ -1,0 +1,47 @@
+@use "variables" as *;
+
+.main-content {
+  @include main-content;
+
+  .svg {
+    width: 100px;
+    height: 100px;
+    border: 3px solid $color-text;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  section {
+    margin: 0;
+  }
+}
+
+.container-fluide {
+  width: 800px;
+  height: 200px;
+  border: 3px solid $color-secondary;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  gap: 5px;
+
+  * {
+    margin-left: 60px;
+    margin-top: 30px;
+  }
+}
+
+.profile {
+  display: flex;
+}
+
+.account-setting {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
