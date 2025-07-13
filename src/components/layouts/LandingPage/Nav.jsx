@@ -36,7 +36,7 @@ function Nav() {
   }, []);
 
   return (
-    <header>
+    <header className="header">
       <nav
         className="nav"
         style={{

@@ -57,7 +57,7 @@ function Router() {
               </PrivateRoute>
             }
           />
-          <Route path="souvenirs">
+          <Route path="souvenir">
             <Route
               index
               element={

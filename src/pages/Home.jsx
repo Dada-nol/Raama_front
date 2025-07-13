@@ -5,7 +5,7 @@ function Home() {
   return (
     <>
       <div>
-        <h1>Bienvenue {user.pseudo} !</h1>
+        <h1 className="title">Bienvenue {user.pseudo} !</h1>
       </div>
 
       <div>{/* <Souvenirs></Souvenirs> */}</div>

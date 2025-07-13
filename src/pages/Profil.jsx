@@ -7,6 +7,13 @@ function Profil() {
   const navigate = useNavigate();
   const { user } = useAuth();
 
+  const createdAtDate = new Date(user.created_at);
+  const formattedDate = createdAtDate.toLocaleDateString("fr-FR", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+
   // Method de suppression de compte
   const deleteAccount = async () => {
     await axios.delete("http://localhost:8000/api/user", {
@@ -21,8 +28,12 @@ function Profil() {
   return (
     <>
       <div>
-        <p>{user.name}</p>
-        <p>{user.email}</p>
+        <img src="" alt="" />
+        <div className="profile">
+          <p>{user.name}</p>
+          <p>{user.email}</p>
+          <p>Membre depuis le {formattedDate}</p>
+        </div>
       </div>
 
       <a href="/">Home</a>

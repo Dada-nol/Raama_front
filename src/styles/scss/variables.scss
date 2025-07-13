@@ -13,17 +13,11 @@ $color-danger: #d67229;
   flex-wrap: $wrap;
 }
 
-@mixin flex(
-  $direction: row,
-  $gap: null,
-  $justifyContent: space-between,
-  $wrap: nowrap
-) {
+@mixin flex($direction: row, $justifyContent: space-between, $wrap: nowrap) {
   display: flex;
   justify-content: $justifyContent;
   align-items: center;
   flex-direction: $direction;
-  gap: $gap;
   flex-wrap: $wrap;
 }
 
