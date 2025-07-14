@@ -9,10 +9,13 @@ function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+  const [globalErrors, setGlobalErrors] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setErrors({});
 
     try {
       const res = await axios.post("http://localhost:8000/api/login", {
@@ -33,7 +36,13 @@ function Login() {
 
       navigate("/home");
     } catch (e) {
-      console.error("Les informations données sont incorrect");
+      if (e.response && e.response.status === 422) {
+        setErrors(e.response.data.errors); // <- Laravel met les erreurs ici
+      } else if (e.response && e.response.status === 401) {
+        setGlobalErrors("Email ou mot de passe incorrect.");
+      } else {
+        console.error("Erreur inattendue", e);
+      }
     }
   };
   return (
@@ -48,6 +57,7 @@ function Login() {
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
           />
+          {errors.email && <p className="error">{errors.email[0]}</p>}
         </div>
         <div className="form-item">
           <input
@@ -56,10 +66,12 @@ function Login() {
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
+          {errors.password && <p className="error">{errors.password[0]}</p>}
           <a href="/reset-password">Forget password ?</a>
         </div>
 
         <button type="submit">Se connecter</button>
+        {globalErrors && <p className="error">{globalErrors}</p>}
         <p>
           <a href="/register">Sign up</a> if you don't have an account yet.
         </p>

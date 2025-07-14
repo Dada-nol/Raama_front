@@ -13,6 +13,7 @@ function AccountSettings() {
   const [password, setPassword] = useState("");
   const [password_confirmation, setPassword_confirmation] = useState("");
   const [oldPassword, setOldPassword] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (user) {
@@ -26,24 +27,30 @@ function AccountSettings() {
   const UpdateUser = async (e) => {
     e.preventDefault();
 
-    await axios.put(
-      `http://localhost:8000/api/user/${user.id}`,
-      {
-        name,
-        firstname,
-        pseudo,
-        email,
-        ...(password
-          ? { password, password_confirmation, old_password: oldPassword }
-          : {}),
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+    if (!email.includes("@")) {
+      setError("Adresse e-mail invalide");
+    } else {
+      setError("");
+
+      await axios.put(
+        `http://localhost:8000/api/user/${user.id}`,
+        {
+          name,
+          firstname,
+          pseudo,
+          email,
+          ...(password
+            ? { password, password_confirmation, old_password: oldPassword }
+            : {}),
         },
-      }
-    );
-    alert("Update completed !");
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      alert("Update completed !");
+    }
   };
 
   const navigate = useNavigate();
@@ -92,6 +99,7 @@ function AccountSettings() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
+              {error && <p className="error">{error}</p>}
             </div>
 
             <div>
