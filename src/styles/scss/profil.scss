@@ -2,8 +2,6 @@
 
 .main-content {
   @include main-content;
-  display: flex;
-  flex-direction: column;
 
   .svg {
     width: 100px;

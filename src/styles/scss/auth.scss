@@ -1,5 +1,12 @@
 @use "variables" as *;
 
+.container-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .container-form .logo {
   padding: 5px 0;
 }
@@ -7,12 +14,7 @@
 .auth {
   @include flex-center(column, 20px);
   background-color: $color-secondary;
-  // position: absolute;
-  // top: 50%;
-  // left: 50%;
-  // transform: translate(-50%, -50%);
-  padding: 40px 0;
-  margin: 0 450px;
+  padding: 40px 80px;
   border: solid 3px $color-text;
   box-shadow: 10px 10px 0 $color-text,
     /* ombre "papier découpé" */ 10px 10px 20px rgba(0, 0, 0, 0.3); /* ombre floutée réaliste */
