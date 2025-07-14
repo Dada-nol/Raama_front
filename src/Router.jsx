@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PrivateRoute from "./components/PivateRoute";
+import PublicRoute from "./components/PublicRoute";
 import Layout from "./components/layouts/LandingPage/Layout";
 import LayoutAuth from "./components/layouts/auth/LayoutAuth";
 import MainLayout from "./components/layouts/main/Layout";
@@ -34,11 +35,32 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<LandingPage />} />
+          <Route
+            index
+            element={
+              <PublicRoute>
+                <LandingPage />
+              </PublicRoute>
+            }
+          />
         </Route>
         <Route element={<LayoutAuth />}>
-          <Route path="register" element={<Register />} />
-          <Route path="login" element={<Login />} />
+          <Route
+            path="register"
+            element={
+              <PublicRoute>
+                <Register />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="login"
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            }
+          />
         </Route>
 
         <Route element={<MainLayout />}>
