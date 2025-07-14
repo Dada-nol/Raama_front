@@ -14,34 +14,44 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password_confirmation, setPassword_confirmation] = useState("");
+  const [errors, setErrors] = useState({});
 
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setErrors({});
 
-    const res = await axios.post("http://localhost:8000/api/register", {
-      name,
-      firstname,
-      pseudo,
-      email,
-      password,
-      password_confirmation,
-    });
+    try {
+      const res = await axios.post("http://localhost:8000/api/register", {
+        name,
+        firstname,
+        pseudo,
+        email,
+        password,
+        password_confirmation,
+      });
 
-    const token = res.data.token;
+      const token = res.data.token;
 
-    localStorage.setItem("token", token);
+      localStorage.setItem("token", token);
 
-    // 🔥 Appelle manuellement l'API pour remplir le context directement
-    const userRes = await axios.get("http://localhost:8000/api/user", {
-      headers: {
-        Authorization: `Bearer ${res.data.token}`,
-      },
-    });
+      // 🔥 Appelle manuellement l'API pour remplir le context directement
+      const userRes = await axios.get("http://localhost:8000/api/user", {
+        headers: {
+          Authorization: `Bearer ${res.data.token}`,
+        },
+      });
 
-    setUser(userRes.data);
-    navigate("/home");
+      setUser(userRes.data);
+      navigate("/home");
+    } catch (e) {
+      if (e.response && e.response.status === 422) {
+        setErrors(e.response.data.errors); // <- Laravel met les erreurs ici
+      } else {
+        console.error("Erreur inattendue", e);
+      }
+    }
   };
 
   return (
@@ -57,6 +67,7 @@ function Register() {
               placeholder="Name"
               onChange={(e) => setName(e.target.value)}
             />
+            {errors.name && <p className="error">{errors.name[0]}</p>}
           </div>
 
           <div className="form-item">
@@ -66,6 +77,7 @@ function Register() {
               placeholder="Firstname"
               onChange={(e) => setFirstName(e.target.value)}
             />
+            {errors.firstname && <p className="error">{errors.firstname[0]}</p>}
           </div>
 
           <div className="form-item">
@@ -75,6 +87,7 @@ function Register() {
               placeholder="Pseudo"
               onChange={(e) => setPseudo(e.target.value)}
             />
+            {errors.pseudo && <p className="error">{errors.pseudo[0]}</p>}
           </div>
 
           <hr></hr>
@@ -86,6 +99,7 @@ function Register() {
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
             />
+            {errors.email && <p className="error">{errors.email[0]}</p>}
           </div>
 
           <div className="form-item">
@@ -104,6 +118,7 @@ function Register() {
               placeholder="Confirm password"
               onChange={(e) => setPassword_confirmation(e.target.value)}
             />
+            {errors.password && <p className="error">{errors.password[0]}</p>}
           </div>
 
           <div>
