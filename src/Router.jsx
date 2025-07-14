@@ -1,9 +1,12 @@
+import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PrivateRoute from "./components/PivateRoute";
 import PublicRoute from "./components/PublicRoute";
 import Layout from "./components/layouts/LandingPage/Layout";
 import LayoutAuth from "./components/layouts/auth/LayoutAuth";
 import MainLayout from "./components/layouts/main/Layout";
+import Transition from "./components/transitions/Transition";
+import { useAuth } from "./context/AuthContext";
 import AccountSettings from "./pages/AccountSettings";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
@@ -30,6 +33,19 @@ function Router() {
   /* {staticRoutes.map(({ path, title }) => (
   <Route key={path} path={path} element={<PageVide title={title} />} />
 ))} */
+
+  const { loading } = useAuth();
+  const [showLoader, setShowLoader] = useState(true);
+
+  useEffect(() => {
+    if (!loading) {
+      // Attend 700ms que l’animation "fade-out" finisse
+      const timeout = setTimeout(() => setShowLoader(false), 700);
+      return () => clearTimeout(timeout);
+    }
+  }, [loading]);
+
+  if (showLoader) return <Transition />;
 
   return (
     <BrowserRouter>
