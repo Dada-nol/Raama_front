@@ -13,7 +13,8 @@ function AccountSettings() {
   const [password, setPassword] = useState("");
   const [password_confirmation, setPassword_confirmation] = useState("");
   const [oldPassword, setOldPassword] = useState("");
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
+  const [password_error, setPasswordError] = useState({});
 
   useEffect(() => {
     if (user) {
@@ -26,12 +27,9 @@ function AccountSettings() {
 
   const UpdateUser = async (e) => {
     e.preventDefault();
+    setErrors({});
 
-    if (!email.includes("@")) {
-      setError("Adresse e-mail invalide");
-    } else {
-      setError("");
-
+    try {
       await axios.put(
         `http://localhost:8000/api/user/${user.id}`,
         {
@@ -50,6 +48,14 @@ function AccountSettings() {
         }
       );
       alert("Update completed !");
+    } catch (e) {
+      if (e.response && e.response.status === 422) {
+        setErrors(e.response.data.errors); // <- Laravel met les erreurs ici
+      } else if (e.response && e.response.status === 401) {
+        setPasswordError(e.response.data);
+      } else {
+        console.error("Erreur inattendue", e);
+      }
     }
   };
 
@@ -99,7 +105,7 @@ function AccountSettings() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              {error && <p className="error">{error}</p>}
+              {errors.name && <p className="error">{errors.name[0]}</p>}
             </div>
 
             <div>
@@ -109,6 +115,9 @@ function AccountSettings() {
                 value={firstname}
                 onChange={(e) => setFirstname(e.target.value)}
               />
+              {errors.firstname && (
+                <p className="error">{errors.firstname[0]}</p>
+              )}
             </div>
           </div>
           <div className="row">
@@ -119,6 +128,7 @@ function AccountSettings() {
                 value={pseudo}
                 onChange={(e) => setPseudo(e.target.value)}
               />
+              {errors.pseudo && <p className="error">{errors.pseudo[0]}</p>}
             </div>
             <div>
               <p>Email</p>
@@ -127,6 +137,7 @@ function AccountSettings() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
+              {errors.email && <p className="error">{errors.email[0]}</p>}
             </div>
           </div>
         </section>
@@ -140,6 +151,9 @@ function AccountSettings() {
                 type="password"
                 onChange={(e) => setOldPassword(e.target.value)}
               />
+              {password_error.message && (
+                <p className="error">{password_error.message}</p>
+              )}
             </div>
           </div>
 
@@ -150,6 +164,7 @@ function AccountSettings() {
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
               />
+              {errors.password && <p className="error">{errors.password[0]}</p>}
             </div>
 
             <div>
@@ -158,6 +173,7 @@ function AccountSettings() {
                 type="password"
                 onChange={(e) => setPassword_confirmation(e.target.value)}
               />
+              {errors.password && <p className="error">{errors.password[0]}</p>}
             </div>
           </div>
         </section>
