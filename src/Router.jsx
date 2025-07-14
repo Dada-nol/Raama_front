@@ -1,6 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import PrivateRoute from "./components/PivateRoute";
 import Layout from "./components/layouts/LandingPage/Layout";
-import LayoutAuth from "./components/layouts/LayoutAuth";
+import LayoutAuth from "./components/layouts/auth/LayoutAuth";
+import MainLayout from "./components/layouts/main/Layout";
+import AccountSettings from "./pages/AccountSettings";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Home from "./pages/Home";
@@ -38,13 +41,65 @@ function Router() {
           <Route path="login" element={<Login />} />
         </Route>
 
-        <Route path="profil" element={<Profil />} />
-        <Route path="home" element={<Home />} />
-        <Route path="souvenirs">
-          <Route index element={<List></List>} />
-          <Route path=":id" element={<Show></Show>} />
-          <Route path="create" element={<Create></Create>} />
-          <Route path=":id/update" element={<Update></Update>} />
+        <Route element={<MainLayout />}>
+          <Route
+            path="home"
+            element={
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="profil"
+            element={
+              <PrivateRoute>
+                <Profil />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="account-setting"
+            element={
+              <PrivateRoute>
+                <AccountSettings />
+              </PrivateRoute>
+            }
+          />
+          <Route path="souvenir">
+            <Route
+              index
+              element={
+                <PrivateRoute>
+                  <List></List>
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path=":id"
+              element={
+                <PrivateRoute>
+                  <Show></Show>
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="create"
+              element={
+                <PrivateRoute>
+                  <Create></Create>
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path=":id/update"
+              element={
+                <PrivateRoute>
+                  <Update></Update>
+                </PrivateRoute>
+              }
+            />
+          </Route>
         </Route>
 
         <Route path="*" element={<NotFound />} />

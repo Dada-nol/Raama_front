@@ -13,17 +13,11 @@ $color-danger: #d67229;
   flex-wrap: $wrap;
 }
 
-@mixin flex(
-  $direction: row,
-  $gap: null,
-  $justifyContent: space-between,
-  $wrap: nowrap
-) {
+@mixin flex($direction: row, $justifyContent: space-between, $wrap: nowrap) {
   display: flex;
   justify-content: $justifyContent;
   align-items: center;
   flex-direction: $direction;
-  gap: $gap;
   flex-wrap: $wrap;
 }
 
@@ -37,4 +31,13 @@ $color-danger: #d67229;
 @mixin grid-phone {
   display: grid;
   grid-template-columns: 1fr;
+}
+
+@mixin main-content {
+  margin-top: 140px; // hauteur de la navbar
+  margin-left: 80px; // largeur de la sidebar
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

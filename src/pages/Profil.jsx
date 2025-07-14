@@ -1,82 +1,43 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import LogoutButton from "../components/ui/LogoutButton";
+import { useAuth } from "../context/AuthContext";
 
 function Profil() {
-  const [user, setUser] = useState(null); // initialiser un user avec un appel API
-  const [show, setShow] = useState(false); // afficher les données d'un user mais avec setTimeOut
-  const [error, setError] = useState(null); //afficher un message d'erreur s'il n'y a pas de user
+  const { user } = useAuth();
 
-  const navigate = useNavigate();
-
-  // obtenir les info du user connecté
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get("http://localhost:8000/api/user", {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        });
-        setUser(res.data);
-      } catch (e) {
-        console.error("Erreur lors de la récupération de l'utilisateur :", e);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  // Mise en place d'un délai pour afficher soit des données soit une erreur
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (user) {
-        setShow(true);
-      } else {
-        setError(
-          <>
-            <p>Veuillez vous connecter !</p>
-            <div className="flex-row">
-              <a href="/login">Se connecter</a>
-              <>Ou</>
-              <a href="/register">Créer un compte</a>
-            </div>
-          </>
-        );
-      }
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, [user]);
-
-  if (!user || !show) {
-    return <>{error || <p>Chargement...</p>}</>;
-  }
-
-  // Method de suppression de compte
-  const deleteAccount = async () => {
-    await axios.delete("http://localhost:8000/api/user", {
-      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-    });
-
-    localStorage.removeItem("token");
-
-    navigate("/");
-  };
+  const createdAtDate = new Date(user.created_at);
+  const formattedDate = createdAtDate.toLocaleDateString("fr-FR", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
 
   return (
-    <>
-      <div>
-        <p>{user.name}</p>
-        <p>{user.email}</p>
+    <main className="main-content">
+      <div className="profile">
+        <div className="svg">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+            />
+          </svg>
+        </div>
+        <div>
+          <p>{user.name}</p>
+          <p>{user.email}</p>
+          <p>Membre depuis le {formattedDate}</p>
+          {/*           Nombre total de souvenirs partagés Albums créés Groupes rejoints
+          Souvenirs préférés ou mis en avant Déconnexion Thème */}
+        </div>
       </div>
-
-      <a href="/">Home</a>
-
-      <div>
-        <LogoutButton></LogoutButton>
-      </div>
-      <button onClick={deleteAccount}>Supprimer le compte</button>
-    </>
+    </main>
   );
 }
 

@@ -12,14 +12,16 @@ function LogoutButton() {
       );
 
       localStorage.removeItem("token");
-      window.location.href = "/";
+      window.location.href = "/login";
     } catch (e) {
       console.error("Erreur lors de la déconnexion de l'utilisateur :", e);
     }
   };
   return (
     <>
-      <button onClick={handleRemoveUser}>Déconnexion</button>
+      <button className="logout" onClick={handleRemoveUser}>
+        Déconnexion
+      </button>
     </>
   );
 }
