@@ -48,7 +48,7 @@ function Register() {
     <main className="container-form">
       <Logo></Logo>
       <div>
-        <form onSubmit={handleRegister}>
+        <form className="auth" onSubmit={handleRegister}>
           <h2>Create an account to continue</h2>
           <div className="form-item">
             <input

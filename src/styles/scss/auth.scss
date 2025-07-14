@@ -4,7 +4,7 @@
   padding: 5px 0;
 }
 
-form {
+.auth {
   @include flex-center(column, 20px);
   background-color: $color-secondary;
   // position: absolute;
@@ -35,6 +35,7 @@ form {
   justify-content: center;
   align-items: start;
   gap: 5px;
+  flex-wrap: wrap;
 
   input {
     box-sizing: border-box;

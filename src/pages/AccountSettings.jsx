@@ -1,10 +1,50 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "../styles/scss/profil.scss";
 
 function AccountSettings() {
   const { user } = useAuth();
+  const [name, setName] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [pseudo, setPseudo] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [password_confirmation, setPassword_confirmation] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+
+  useEffect(() => {
+    if (user) {
+      setName(user.name);
+      setFirstname(user.firstname);
+      setEmail(user.email);
+      setPseudo(user.pseudo);
+    }
+  }, [user]);
+
+  const UpdateUser = async (e) => {
+    e.preventDefault();
+
+    await axios.put(
+      `http://localhost:8000/api/user/${user.id}`,
+      {
+        name,
+        firstname,
+        pseudo,
+        email,
+        ...(password
+          ? { password, password_confirmation, old_password: oldPassword }
+          : {}),
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    alert("Update completed !");
+  };
 
   const navigate = useNavigate();
   // Method de suppression de compte
@@ -20,16 +60,16 @@ function AccountSettings() {
 
   return (
     <main className="main-content">
-      <div className="account-setting">
+      <form onSubmit={UpdateUser} className="form-setting">
         <section>
           <div className="svg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="2"
+              strokeWidth="2"
               stroke="currentColor"
-              class="size-6"
+              className="size-6"
             >
               <path
                 stroke-linecap="round"
@@ -44,28 +84,85 @@ function AccountSettings() {
         </section>
         <section className="container-fluide">
           <h2>Your informations</h2>
-          <div>
-            <p>Name</p>
-            <input type="text" value={user.name} />
-            <p>Firstname</p>
-            <p>Email</p>
+          <div className="row">
+            <div>
+              <p>Name</p>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+
+            <div>
+              <p>Firstname</p>
+              <input
+                type="text"
+                value={firstname}
+                onChange={(e) => setFirstname(e.target.value)}
+              />
+            </div>
           </div>
-          <button onClick={deleteAccount}>Supprimer le compte</button>
+          <div className="row">
+            <div>
+              <p>Pseudo</p>
+              <input
+                type="text"
+                value={pseudo}
+                onChange={(e) => setPseudo(e.target.value)}
+              />
+            </div>
+            <div>
+              <p>Email</p>
+              <input
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+          </div>
         </section>
 
         <section className="container-fluide">
           <h2>Update password</h2>
-          <div>
-            <p>Previous password</p>
-            <p>New password</p>
-            <p>Confirm password</p>
+          <div className="row">
+            <div>
+              <p>Previous password</p>
+              <input
+                type="password"
+                onChange={(e) => setOldPassword(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="row">
+            <div>
+              <p>New password</p>
+              <input
+                type="password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+
+            <div>
+              <p>Confirm password</p>
+              <input
+                type="password"
+                onChange={(e) => setPassword_confirmation(e.target.value)}
+              />
+            </div>
           </div>
         </section>
 
-        <section>
-          <button onClick={deleteAccount}>Supprimer le compte</button>
-        </section>
-      </div>
+        <button type="submit">Modifier les info</button>
+      </form>
+
+      <section className="container-fluide">
+        <h2>Delete account</h2>
+        <button className="btn-danger" onClick={deleteAccount}>
+          Supprimer le compte
+        </button>
+      </section>
     </main>
   );
 }
