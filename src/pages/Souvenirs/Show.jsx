@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Delete from "./Delete";
+import BtnUpload from "../../components/ui/BtnUpload";
 
 function Show() {
   const [title, setTitle] = useState("");
@@ -31,6 +32,7 @@ function Show() {
 
     fetchData();
   }, [id]);
+
   return (
     <main className="main-content">
       <div className="souvenir-header">
@@ -109,9 +111,10 @@ function Show() {
         <div className="roadmap-items">
           <h4>Insert your entry</h4>
           <div className="entries">
-            <button>+</button>
-            <button>+</button>
-            <button>+</button>
+            <BtnUpload></BtnUpload>
+            <BtnUpload></BtnUpload>
+            <BtnUpload></BtnUpload>
+            <BtnUpload></BtnUpload>
           </div>
         </div>
       </div>

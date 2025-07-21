@@ -110,6 +110,7 @@ select {
   gap: 10px;
   margin-bottom: 20px;
 }
+
 .souvenir-nav-items {
   width: 60px;
   height: 60px;
@@ -124,16 +125,5 @@ select {
     justify-content: center;
     align-items: center;
     gap: 20px;
-  }
-
-  .entries button {
-    width: 80px;
-    height: 80px;
-    border: 2px solid $color-text;
-    border-radius: 50%;
-
-    &:hover {
-      border: 4px solid $color-primary;
-    }
   }
 }
