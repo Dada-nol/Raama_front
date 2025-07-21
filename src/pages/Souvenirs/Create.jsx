@@ -1,24 +1,41 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/scss/souvenirPage.scss";
 
 function Create() {
-  const [name, setName] = useState("");
+  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [memoryType, setMemoryType] = useState([]);
+  const [selectedMemoryType, setSelectedMemoryType] = useState("");
   const [coverImage, setCover_image] = useState("");
+  const [errors, setErrors] = useState({});
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const fetch = async () => {
+      const res = await axios.get("http://localhost:8000/api/memory_type");
+
+      setMemoryType(res.data);
+      console.log("Memory type trouvé !");
+    };
+
+    fetch();
+  }, []);
+
   const handleCreate = async (e) => {
     e.preventDefault();
+    setErrors({});
+
     try {
       await axios.post(
         "http://localhost:8000/api/souvenir",
         {
-          name,
+          title,
           description,
           coverImage,
+          memory_type: selectedMemoryType,
         },
         {
           headers: {
@@ -28,24 +45,47 @@ function Create() {
       );
 
       console.log("Souvenir créée !");
-      navigate("/");
+      navigate("/souvenir");
     } catch (e) {
-      console.error(e);
+      if (e.response && e.response.status === 422) {
+        setErrors(e.response.data.errors); // <- Laravel met les erreurs ici
+      } else {
+        console.error("Erreur inattendue", e);
+      }
     }
   };
 
   return (
     <main className="main-content">
-      <form className="form-souvenir" onSubmit={handleCreate}>
+      <form className="souvenir-create" onSubmit={handleCreate}>
         <h2>Create Souvenir</h2>
+
         <div className="form-item">
-          <h3>Name</h3>
+          <h3>Memory Type</h3>
+          <select onChange={(e) => setSelectedMemoryType(e.target.value)}>
+            <option value="">Select your type</option>
+            {memoryType.map((data) => (
+              <option key={data.id} value={data.id}>
+                {data.title}
+              </option>
+            ))}
+          </select>
+
+          {errors.memory_type && (
+            <p className="error">{errors.memory_type[0]}</p>
+          )}
+        </div>
+
+        <div className="form-item">
+          <h3>Title</h3>
           <input
             type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
+          {errors.title && <p className="error">{errors.title[0]}</p>}
         </div>
+
         <div className="form-item">
           <h3>Description</h3>
           <input
@@ -53,14 +93,19 @@ function Create() {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
+          {errors.description && (
+            <p className="error">{errors.description[0]}</p>
+          )}
         </div>
+
         <div className="form-item">
           <h3>Cover Image</h3>
           <input
-            type="text"
+            type=""
             value={coverImage}
             onChange={(e) => setCover_image(e.target.value)}
           />
+          {errors.coverImage && <p className="error">{errors.coverImage[0]}</p>}
         </div>
 
         <button type="submit">Créer</button>

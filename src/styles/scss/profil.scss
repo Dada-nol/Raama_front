@@ -1,32 +1,28 @@
 @use "variables" as *;
 
-.main-content {
-  @include main-content;
+.svg {
+  width: 100px;
+  height: 100px;
+  border: 3px solid $color-text;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .svg {
-    width: 100px;
-    height: 100px;
-    border: 3px solid $color-text;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+section {
+  margin: 20px 0;
+}
 
-  section {
-    margin: 20px 0;
-  }
+.btn-danger {
+  color: $color-danger;
+  border: $color-danger 3px solid;
+  margin: 20px;
+  align-self: center;
 
-  .btn-danger {
-    color: $color-danger;
-    border: $color-danger 3px solid;
-    margin: 20px;
-    align-self: center;
-
-    &:hover {
-      background-color: $color-danger;
-      color: $color-secondary;
-    }
+  &:hover {
+    background-color: $color-danger;
+    color: $color-secondary;
   }
 }
 
