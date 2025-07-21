@@ -3,28 +3,59 @@ import { useEffect, useState } from "react";
 
 function List() {
   const [data, setData] = useState([]);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get("http://localhost:8000/api/souvenirs", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      setErrors({});
 
-      setData(res.data);
+      try {
+        const res = await axios.get("http://localhost:8000/api/souvenirs", {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        });
+
+        setData(res.data);
+      } catch (e) {
+        if (e.response && e.response.status === 401) {
+          setErrors(e.response.data); // <- Laravel met les erreurs ici
+        } else {
+          console.error("Erreur inattendue", e);
+        }
+      }
     };
     fetchData();
   }, []);
 
   return (
-    <>
-      <div>
-        {data.map((souvenir) => (
-          <p key={souvenir.id}>{souvenir.name}</p>
-        ))}
-      </div>
+    <main className="main-content">
+      <h2>My Souvenirs</h2>
+      <form>
+        <select>
+          <option>Sort by</option>
+          <option value="title">Title</option>
+          <option value="points">Points</option>
+        </select>
+      </form>
+      <ul className="list">
+        {/* {errors.message && <p className="error">{errors.message}</p>} */}
 
-      <a href="/souvenir-create">Créer souvenir</a>
-    </>
+        {data.map((souvenir) => (
+          <a
+            href={`souvenir/${souvenir.id}`}
+            className="card"
+            key={souvenir.id}
+          >
+            <li className="list-items">
+              <h3>{souvenir.title}</h3>
+              <div>
+                <p>{souvenir.memory_type_id}</p>
+                <p>Memory points : {souvenir.memory_points}</p>
+              </div>
+            </li>
+          </a>
+        ))}
+      </ul>
+    </main>
   );
 }
 

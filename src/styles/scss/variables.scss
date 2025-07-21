@@ -1,7 +1,7 @@
-$color-bg: #2c2c2c;
+$color-bg: #1a1f16;
 $color-primary: #64b000;
-$color-secondary: #1e1e1e;
-$color-text: #d1d0c5;
+$color-secondary: #1e251a;
+$color-text: #fff;
 $color-danger: #d67229;
 
 @mixin flex-center($direction: row, $gap: null, $wrap: nowrap) {
@@ -34,10 +34,8 @@ $color-danger: #d67229;
 }
 
 @mixin main-content {
-  margin-top: 140px; // hauteur de la navbar
-  margin-left: 80px; // largeur de la sidebar
+  padding-top: 140px; // hauteur de la navbar
+  padding-left: 80px; // largeur de la sidebar
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  flex: 1;
 }

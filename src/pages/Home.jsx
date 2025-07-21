@@ -3,7 +3,7 @@ import { useAuth } from "../context/AuthContext";
 function Home() {
   const { user } = useAuth();
   return (
-    <main>
+    <main className="main-content">
       <div>
         <h1 className="title">Bienvenue {user.pseudo} !</h1>
       </div>

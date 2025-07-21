@@ -4,7 +4,7 @@ footer {
   bottom: 0;
   display: flex;
   flex-direction: row;
-  background-color: #1e1e1e;
+  background-color: $color-bg;
   border-top: $color-text 3px solid;
   padding: 10px 0;
 }
