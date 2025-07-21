@@ -10,6 +10,7 @@ function Show() {
   const [coverImage, setCoverImage] = useState("");
 
   const { id } = useParams(); // Pour récupérer l'id dans l'url c'est important de faire ça
+  const token = localStorage.getItem("token"); // ou sessionStorage
 
   // Récupérer les données déjà existantes, pour les afficher dans le form
   useEffect(() => {
@@ -17,7 +18,7 @@ function Show() {
       await axios
         .get(`http://localhost:8000/api/souvenir/${id}`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${token}`,
           },
         })
         .then((res) => {
@@ -111,7 +112,7 @@ function Show() {
         <div className="roadmap-items">
           <h4>Insert your entry</h4>
           <div className="entries">
-            <BtnUpload></BtnUpload>
+            <BtnUpload id={id} token={token}></BtnUpload>
             <BtnUpload></BtnUpload>
             <BtnUpload></BtnUpload>
             <BtnUpload></BtnUpload>
