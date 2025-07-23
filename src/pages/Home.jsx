@@ -5,7 +5,7 @@ function Home() {
   return (
     <main className="main-content">
       <div>
-        <h1 className="title">Bienvenue {user.pseudo} !</h1>
+        <h1>Bienvenue {user.pseudo} !</h1>
       </div>
 
       <div>{/* <Souvenirs></Souvenirs> */}</div>
