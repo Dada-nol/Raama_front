@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Delete from "./Delete";
+import BtnUpload from "../../components/ui/BtnUpload";
 
 function Show() {
   const [title, setTitle] = useState("");
@@ -9,6 +10,7 @@ function Show() {
   const [coverImage, setCoverImage] = useState("");
 
   const { id } = useParams(); // Pour récupérer l'id dans l'url c'est important de faire ça
+  const token = localStorage.getItem("token"); // ou sessionStorage
 
   // Récupérer les données déjà existantes, pour les afficher dans le form
   useEffect(() => {
@@ -16,7 +18,7 @@ function Show() {
       await axios
         .get(`http://localhost:8000/api/souvenir/${id}`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${token}`,
           },
         })
         .then((res) => {
@@ -31,6 +33,7 @@ function Show() {
 
     fetchData();
   }, [id]);
+
   return (
     <main className="main-content">
       <div className="souvenir-header">
@@ -109,9 +112,10 @@ function Show() {
         <div className="roadmap-items">
           <h4>Insert your entry</h4>
           <div className="entries">
-            <button>+</button>
-            <button>+</button>
-            <button>+</button>
+            <BtnUpload id={id} token={token}></BtnUpload>
+            <BtnUpload></BtnUpload>
+            <BtnUpload></BtnUpload>
+            <BtnUpload></BtnUpload>
           </div>
         </div>
       </div>

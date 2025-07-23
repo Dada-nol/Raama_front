@@ -9,7 +9,7 @@ function SideBar({ expanded }) {
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="2"
-          color="#d1d0c5"
+          color="#fff"
           stroke="currentColor"
           class="size-6"
         >
@@ -28,7 +28,7 @@ function SideBar({ expanded }) {
           viewBox="0 0 24 24"
           stroke-width="2"
           stroke="currentColor"
-          color="#d1d0c5"
+          color="#fff"
           class="size-6"
         >
           <path
@@ -43,7 +43,7 @@ function SideBar({ expanded }) {
         className="sidebar-create"
         to="souvenir/create"
         style={{
-          backgroundColor: "#d1d0c5",
+          backgroundColor: "#fff",
           borderTopRightRadius: 50,
           borderEndEndRadius: 50,
         }}
@@ -72,7 +72,7 @@ function SideBar({ expanded }) {
           viewBox="0 0 24 24"
           stroke-width="2"
           stroke="currentColor"
-          color="#d1d0c5"
+          color="#fff"
           class="size-6"
         >
           <path
@@ -91,7 +91,7 @@ function SideBar({ expanded }) {
           stroke-width="2"
           stroke="currentColor"
           class="size-6"
-          color="#d1d0c5"
+          color="#fff"
         >
           <path
             stroke-linecap="round"

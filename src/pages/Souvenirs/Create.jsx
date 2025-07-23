@@ -15,7 +15,7 @@ function Create() {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await axios.get("http://localhost:8000/api/memory_type");
+      const res = await axios.get("http://localhost:8000/api/memory-type");
 
       setMemoryType(res.data);
       console.log("Memory type trouvé !");
