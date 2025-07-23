@@ -23,7 +23,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 5;
-    color: #fff;
+    color: $color-text;
   }
 }
 
@@ -93,7 +93,7 @@
     hr {
       height: 2px;
       width: 150px;
-      background-color: #d1d0c5;
+      background-color: $color-text;
       margin: 10px 0;
     }
 
