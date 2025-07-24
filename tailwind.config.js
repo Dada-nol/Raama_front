@@ -21,6 +21,9 @@ module.exports = {
         "gradient-border":
           "linear-gradient(to right, #C6CC09, #64B000 , #00BDB4)",
       },
+      boxShadow: {
+        custom: "0 0 10px 5px #64B000",
+      },
     },
   },
   plugins: [],

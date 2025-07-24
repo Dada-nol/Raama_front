@@ -55,7 +55,6 @@ function Create() {
   };
 
   return (
-    <main className="main-content">
       <form className="souvenir-create" onSubmit={handleCreate}>
         <h2>Create Souvenir</h2>
 
@@ -109,7 +108,6 @@ function Create() {
 
         <button type="submit">Créer</button>
       </form>
-    </main>
   );
 }
 

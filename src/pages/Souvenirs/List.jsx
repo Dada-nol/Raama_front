@@ -27,7 +27,7 @@ function List() {
   }, []);
 
   return (
-    <main className="main-content">
+    <>
       <h2>My Souvenirs</h2>
       <form>
         <select>
@@ -37,7 +37,7 @@ function List() {
         </select>
       </form>
       <ul className="list">
-        {/* {errors.message && <p className="error">{errors.message}</p>} */}
+        {errors.message && <p className="error">{errors.message}</p>}
 
         {data.map((souvenir) => (
           <a
@@ -55,7 +55,7 @@ function List() {
           </a>
         ))}
       </ul>
-    </main>
+    </>
   );
 }
 

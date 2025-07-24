@@ -142,7 +142,6 @@
 
     svg {
       margin-right: 12px;
-      min-width: 24px;
 
       &:hover {
         color: $color-primary;
@@ -156,22 +155,20 @@
       white-space: nowrap;
     }
   }
+}
+.expanded {
+  width: 220px;
 
-  &.expanded {
-    width: 220px;
-    background-color: $color-secondary;
-
-    a span {
-      transform: translateX(0);
-      opacity: 1;
-    }
+  a span {
+    transform: translateX(0);
+    opacity: 1;
   }
+}
 
-  &.collapsed {
-    width: 60px;
+.collapsed {
+  width: 60px;
 
-    a span {
-      display: none;
-    }
+  a span {
+    display: none;
   }
 }

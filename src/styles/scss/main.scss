@@ -1,14 +1,5 @@
 @use "variables" as *;
 
-.App {
-  text-align: center;
-  color: $color-text;
-
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
 html,
 body {
   background-color: $color-bg;
@@ -33,7 +24,7 @@ li {
   list-style: none;
 }
 
-button {
+/* button {
   background-color: transparent;
   border: solid #fff 3px;
   padding: 0 16px;
@@ -53,7 +44,7 @@ button {
 button:hover {
   border: solid $color-primary 3px;
   color: #fff;
-}
+} */
 
 a {
   text-decoration: none;

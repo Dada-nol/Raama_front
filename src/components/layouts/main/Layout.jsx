@@ -1,13 +1,15 @@
 import { Outlet } from "react-router-dom";
-import Footer from "./Footer";
-import NavBar from "./NavBar";
+import NavBar from "./BurgerButton";
+// import Footer from "./Footer";
 
 function Layout() {
   return (
     <>
       <NavBar />
-      <Outlet />
-      <Footer />
+      <main className="flex-1 overflow-y-auto text-center">
+        <Outlet />
+      </main>
+      {/* <Footer /> */}
     </>
   );
 }
