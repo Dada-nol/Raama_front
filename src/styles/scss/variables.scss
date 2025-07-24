@@ -4,38 +4,15 @@ $color-secondary: #1e251a;
 $color-text: #fff;
 $color-danger: #d67229;
 
-@mixin flex-center($direction: row, $gap: null, $wrap: nowrap) {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: $direction;
-  gap: $gap;
-  flex-wrap: $wrap;
-}
-
-@mixin flex($direction: row, $justifyContent: space-between, $wrap: nowrap) {
-  display: flex;
-  justify-content: $justifyContent;
-  align-items: center;
-  flex-direction: $direction;
-  flex-wrap: $wrap;
-}
-
-@mixin grid2 {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  align-items: center;
-  justify-content: center;
-}
-
-@mixin grid-phone {
-  display: grid;
-  grid-template-columns: 1fr;
-}
-
 @mixin main-content {
   padding-top: 140px; // hauteur de la navbar
   padding-left: 80px; // largeur de la sidebar
 
   flex: 1;
+}
+
+.gradient-border {
+  border-width: 2px;
+  border-style: solid;
+  border-image: linear-gradient(to right, #64b000, #d1d0c5, #2c2c2c) 1;
 }

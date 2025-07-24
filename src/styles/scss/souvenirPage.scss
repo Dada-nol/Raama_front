@@ -1,7 +1,6 @@
 @use "variables" as *;
 
 .souvenir-create {
-  @include flex-center(column, 20px);
   width: 500px;
   background-color: $color-secondary;
   padding: 40px;

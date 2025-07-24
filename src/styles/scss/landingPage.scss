@@ -17,18 +17,6 @@ section {
   align-items: center;
 }
 
-.card-feature {
-  @include flex-center(column, 0);
-}
-
-.grid {
-  @include grid2;
-
-  @media (max-width: 768px) {
-    @include grid-phone;
-  }
-}
-
 .photo1 {
   width: 400px;
   height: auto;
