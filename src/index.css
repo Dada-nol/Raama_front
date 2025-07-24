@@ -9,3 +9,16 @@
     @apply font-inknut;
   }
 }
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(to right, #c6cc09, #64b000, #00bdb4);
+  }
+
+  .gradient-border {
+    border-width: 2px;
+    border-style: solid;
+    border-image: linear-gradient(to right, #c6cc09, #64b000, #00bdb4) 1;
+  }
+}

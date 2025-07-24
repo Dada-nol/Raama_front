@@ -8,18 +8,18 @@ module.exports = {
       },
       colors: {
         primary: "#64B000",
-        secondary: "#2C2C2C",
-        background: "#1E1E1E",
-        text: "#D1D0C5",
-        alt: "#FFFFFF",
+        secondary: "#1E251A",
+        background: "#1A1F16",
+        danger: "#D67229",
+        text: "#FFFFFF",
         // Ajoute d'autres couleurs selon ton design
       },
       backgroundImage: {
-        "my-gradient": "linear-gradient(to right, #64B000, #D1D0C5, #2C2C2C)",
+        "my-gradient": "linear-gradient(to right, #C6CC09, #64B000, #00BDB4)",
       },
       borderImage: {
         "gradient-border":
-          "linear-gradient(to right, #64B000, #D1D0C5, #2C2C2C)",
+          "linear-gradient(to right, #C6CC09, #64B000 , #00BDB4)",
       },
     },
   },
