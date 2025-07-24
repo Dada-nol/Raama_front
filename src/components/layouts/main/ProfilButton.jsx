@@ -13,7 +13,7 @@ function ProfilButton() {
   return (
     <>
       {" "}
-      <div className="">
+      <div className="absolute bottom-10 left-3">
         <button className="" onClick={handleProfil}>
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -12,7 +12,7 @@ import "./styles/scss/transitions.scss";
 
 function App() {
   return (
-    <div className="App flex h-screen text-text">
+    <div className="App flex justify-center h-screen text-text">
       <AuthProvider>
         <Router></Router>
       </AuthProvider>

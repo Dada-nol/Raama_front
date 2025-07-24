@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 function SideBar({ expanded }) {
   return (
     <div
-      className={`${
-        expanded ? "expanded" : "collapsed"
+      className={`sidebar-links ${
+        expanded ? "expanded w-64" : "collapsed"
       } mt-8 flex flex-col gap-6`}
     >
       <Link to="/home" className="flex gap-4 justify-start ml-2">
@@ -43,22 +43,14 @@ function SideBar({ expanded }) {
         </svg>
         <span>Souvenirs</span>
       </Link>
-      <Link
-        className="flex gap-4 justify-start ml-2"
-        to="souvenir/create"
-        style={{
-          backgroundColor: "#fff",
-          borderTopRightRadius: 50,
-          borderEndEndRadius: 50,
-        }}
-      >
+      <Link className="flex gap-4 justify-start ml-2" to="souvenir/create">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth="3"
           stroke="currentColor"
-          color="#000"
+          color="#fff"
           className="size-6"
         >
           <path
@@ -67,9 +59,9 @@ function SideBar({ expanded }) {
             d="M12 4.5v15m7.5-7.5h-15"
           />
         </svg>
-        <span style={{ color: "#000" }}>Create</span>
+        <span>Create</span>
       </Link>
-      <Link to="/notification" className="flex gap-4 justify-start ml-2">
+      {/*       <Link to="/notification" className="flex gap-4 justify-start ml-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -86,7 +78,7 @@ function SideBar({ expanded }) {
           />
         </svg>
         <span>Notifications</span>
-      </Link>
+      </Link> */}
       <Link to="/setting" className="flex gap-4 justify-start ml-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"

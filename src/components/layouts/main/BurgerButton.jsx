@@ -4,27 +4,31 @@ import SideBar from "./SideBar";
 import ProfilButton from "./ProfilButton";
 
 function BurgerButton() {
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
 
   const handleSideBar = () => {
     setIsSidebarExpanded((prev) => !prev);
   };
 
   return (
-    <aside className="w-64">
-      <div className="flex items-center gap-8 ml-2">
-        <a href="/home">
-          <img src={logo} alt="Pandaraama" className="" style={{ width: 80 }} />
-        </a>
+    <aside
+      className={`sidebar ${isSidebarExpanded ? "expanded" : "collapsed"}`}
+    >
+      <div className="sidebar-header">
+        <img
+          onClick={handleSideBar}
+          src={logo}
+          alt="Pandaraama"
+          className="logo"
+        />
 
-        <button className="hover:shadow-custom" onClick={handleSideBar}>
+        <button onClick={handleSideBar} className="toggle-button">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth="2"
             stroke="currentColor"
-            className="size-6 hover:text-[#64B000]"
           >
             <path
               strokeLinecap="round"
@@ -34,8 +38,9 @@ function BurgerButton() {
           </svg>
         </button>
       </div>
-      <SideBar expanded={isSidebarExpanded}></SideBar>
-      <ProfilButton></ProfilButton>
+
+      <SideBar expanded={isSidebarExpanded} />
+      <ProfilButton />
     </aside>
   );
 }
