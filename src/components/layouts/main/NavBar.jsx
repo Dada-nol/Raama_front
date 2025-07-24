@@ -1,7 +1,7 @@
 import { useState } from "react";
 import logo from "../../../assets/img/logo.png";
 import LogoutButton from "../../ui/LogoutButton";
-import SideBar from "../SideBar";
+import SideBar from "./SideBar";
 
 function NavBar() {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);

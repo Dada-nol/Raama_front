@@ -1,5 +1,3 @@
-import "../../../styles/scss/footer.scss";
-/* import Button from "./Button"; */
 import SocialIcons from "../../ui/SocialIcons";
 
 function Footer() {

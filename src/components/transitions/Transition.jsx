@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "../../styles/scss/transitions.scss";
 
 function Transition() {
   const [fadeOut, setFadeOut] = useState(false);

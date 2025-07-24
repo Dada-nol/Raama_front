@@ -1,4 +1,4 @@
-import SocialIcons from "../ui/SocialIcons";
+import SocialIcons from "../../ui/SocialIcons";
 
 function Footer() {
   return (

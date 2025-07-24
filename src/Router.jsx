@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PrivateRoute from "./components/PivateRoute";
 import PublicRoute from "./components/PublicRoute";
-import Layout from "./components/layouts/LandingPage/Layout";
-import LayoutAuth from "./components/layouts/auth/LayoutAuth";
+import Guest from "./components/layouts/LandingPage/Guest";
 import MainLayout from "./components/layouts/main/Layout";
 import Transition from "./components/transitions/Transition";
 import { useAuth } from "./context/AuthContext";
@@ -50,7 +49,7 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<Guest />}>
           <Route
             index
             element={
@@ -60,24 +59,23 @@ function Router() {
             }
           />
         </Route>
-        <Route element={<LayoutAuth />}>
-          <Route
-            path="register"
-            element={
-              <PublicRoute>
-                <Register />
-              </PublicRoute>
-            }
-          />
-          <Route
-            path="login"
-            element={
-              <PublicRoute>
-                <Login />
-              </PublicRoute>
-            }
-          />
-        </Route>
+
+        <Route
+          path="register"
+          element={
+            <PublicRoute>
+              <Register />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
 
         <Route element={<MainLayout />}>
           <Route
