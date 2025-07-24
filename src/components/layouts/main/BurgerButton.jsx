@@ -12,7 +12,9 @@ function BurgerButton() {
 
   return (
     <aside
-      className={`sidebar ${isSidebarExpanded ? "expanded" : "collapsed"}`}
+      className={`sidebar ${
+        isSidebarExpanded ? "expanded gradient-r-border" : "collapsed"
+      }`}
     >
       <div className="sidebar-header">
         <img
@@ -22,7 +24,10 @@ function BurgerButton() {
           className="logo"
         />
 
-        <button onClick={handleSideBar} className="toggle-button">
+        <button
+          onClick={handleSideBar}
+          className="toggle-button hover:shadow-[0_0_10px_2px_#64b000]"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -40,7 +45,7 @@ function BurgerButton() {
       </div>
 
       <SideBar expanded={isSidebarExpanded} />
-      <ProfilButton />
+      <ProfilButton expanded={isSidebarExpanded} />
     </aside>
   );
 }

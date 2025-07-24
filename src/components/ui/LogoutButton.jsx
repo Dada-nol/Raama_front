@@ -19,7 +19,7 @@ function LogoutButton() {
   };
   return (
     <>
-      <button className="logout" onClick={handleRemoveUser}>
+      <button className="hover:text-danger" onClick={handleRemoveUser}>
         Déconnexion
       </button>
     </>

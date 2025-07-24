@@ -5,7 +5,7 @@ function Home() {
   return (
     <>
       <div>
-        <h1>Bienvenue {user.firstname} !</h1>
+        <h1 className="text-gradient">Bienvenue {user.firstname} !</h1>
       </div>
 
       <div>{/* <Souvenirs></Souvenirs> */}</div>

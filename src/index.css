@@ -21,4 +21,18 @@
     border-style: solid;
     border-image: linear-gradient(to right, #c6cc09, #64b000, #00bdb4) 1;
   }
+
+  .gradient-r-border {
+    position: relative;
+  }
+
+  .gradient-r-border::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, #c6cc09, #64b000, #00bdb4);
+  }
 }

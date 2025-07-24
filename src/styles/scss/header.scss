@@ -52,9 +52,48 @@
   }
 }
 
+.settings-menu {
+  position: absolute;
+  bottom: 0;
+  left: 100%;
+  margin-left: 0.5rem;
+  background-color: $color-secondary;
+  color: $color-text;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  display: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+
+  &.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  a {
+    display: block;
+    padding: 0.25rem 0;
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  hr {
+    margin: 0.5rem 0;
+    border: none;
+    border-top: 1px solid #ccc;
+  }
+}
+
 .sidebar {
   position: relative;
-  overflow: hidden;
   transition: width 0.5s ease;
   opacity: 1;
 
@@ -64,7 +103,7 @@
     border-right: none;
 
     .sidebar-header {
-      justify-content: center;
+      justify-content: start;
 
       .toggle-button {
         opacity: 0;
@@ -83,7 +122,7 @@
   // Largeur étendue
   &.expanded {
     width: 16rem;
-    border-right: 1px solid $color-primary;
+    // border-right: 1px solid $color-primary;
 
     .sidebar-header {
       justify-content: space-between;
@@ -99,14 +138,13 @@
     display: flex;
     align-items: center;
     height: 5rem;
-    padding: 0 1rem;
+    padding: 0 0.5rem;
     position: relative;
     transition: all 0.5s ease;
 
     .logo {
       height: 4rem;
       width: auto;
-      margin-left: 0.5rem;
       cursor: pointer;
     }
 
@@ -140,6 +178,12 @@
       transform: scale(1);
       transition: opacity 0.3s ease, transform 0.3s ease;
       pointer-events: auto;
+
+      &:hover {
+        transform: scale(1.1);
+        @apply bg-clip-text text-transparent;
+        background-image: linear-gradient(to right, #c6cc09, #64b000, #00bdb4);
+      }
     }
   }
 
@@ -156,9 +200,12 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    color: white;
     svg {
       flex-shrink: 0;
+
+      &:hover {
+        color: $color-primary;
+      }
     }
   }
 }

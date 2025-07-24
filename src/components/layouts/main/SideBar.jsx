@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function SideBar({ expanded }) {
   return (
@@ -7,7 +7,14 @@ function SideBar({ expanded }) {
         expanded ? "expanded w-64" : "collapsed"
       } mt-8 flex flex-col gap-6`}
     >
-      <Link to="/home" className="flex gap-4 justify-start ml-2">
+      <NavLink
+        to="/home"
+        className={({ isActive }) =>
+          `flex gap-4 justify-start ml-2 font-bold ${
+            isActive ? "text-gradient" : "text-neutral-300"
+          }`
+        }
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -24,8 +31,15 @@ function SideBar({ expanded }) {
           />
         </svg>
         <span>Recent</span>
-      </Link>
-      <Link to="/souvenir" className="flex gap-4 justify-start ml-2">
+      </NavLink>
+      <NavLink
+        to="/souvenir"
+        className={({ isActive }) =>
+          `flex gap-4 justify-start ml-2 font-bold ${
+            isActive ? "text-gradient" : "text-neutral-300"
+          }`
+        }
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -42,8 +56,15 @@ function SideBar({ expanded }) {
           />
         </svg>
         <span>Souvenirs</span>
-      </Link>
-      <Link className="flex gap-4 justify-start ml-2" to="souvenir/create">
+      </NavLink>
+      <NavLink
+        to="souvenir/create"
+        className={({ isActive }) =>
+          `flex gap-4 justify-start ml-2 font-bold ${
+            isActive ? "text-gradient" : "text-neutral-300"
+          }`
+        }
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -60,7 +81,7 @@ function SideBar({ expanded }) {
           />
         </svg>
         <span>Create</span>
-      </Link>
+      </NavLink>
       {/*       <Link to="/notification" className="flex gap-4 justify-start ml-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +100,14 @@ function SideBar({ expanded }) {
         </svg>
         <span>Notifications</span>
       </Link> */}
-      <Link to="/setting" className="flex gap-4 justify-start ml-2">
+      <NavLink
+        to="/setting"
+        className={({ isActive }) =>
+          `flex gap-4 justify-start ml-2 font-bold ${
+            isActive ? "text-gradient" : "text-neutral-300"
+          }`
+        }
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -101,7 +129,7 @@ function SideBar({ expanded }) {
           />
         </svg>
         <span>Settings</span>
-      </Link>
+      </NavLink>
     </div>
   );
 }
