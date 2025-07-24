@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState } from "react";
-import "../../styles/scss/entry.scss";
 
 const BtnUpload = ({ userId, id, token }) => {
   const [showModal, setShowModal] = useState(false);

@@ -3,13 +3,13 @@ import { useAuth } from "../context/AuthContext";
 function Home() {
   const { user } = useAuth();
   return (
-    <main className="main-content">
+    <>
       <div>
-        <h1 className="title">Bienvenue {user.pseudo} !</h1>
+        <h1 className="text-gradient">Bienvenue {user.firstname} !</h1>
       </div>
 
       <div>{/* <Souvenirs></Souvenirs> */}</div>
-    </main>
+    </>
   );
 }
 

@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../components/ui/Logo";
 import { useAuth } from "../../context/AuthContext";
-import "../../styles/scss/auth.scss";
 
 function Register() {
   const { setUser } = useAuth();

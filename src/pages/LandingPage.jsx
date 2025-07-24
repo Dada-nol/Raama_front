@@ -2,7 +2,6 @@ import photo1 from "../assets/img/photo1.jpg";
 import photo2 from "../assets/img/photo2.jpg";
 import Button from "../components/ui/Button";
 import Feature from "../components/ui/CardFeature";
-import "../styles/scss/landingPage.scss";
 
 function LandingPage() {
   return (

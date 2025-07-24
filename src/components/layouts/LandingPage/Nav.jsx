@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import logo from "../../../assets/img/logo.png";
 import img_panda1 from "../../../assets/img/panda1.png";
 import video_loop1 from "../../../assets/video/loop1.mp4";
-import "../../../styles/scss/header.scss";
 import Button from "../../ui/Button";
 
 function Nav() {

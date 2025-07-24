@@ -1,14 +1,5 @@
 @use "variables" as *;
 
-.App {
-  text-align: center;
-  color: $color-text;
-
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
 html,
 body {
   background-color: $color-bg;
@@ -19,7 +10,6 @@ body {
 }
 
 .main-content {
-  @include main-content;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -34,7 +24,7 @@ li {
   list-style: none;
 }
 
-button {
+/* button {
   background-color: transparent;
   border: solid #fff 3px;
   padding: 0 16px;
@@ -54,25 +44,15 @@ button {
 button:hover {
   border: solid $color-primary 3px;
   color: #fff;
-}
+} */
 
 a {
   text-decoration: none;
-  color: $color-text;
 }
 
 a:hover {
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  color: $color-primary;
-}
-
-.flex-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 10px;
-  margin: 5px;
+  @apply bg-clip-text text-transparent;
+  background-image: linear-gradient(to right, #c6cc09, #64b000, #00bdb4);
 }
 
 .social-icons {
@@ -81,25 +61,25 @@ a:hover {
   gap: 5px;
 }
 
-.icon {
+/* .icon {
   width: 30px;
   height: 30px;
   color: $color-text;
-}
+} */
 
-.logo {
+/* .logo {
   width: 156.5px;
   margin-right: 30px;
-}
+} */
 
-svg {
+/* svg {
   width: 40px;
   height: 40px;
-}
+} */
 
 hr {
   height: 2px;
-  width: 280px;
+  width: 240px;
   background-color: $color-text;
   margin: 10px 0;
   z-index: 5;

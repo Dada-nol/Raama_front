@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../styles/scss/souvenirPage.scss";
 
 function Create() {
   const [title, setTitle] = useState("");
@@ -56,7 +55,6 @@ function Create() {
   };
 
   return (
-    <main className="main-content">
       <form className="souvenir-create" onSubmit={handleCreate}>
         <h2>Create Souvenir</h2>
 
@@ -110,7 +108,6 @@ function Create() {
 
         <button type="submit">Créer</button>
       </form>
-    </main>
   );
 }
 
