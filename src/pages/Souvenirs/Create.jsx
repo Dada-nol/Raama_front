@@ -28,6 +28,11 @@ function Create() {
     e.preventDefault();
     setErrors({});
 
+    if (coverImage && coverImage.size > 10 * 1024 * 1024) {
+      setErrors({ cover_image: ["Le fichier est trop lourd (max 10Mo)."] });
+      return;
+    }
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("memory_type", selectedMemoryType);
@@ -95,7 +100,7 @@ function Create() {
           accept=".png,.jpg,.jpeg"
           onChange={(e) => setCoverImage(e.target.files[0])}
         />
-        {errors.coverImage && <p className="error">{errors.coverImage[0]}</p>}
+        {errors.cover_image && <p className="error">{errors.cover_image[0]}</p>}
       </div>
 
       <button type="submit">Créer</button>

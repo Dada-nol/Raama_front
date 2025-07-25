@@ -199,17 +199,17 @@
       display: block;
       padding: 0.25rem 0;
       text-decoration: none;
-      color: inherit;
 
       &:hover {
-        text-decoration: underline;
+        text-decoration: none;
       }
     }
 
     hr {
-      margin: 0.5rem 0;
-      border: none;
-      border-top: 1px solid #ccc;
+      height: 2px;
+      width: 240px;
+      background-color: $color-text;
+      margin: 10px 0;
     }
   }
 }
