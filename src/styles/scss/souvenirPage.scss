@@ -38,21 +38,6 @@
   box-shadow: 0 0 8px #000;
 } */
 
-.souvenir-create {
-  width: 500px;
-  background-color: $color-secondary;
-  padding: 40px;
-  border: solid 3px $color-text;
-  box-shadow: 10px 10px 0 $color-text,
-    /* ombre "papier découpé" */ 10px 10px 20px rgba(0, 0, 0, 0.3); /* ombre floutée réaliste */
-
-  button {
-    margin-top: 20px;
-    border-radius: 0;
-    padding: 20px 30px;
-  }
-}
-
 .list {
   display: flex;
   flex-direction: column;

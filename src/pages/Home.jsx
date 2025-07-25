@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import panda3 from "../assets/img/panda3.jpg";
 
 function Home() {
   const { user } = useAuth();
   const [souvenirs, setSouvenirs] = useState([]);
   const [memoryType, setMemoryType] = useState([]);
-  const [selectedMemoryType, setSelectedMemoryType] = useState("");
 
   useEffect(() => {
     const fetch = async () => {
@@ -40,16 +40,24 @@ function Home() {
         <ul className="flex justify-evenly items-center p-4">
           {souvenirs.map((souvenir) => (
             <a href={`souvenir/${souvenir.id}`} key={souvenir.id}>
-              <li className="card w-80 p-4 relative group overflow-hidden rounded-xl bg-secondary shadow-[0_0_5px_1px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient">
-                <img
-                  src={
-                    souvenir.cover_image
-                      ? `http://localhost:8000/storage/${souvenir.cover_image}`
-                      : "none"
-                  }
-                  alt="souvenir"
-                  className="w-full h-48 object-cover rounded-lg"
-                />
+              <li className="card w-80 p-4 relative group overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient">
+                {souvenir.cover_image ? (
+                  <img
+                    src={
+                      souvenir.cover_image
+                        ? `http://localhost:8000/storage/${souvenir.cover_image}`
+                        : "none"
+                    }
+                    alt="souvenir"
+                    className="w-full h-48 object-cover rounded-lg"
+                  />
+                ) : (
+                  <img
+                    src={panda3}
+                    alt="panda dans un arbre"
+                    className="w-full h-48 object-cover rounded-lg"
+                  />
+                )}
                 <p className="w-fit">{souvenir.title}</p>
                 <p className="w-fit">{souvenir.memory_points}</p>
               </li>
@@ -59,12 +67,12 @@ function Home() {
       </div>
 
       <div className="flex items-center justify-center m-4">
-        <hr className="w-64 gradient-border" />
+        <hr className="w-64 border" />
       </div>
 
       <div className="border-2 border-primary mx-8">
         <h3 className="flex justify-start p-4 text-lg font-medium">
-          Créer de nouveau souvenirs
+          Créer de nouveaux <h3 className="text-gradient pl-1">souvenirs</h3>
         </h3>
 
         <ul className="flex justify-between items-center p-4">
