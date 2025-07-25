@@ -5,10 +5,20 @@ import { useAuth } from "../context/AuthContext";
 function Home() {
   const { user } = useAuth();
   const [souvenirs, setSouvenirs] = useState([]);
-
-  const memories = ["One per Day", "Simple Album", "Mysteries's Box"];
+  const [memoryType, setMemoryType] = useState([]);
+  const [selectedMemoryType, setSelectedMemoryType] = useState("");
 
   useEffect(() => {
+    const fetch = async () => {
+      try {
+        const res = await axios.get("http://localhost:8000/api/memory-type");
+        setMemoryType(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetch();
+
     axios
       .get("http://localhost:8000/api/recent", {
         headers: {
@@ -24,7 +34,7 @@ function Home() {
         Bienvenue {user?.firstname} !
       </h2>
 
-      <div className="border-2 border-primary m-8">
+      <div className="border-2 border-primary mx-8">
         <h3 className="flex justify-start p-4 text-lg font-medium">Recent</h3>
 
         <ul className="flex justify-evenly items-center p-4">
@@ -48,16 +58,23 @@ function Home() {
         </ul>
       </div>
 
-      <div className="border-2 border-primary m-8">
+      <div className="flex items-center justify-center m-4">
+        <hr className="w-64 gradient-border" />
+      </div>
+
+      <div className="border-2 border-primary mx-8">
         <h3 className="flex justify-start p-4 text-lg font-medium">
           Créer de nouveau souvenirs
         </h3>
 
         <ul className="flex justify-between items-center p-4">
-          {memories.map((memory) => (
-            <a href={`souvenir/create`} key={memory}>
+          {memoryType.map((memory) => (
+            <a
+              href={`souvenir/create?memory_type_id=${memory.id}`}
+              key={memory.id}
+            >
               <li className="card w-80 p-4 relative group overflow-hidden rounded-xl bg-secondary gradient-border transition-transform duration-300 hover:scale-105 hover:text-gradient">
-                {memory}
+                {memory.title}
               </li>
             </a>
           ))}

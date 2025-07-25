@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function Create() {
   const [title, setTitle] = useState("");
@@ -9,8 +9,12 @@ function Create() {
   const [coverImage, setCoverImage] = useState("");
   const [errors, setErrors] = useState({});
 
+  const [searchParams] = useSearchParams();
+  const memoryTypeId = searchParams.get("memory_type_id");
+
   const navigate = useNavigate();
 
+  // Charger les memory types une seule fois au montage
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -23,6 +27,13 @@ function Create() {
 
     fetch();
   }, []);
+
+  // Mettre à jour le selectedMemoryType si memoryTypeId change
+  useEffect(() => {
+    if (memoryTypeId) {
+      setSelectedMemoryType(Number(memoryTypeId));
+    }
+  }, [memoryTypeId]);
 
   const handleCreate = async (e) => {
     e.preventDefault();
@@ -37,7 +48,7 @@ function Create() {
     formData.append("title", title);
     formData.append("memory_type", selectedMemoryType);
     if (coverImage) {
-      formData.append("cover_image", coverImage); // important !
+      formData.append("cover_image", coverImage);
     }
 
     try {
@@ -65,18 +76,17 @@ function Create() {
 
       <div className="form-item">
         <h3>Memory Type</h3>
-        <select
-          className="text-[#000]"
-          onChange={(e) => setSelectedMemoryType(e.target.value)}
-        >
-          <option value="">Select your type</option>
-          {memoryType.map((data) => (
-            <option key={data.id} value={data.id}>
-              {data.title}
-            </option>
-          ))}
-        </select>
-
+        {memoryType.map((memory) => (
+          <div key={memory.id} onClick={() => setSelectedMemoryType(memory.id)}>
+            <div
+              className={`card w-80 p-4 relative group overflow-hidden rounded-xl 
+    ${selectedMemoryType === memory.id ? "ring-4 ring-green-500" : ""}
+    bg-secondary gradient-border transition-transform duration-300 hover:scale-105 hover:text-gradient`}
+            >
+              {memory.title}
+            </div>
+          </div>
+        ))}
         {errors.memory_type && <p className="error">{errors.memory_type[0]}</p>}
       </div>
 
