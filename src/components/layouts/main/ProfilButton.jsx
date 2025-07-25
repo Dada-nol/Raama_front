@@ -43,7 +43,7 @@ function ProfilButton({ expanded }) {
                     />
                   </svg>
                 </div>
-                <p>{user.firstname}</p>
+                <p>{user?.firstname}</p>
               </>
             )
           ) : (
@@ -96,7 +96,12 @@ function ProfilButton({ expanded }) {
                 display === "block" ? "show" : ""
               }`}
             >
-              <a href="/account-setting">Paramètre du compte</a>
+              <a
+                className="hover:text-gradient hover:scale-105"
+                href="/account-setting"
+              >
+                Paramètre du compte
+              </a>
               <hr></hr>
               <LogoutButton></LogoutButton>
             </div>
