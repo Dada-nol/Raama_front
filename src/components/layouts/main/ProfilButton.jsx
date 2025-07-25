@@ -43,7 +43,7 @@ function ProfilButton({ expanded }) {
                     />
                   </svg>
                 </div>
-                <p>{user.firstname}</p>
+                <p>{user?.firstname}</p>
               </>
             )
           ) : (

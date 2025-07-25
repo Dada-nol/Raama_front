@@ -1,6 +1,6 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import axios from "axios";
 
 function Home() {
   const { user } = useAuth();
@@ -8,14 +8,18 @@ function Home() {
 
   useEffect(() => {
     axios
-      .get("/api/souvenirs/recent")
+      .get("http://localhost:8000/api/recent", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       .then((response) => setSouvenirs(response.data))
       .catch((error) => console.error("Erreur :", error));
   }, []);
   return (
     <>
       <h2 className="flex justify-center items-center">
-        Bienvenue {user.firstname} !
+        Bienvenue {user?.firstname} !
       </h2>
 
       <div className="border-2 border-primary m-8">
@@ -23,10 +27,22 @@ function Home() {
 
         <ul className="flex justify-between items-center p-4">
           {souvenirs.map((souvenir) => (
-            <li className="card relative group overflow-hidden rounded-xl bg-secondary shadow-[0_0_5px_1px_#64b000] transition-transform duration-300 hover:scale-105">
+            <li
+              style={{
+                backgroundImage: souvenir.cover_image
+                  ? `url(http://localhost:8000/storage/${souvenir.cover_image})`
+                  : "none",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                opacity: 0.5,
+                cursor: "pointer",
+              }}
+              key={souvenir.id}
+              className="card relative group overflow-hidden rounded-xl bg-secondary shadow-[0_0_5px_1px_#64b000] transition-transform duration-300 hover:scale-105"
+            >
               <p>{souvenir.title}</p>
               <p>{souvenir.description}</p>
-              {/* <p>{souvenir.cover_image}</p> */}
               <p>{souvenir.memory_points}</p>
             </li>
           ))}
