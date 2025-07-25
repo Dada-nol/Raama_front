@@ -1,5 +1,43 @@
 @use "variables" as *;
 
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    transparent 100%
+  );
+  transform: skewX(-25deg);
+  transition: none;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card:hover::before {
+  animation: shine 0.8s forwards;
+}
+
+@keyframes shine {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 125%;
+  }
+}
+
+/* .card img {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 0 8px #000;
+} */
+
 .souvenir-create {
   width: 500px;
   background-color: $color-secondary;
@@ -33,56 +71,6 @@
     padding: 0;
     margin: 5px 0 0 0;
   }
-}
-
-.card {
-  position: relative;
-  width: 700px;
-  height: 60px;
-  background: $color-secondary;
-  border-radius: 16px;
-  box-shadow: 0 0 3px $color-text,
-    /* ombre intérieure */ 0 4px 6px rgba(0, 0, 0, 0.6); /* ombre extérieure */
-  border: 1px solid $color-primary;
-  overflow: hidden;
-  padding: 16px;
-  transition: transform 0.3s ease;
-
-  &:hover {
-    text-decoration: none;
-  }
-  p {
-    color: $color-text;
-  }
-}
-
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.15),
-    transparent 70%
-  );
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-}
-
-.card:hover::before {
-  opacity: 1;
-}
-
-.card:hover {
-  transform: scale(1.02);
-}
-
-.card img {
-  width: 100%;
-  border-radius: 12px;
-  object-fit: cover;
-  box-shadow: 0 0 8px #000;
 }
 
 select {
