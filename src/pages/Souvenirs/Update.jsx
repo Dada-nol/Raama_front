@@ -76,19 +76,6 @@ function Update() {
         onChange={(e) => setCoverImage(e.target.value)}
       />
 
-      <select
-        value={isClosed ? "1" : "0"}
-        onChange={(e) => setIsClosed(e.target.value === "1")}
-      >
-        <option value="0">Ouvert</option>
-        <option value="1">Fermé</option>
-      </select>
-      {/* <input
-        type="checkbox"
-        value={isClosed}
-        onChange={(e) => setIsClosed(e.target.value)}
-      /> */}
-
       <button type="submit">Modifier</button>
     </form>
   );
