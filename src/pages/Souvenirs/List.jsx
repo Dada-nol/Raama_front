@@ -7,12 +7,26 @@ function List() {
   const [memoryType, setMemoryType] = useState([]);
   const [errors, setErrors] = useState({});
   const [sortOption, setSortOption] = useState("memory_type");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const options = ["title", "created_at", "updated_at", "memory_type"];
 
   const handleSort = (e) => {
     setSortOption(e);
   };
+
+  const handleFilter = (e) => {
+    const { value } = e.target;
+    setSearchTerm(value);
+  };
+
+  const filteredData = data.filter(
+    (item) =>
+      item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.users?.some((user) =>
+        user.name?.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+  );
 
   useEffect(() => {
     const fetch = async () => {
@@ -52,16 +66,33 @@ function List() {
     <>
       <h2>My Souvenirs</h2>
 
-      <div className="flex justify-center items-center gap-6">
-        {options.map((option) => (
-          <button
-            className="bg-my-gradient w-fit h-8 rounded-lg px-4"
-            onClick={() => handleSort(option)}
-          >
-            {option}
-          </button>
-        ))}
-      </div>
+      <section className="flex border-2 border-primary rounded-lg mx-8">
+        <div className="flex flex-col justify-center items-start p-4">
+          <h3>Sort by</h3>
+          <ul className="flex gap-6">
+            {options.map((option) => (
+              <li>
+                <button
+                  className="bg-my-gradient w-fit h-8 rounded-lg px-4"
+                  onClick={() => handleSort(option)}
+                >
+                  {option}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="flex flex-col justify-center items-start p-4">
+          <h3>Search souvenir or member</h3>
+          <input
+            value={searchTerm}
+            type="text"
+            className="text-[#000] rounded-md w-60 h-8 border-2 border-transparent focus:border-[#64b000] focus:outline-none transition-colors duration-200"
+            onChange={handleFilter}
+          />
+        </div>
+      </section>
 
       {sortOption === "memory_type" ? (
         memoryType.map((type) => (
@@ -71,7 +102,7 @@ function List() {
             <ul className="flex justify-start gap-6 items-center mb-8">
               {errors.message && <p className="error">{errors.message}</p>}
 
-              {data
+              {filteredData
                 .filter((souvenir) => souvenir.memory_type_id === type.id)
                 .map((souvenir) => (
                   <a href={`souvenir/${souvenir.id}`} key={souvenir.id}>
@@ -104,7 +135,7 @@ function List() {
         ))
       ) : (
         <ul className="flex flex-wrap gap-6 justify-center">
-          {[...data]
+          {[...filteredData]
             .sort((a, b) => {
               if (sortOption === "title") {
                 return a[sortOption].localeCompare(b[sortOption]);
