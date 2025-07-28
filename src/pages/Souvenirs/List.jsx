@@ -64,7 +64,9 @@ function List() {
 
   return (
     <>
-      <h2 className="text-lg font-medium">My Souvenirs</h2>
+      <h2 className="flex justify-center p-4 text-lg font-medium">
+        My <h2 className="text-gradient pl-1">souvenirs</h2>
+      </h2>
 
       <section className="flex border-2 border-primary rounded-lg mx-8 gap-48">
         <div className="flex flex-col justify-center items-start p-4">
