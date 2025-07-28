@@ -64,9 +64,9 @@ function List() {
 
   return (
     <>
-      <h2>My Souvenirs</h2>
+      <h2 className="text-lg font-medium">My Souvenirs</h2>
 
-      <section className="flex border-2 border-primary rounded-lg mx-8">
+      <section className="flex border-2 border-primary rounded-lg mx-8 gap-48">
         <div className="flex flex-col justify-center items-start p-4">
           <h3>Sort by</h3>
           <ul className="flex gap-6">
@@ -86,6 +86,7 @@ function List() {
         <div className="flex flex-col justify-center items-start p-4">
           <h3>Search souvenir or member</h3>
           <input
+            placeholder="ex : Jhon"
             value={searchTerm}
             type="text"
             className="text-[#000] rounded-md w-60 h-8 border-2 border-transparent focus:border-[#64b000] focus:outline-none transition-colors duration-200"
@@ -94,79 +95,83 @@ function List() {
         </div>
       </section>
 
-      {sortOption === "memory_type" ? (
-        memoryType.map((type) => (
-          <>
-            <h3 key={type.id}>{type.title}</h3>
+      <section className="flex flex-col items-start gap-4 mx-8">
+        {sortOption === "memory_type" ? (
+          memoryType.map((type) => (
+            <>
+              <h3 className="text-lg font-medium" key={type.id}>
+                {type.title}
+              </h3>
 
-            <ul className="flex justify-start gap-6 items-center mb-8">
-              {errors.message && <p className="error">{errors.message}</p>}
+              <ul className="flex justify-start gap-6 items-center">
+                {errors.message && <p className="error">{errors.message}</p>}
 
-              {filteredData
-                .filter((souvenir) => souvenir.memory_type_id === type.id)
-                .map((souvenir) => (
-                  <a href={`souvenir/${souvenir.id}`} key={souvenir.id}>
-                    <li className="card w-80 p-4 relative group overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient">
-                      {souvenir.cover_image ? (
-                        <img
-                          src={
-                            souvenir.cover_image
-                              ? `http://localhost:8000/storage/${souvenir.cover_image}`
-                              : "none"
-                          }
-                          alt="souvenir"
-                          className="w-full h-48 object-cover rounded-lg"
-                        />
-                      ) : (
-                        <img
-                          src={panda3}
-                          alt="panda dans un arbre"
-                          className="w-full h-48 object-cover rounded-lg"
-                        />
-                      )}
-                      <p className="w-fit">{souvenir.title}</p>
-                      <p className="w-fit">{souvenir.memory_points}</p>
-                      <p className="w-fit">{souvenir.memory_type_id}</p>
-                    </li>
-                  </a>
-                ))}
-            </ul>
-          </>
-        ))
-      ) : (
-        <ul className="flex flex-wrap gap-6 justify-center">
-          {[...filteredData]
-            .sort((a, b) => {
-              if (sortOption === "title") {
-                return a[sortOption].localeCompare(b[sortOption]);
-              } else {
-                return new Date(b[sortOption]) - new Date(a[sortOption]);
-              }
-            })
-            .map((souvenir) => (
-              <a href={`souvenir/${souvenir.id}`} key={souvenir.id}>
-                <li className="card w-80 p-4 relative group overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient">
-                  {souvenir.cover_image ? (
-                    <img
-                      src={`http://localhost:8000/storage/${souvenir.cover_image}`}
-                      alt="souvenir"
-                      className="w-full h-48 object-cover rounded-lg"
-                    />
-                  ) : (
-                    <img
-                      src={panda3}
-                      alt="panda dans un arbre"
-                      className="w-full h-48 object-cover rounded-lg"
-                    />
-                  )}
-                  <p className="w-fit">{souvenir.title}</p>
-                  <p className="w-fit">{souvenir.memory_points}</p>
-                  <p className="w-fit">{souvenir.memory_type_id}</p>
-                </li>
-              </a>
-            ))}
-        </ul>
-      )}
+                {filteredData
+                  .filter((souvenir) => souvenir.memory_type_id === type.id)
+                  .map((souvenir) => (
+                    <a href={`souvenir/${souvenir.id}`} key={souvenir.id}>
+                      <li className="card w-80 p-4 relative group overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient">
+                        {souvenir.cover_image ? (
+                          <img
+                            src={
+                              souvenir.cover_image
+                                ? `http://localhost:8000/storage/${souvenir.cover_image}`
+                                : "none"
+                            }
+                            alt="souvenir"
+                            className="w-full h-48 object-cover rounded-lg"
+                          />
+                        ) : (
+                          <img
+                            src={panda3}
+                            alt="panda dans un arbre"
+                            className="w-full h-48 object-cover rounded-lg"
+                          />
+                        )}
+                        <p className="w-fit">{souvenir.title}</p>
+                        <p className="w-fit">{souvenir.memory_points}</p>
+                        <p className="w-fit">{souvenir.memory_type_id}</p>
+                      </li>
+                    </a>
+                  ))}
+              </ul>
+            </>
+          ))
+        ) : (
+          <ul className="flex flex-wrap gap-6 justify-center m-8">
+            {[...filteredData]
+              .sort((a, b) => {
+                if (sortOption === "title") {
+                  return a[sortOption].localeCompare(b[sortOption]);
+                } else {
+                  return new Date(b[sortOption]) - new Date(a[sortOption]);
+                }
+              })
+              .map((souvenir) => (
+                <a href={`souvenir/${souvenir.id}`} key={souvenir.id}>
+                  <li className="card w-80 p-4 relative group overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient">
+                    {souvenir.cover_image ? (
+                      <img
+                        src={`http://localhost:8000/storage/${souvenir.cover_image}`}
+                        alt="souvenir"
+                        className="w-full h-48 object-cover rounded-lg"
+                      />
+                    ) : (
+                      <img
+                        src={panda3}
+                        alt="panda dans un arbre"
+                        className="w-full h-48 object-cover rounded-lg"
+                      />
+                    )}
+                    <p className="w-fit">{souvenir.title}</p>
+                    <p className="w-fit">{souvenir.memory_points}</p>
+                    <p className="w-fit">{souvenir.memory_type_id}</p>
+                  </li>
+                </a>
+              ))}
+          </ul>
+        )}
+      </section>
     </>
   );
 }
