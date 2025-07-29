@@ -115,11 +115,7 @@ function List() {
                       <li className="card w-80 p-4 relative group overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient">
                         {souvenir.cover_image ? (
                           <img
-                            src={
-                              souvenir.cover_image
-                                ? `http://localhost:8000/storage/${souvenir.cover_image}`
-                                : "none"
-                            }
+                            src={`http://localhost:8000/storage/${souvenir.cover_image}`}
                             alt="souvenir"
                             className="w-full h-48 object-cover rounded-lg"
                           />
