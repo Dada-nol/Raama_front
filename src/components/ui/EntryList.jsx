@@ -1,10 +1,8 @@
-import EntryUpload from "./EntryUpload";
+import EntryUpload from "./BtnUpload";
 
-function EntryList({ souvenir, entries, id, date, readonly = false }) {
-  const members = souvenir.users;
-
+function EntryList({ members, entries, id, date, readonly = false }) {
   return (
-    <div className="flex justify-center items-center gap-6">
+    <div className="flex justify-center items-center gap-10">
       {members?.map((user) => {
         const userEntries = entries.filter(
           (entry) => entry.user_id === user.id
@@ -16,13 +14,13 @@ function EntryList({ souvenir, entries, id, date, readonly = false }) {
               readonly ? (
                 <div className="image-upload-button">No entry</div>
               ) : (
-                <EntryUpload user={user} id={id} date={date} />
+                <EntryUpload entryUser={user} id={id} date={date} />
               )
             ) : (
               userEntries.map((entry) => (
                 <div
                   key={entry.id}
-                  className="image-upload-button"
+                  className="image-upload-button hover:scale-105"
                   style={{
                     backgroundImage: `url(http://localhost:8000/storage/${entry.image_path})`,
                   }}

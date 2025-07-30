@@ -1,7 +1,15 @@
 import axios from "axios";
 import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 
-const EntryUpload = ({ id, user, date, onUploadSuccess }) => {
+const EntryUpload = ({ id, entryUser, date, onUploadSuccess }) => {
+  const { user } = useAuth();
+
+  const isCurrentUser = user?.id === entryUser.id;
+
+  console.log("authUser:", user);
+  console.log("entry entryUser:", entryUser);
+
   const [showModal, setShowModal] = useState(false);
   const [caption, setCaption] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
@@ -45,12 +53,17 @@ const EntryUpload = ({ id, user, date, onUploadSuccess }) => {
   return (
     <>
       <button
-        className="image-upload-button"
+        className={`image-upload-button hover:scale-105 ${
+          !isCurrentUser ? "opacity-50 cursor-not-allowed" : ""
+        }`}
         disabled={disabled}
-        onClick={() => setShowModal(true)}
+        onClick={() => {
+          if (!isCurrentUser) return;
+          setShowModal(true);
+        }}
       >
-        {user.pseudo || user.firstname ? (
-          <p>Upload for {user.pseudo || user.firstname}</p>
+        {entryUser.pseudo || entryUser.firstname ? (
+          <p>Upload for {entryUser.pseudo || entryUser.firstname}</p>
         ) : (
           <p>Upload</p>
         )}

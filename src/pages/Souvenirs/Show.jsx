@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import panda3 from "../../assets/img/panda3.jpg";
-import EntryFeed from "./EntryFeed";
+import EntryFilterByUser from "../../components/ui/EntryFilterByUser";
 
 function Show() {
   const [souvenir, setSouvenir] = useState("");
@@ -55,25 +55,20 @@ function Show() {
         </div>
       </div>
 
-      {/*       <div className="roadmap">
-        <div className="roadmap-items">
-          <h4>Insert your entry</h4>
-          <div className="entries">
-            <EntryList souvenir={souvenir} id={id}></EntryList>
-          </div>
-        </div>
-      </div>
+      <ul className="flex justify-start gap-6 px-4 pt-2 ">
+        <li className="text-gradient">
+          {souvenir.memory_points} Memory points
+        </li>
+        <li className="text-gradient">
+          {souvenir.entries?.length} published photos
+        </li>
+      </ul>
 
-      <div>
-        <Delete></Delete>
-      </div> */}
-
-      <EntryFeed
-        souvenir={souvenir}
-        entries={souvenir.entries}
+      <EntryFilterByUser
         members={souvenir.users}
+        entries={souvenir.entries}
         id={id}
-      ></EntryFeed>
+      ></EntryFilterByUser>
     </>
   );
 }
