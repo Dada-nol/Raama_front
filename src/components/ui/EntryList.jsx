@@ -1,6 +1,13 @@
 import EntryUpload from "./BtnUpload";
 
-function EntryList({ members, entries, id, date, readonly = false }) {
+function EntryList({
+  members,
+  entries,
+  id,
+  date,
+  readonly = false,
+  selectedUserId,
+}) {
   return (
     <div className="flex justify-center items-center gap-10">
       {members?.map((user) => {
@@ -11,7 +18,7 @@ function EntryList({ members, entries, id, date, readonly = false }) {
         return (
           <div key={user.id}>
             {userEntries.length === 0 ? (
-              readonly ? (
+              selectedUserId ? null : readonly ? (
                 <div className="image-upload-button">No entry</div>
               ) : (
                 <EntryUpload entryUser={user} id={id} date={date} />

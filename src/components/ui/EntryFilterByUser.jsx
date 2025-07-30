@@ -18,6 +18,7 @@ function EntryFilterByUser({ entries, members, id }) {
       <EntryFeed
         entries={entries}
         members={members}
+        selectedUserId={selectedUserId}
         id={id}
         filteredEntries={filteredEntries}
       />
