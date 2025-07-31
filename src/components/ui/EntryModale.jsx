@@ -2,6 +2,15 @@ import { useState } from "react";
 
 const EntryModale = ({ entry }) => {
   const [showModal, setShowModal] = useState(false);
+
+  const handleOverlayClick = () => {
+    setShowModal(false);
+  };
+
+  const handleModalClick = (e) => {
+    e.stopPropagation(); // Empêche de fermer quand on clique dans la modale
+  };
+
   const date = new Date(entry.created_at).toLocaleDateString("fr-FR", {
     year: "numeric",
     month: "long",
@@ -21,12 +30,18 @@ const EntryModale = ({ entry }) => {
 
       {/* Modale */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex justify-end items-stretch bg-black/40 backdrop-blur-sm">
-          <div className="bg-[#1E1E1E] w-full sm:w-[400px] p-6 overflow-auto shadow-xl">
+        <div
+          className="fixed inset-0 z-50 flex justify-end items-stretch bg-black/40 backdrop-blur-sm"
+          onClick={handleOverlayClick}
+        >
+          <div
+            className="bg-[#1E1E1E] w-full sm:w-[400px] p-6 overflow-auto shadow-xl"
+            onClick={handleModalClick}
+          >
             <div className="flex justify-end mb-4">
               <button
                 className="text-white font-bold text-lg"
-                onClick={() => setShowModal(false)}
+                onClick={handleOverlayClick}
               >
                 ❌
               </button>
