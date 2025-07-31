@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 
-const EntryUpload = ({ id, entryUser, date, refreshEntries }) => {
+const EntryUpload = ({ id, entryUser, refreshEntries }) => {
   const { user } = useAuth();
 
   const isCurrentUser = user?.id === entryUser.id;
@@ -19,7 +19,6 @@ const EntryUpload = ({ id, entryUser, date, refreshEntries }) => {
     const formData = new FormData();
     formData.append("image_path", selectedFile);
     formData.append("caption", caption);
-    formData.append("date", date); // si besoin côté API
 
     try {
       await axios.post(

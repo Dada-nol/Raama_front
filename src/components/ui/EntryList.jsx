@@ -1,10 +1,10 @@
 import EntryUpload from "./BtnUpload";
+import EntryModale from "./EntryModale";
 
 function EntryList({
   members,
   entries,
   id,
-  date,
   readonly = false,
   selectedUserId,
   refreshEntries,
@@ -29,19 +29,14 @@ function EntryList({
                 <EntryUpload
                   entryUser={user}
                   id={id}
-                  date={date}
                   refreshEntries={refreshEntries}
                 />
               )
             ) : (
               userEntries.map((entry) => (
-                <div
-                  key={entry.id}
-                  className="image-upload-button hover:scale-105"
-                  style={{
-                    backgroundImage: `url(http://localhost:8000/storage/${entry.image_path})`,
-                  }}
-                />
+                <div key={entry.id}>
+                  <EntryModale id={id} entry={entry}></EntryModale>
+                </div>
               ))
             )}
           </div>

@@ -65,6 +65,13 @@ li {
   justify-content: center;
 }
 
+@media screen and (min-width: 768px) {
+  .image-upload-button {
+    width: 200px;
+    height: 200px;
+  }
+}
+
 .modal-overlay {
   position: fixed;
   inset: 0;

@@ -55,7 +55,6 @@ const EntryFeed = ({
             members={members}
             entries={groupedByDate[tomorrowStr] || []}
             id={id}
-            date={tomorrowStr}
             readonly={true}
             selectedUserId={selectedUserId}
           />
@@ -70,7 +69,6 @@ const EntryFeed = ({
             members={members}
             entries={groupedByDate[todayStr] || []}
             id={id}
-            date={todayStr}
             selectedUserId={selectedUserId}
             refreshEntries={refreshEntries}
           />
@@ -85,7 +83,6 @@ const EntryFeed = ({
             members={members}
             entries={groupedByDate[yesterdayStr] || []}
             id={id}
-            date={yesterdayStr}
             readonly={true}
             selectedUserId={selectedUserId}
           />
@@ -103,12 +100,17 @@ const EntryFeed = ({
             key={date}
             className={`${members?.length >= 3 ? "py-4" : "px-4"} `}
           >
-            <h2 className={"text-center text-sm text-gray-500"}>{date}</h2>
+            <h2 className={"text-center text-sm text-gray-500"}>
+              {new Date(date).toLocaleDateString("fr-FR", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </h2>
             <EntryList
               members={members}
               entries={groupedByDate[date]}
               id={id}
-              date={date}
               readonly={true}
               selectedUserId={selectedUserId}
             />
