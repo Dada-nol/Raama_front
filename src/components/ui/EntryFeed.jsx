@@ -11,6 +11,7 @@ const EntryFeed = ({
   if (!entries || !Array.isArray(entries)) {
     return <div>Chargement des souvenirs...</div>;
   }
+
   // Regrouper les entries par date
   const sourceEntries = filteredEntries || entries;
 
@@ -44,14 +45,12 @@ const EntryFeed = ({
         members?.length < 3 || selectedUserId
           ? "flex-row-reverse flex-wrap-reverse justify-end items-end"
           : "flex-col-reverse items-center"
-      } flex overflow-y-scroll h-[90vh] border border-primary md:w-[60vw] m-auto rounded-md bg-secondary`}
+      } flex`} /* flex overflow-y-scroll h-[90vh] border border-primary md:w-[60vw] m-auto rounded-md bg-secondary */
     >
       {/* DEMAIN – Upload seulement */}
-      {selectedUserId ? null : (
+      {(groupedByDate[tomorrowStr]?.length > 0 || !selectedUserId) && (
         <section className={`${members?.length >= 3 ? "py-4" : "px-4"} `}>
           <h2 className="text-center text-sm text-gray-400">Demain</h2>
-
-          {/* <EntryUpload id={id} date={tomorrowStr} user={members} /> */}
           <EntryList
             members={members}
             entries={groupedByDate[tomorrowStr] || []}
@@ -64,11 +63,9 @@ const EntryFeed = ({
       )}
 
       {/* AUJOURD’HUI – Upload + Photos */}
-      {selectedUserId ? null : (
+      {(groupedByDate[todayStr]?.length > 0 || !selectedUserId) && (
         <section className={`${members?.length >= 3 ? "py-4" : "px-4"} `}>
           <h2 className="text-center text-sm text-gray-400">Aujourd'hui</h2>
-
-          {/* <EntryUpload id={id} date={todayStr} user={members} /> */}
           <EntryList
             members={members}
             entries={groupedByDate[todayStr] || []}
@@ -81,10 +78,9 @@ const EntryFeed = ({
       )}
 
       {/* HIER – Photos seulement */}
-      {selectedUserId ? null : (
+      {(groupedByDate[yesterdayStr]?.length > 0 || !selectedUserId) && (
         <section className={`${members?.length >= 3 ? "py-4" : "px-4"} `}>
           <h2 className="text-center text-sm text-gray-400">Hier</h2>
-
           <EntryList
             members={members}
             entries={groupedByDate[yesterdayStr] || []}
@@ -95,6 +91,7 @@ const EntryFeed = ({
           />
         </section>
       )}
+
       {/* ANCIEN – Scroll vers le haut */}
       {sortedDates
         .filter(
@@ -106,7 +103,7 @@ const EntryFeed = ({
             key={date}
             className={`${members?.length >= 3 ? "py-4" : "px-4"} `}
           >
-            <h2 className="text-center text-xs text-gray-500">{date}</h2>
+            <h2 className={"text-center text-sm text-gray-500"}>{date}</h2>
             <EntryList
               members={members}
               entries={groupedByDate[date]}

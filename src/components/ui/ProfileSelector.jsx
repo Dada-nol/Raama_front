@@ -1,18 +1,13 @@
-function ProfileSlector({ ctaOnClick, isSelected }) {
+function ProfileSelector() {
   return (
-    <button
-      onClick={ctaOnClick}
-      className={`souvenir-nav-items ${
-        isSelected ? "border border-white" : ""
-      }`}
-    >
+    <button className={`souvenir-nav-items p-[5px] ml-4 `}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
         strokeWidth="2"
         stroke="currentColor"
-        className="size-6"
+        className="size-6 text-primary"
       >
         <path
           strokeLinecap="round"
@@ -24,4 +19,4 @@ function ProfileSlector({ ctaOnClick, isSelected }) {
   );
 }
 
-export default ProfileSlector;
+export default ProfileSelector;
