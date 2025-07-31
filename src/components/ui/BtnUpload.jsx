@@ -1,18 +1,23 @@
 import axios from "axios";
 import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 
-const BtnUpload = ({ userId, id, token }) => {
+const EntryUpload = ({ id, entryUser, refreshEntries }) => {
+  const { user } = useAuth();
+
+  const isCurrentUser = user?.id === entryUser.id;
+
   const [showModal, setShowModal] = useState(false);
-  const [imageSrc, setImageSrc] = useState(null);
   const [caption, setCaption] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
   const [disabled, setDisabled] = useState(false);
 
   const handleFileChange = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+    // const selectedFile = e.target.files[0];
+    if (!selectedFile) return;
 
     const formData = new FormData();
-    formData.append("image_path", file);
+    formData.append("image_path", selectedFile);
     formData.append("caption", caption);
 
     try {
@@ -22,15 +27,19 @@ const BtnUpload = ({ userId, id, token }) => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
 
-      // Success : afficher l'image et désactiver le bouton
-      setImageSrc(URL.createObjectURL(file));
       setDisabled(true);
       setShowModal(false);
+      setSelectedFile(null);
+      setCaption("");
+
+      if (typeof refreshEntries === "function") {
+        refreshEntries(); // Pour prévenir le parent qu'on a uploadé une image
+      }
     } catch (error) {
       console.error("Erreur lors de l'upload :", error.response?.data);
       alert(error.response?.data?.message || "Erreur inconnue");
@@ -40,34 +49,44 @@ const BtnUpload = ({ userId, id, token }) => {
   return (
     <>
       <button
-        className="image-upload-button"
+        className={`image-upload-button hover:scale-105 ${
+          !isCurrentUser ? "opacity-50 cursor-not-allowed" : ""
+        }`}
         disabled={disabled}
-        onClick={() => !disabled && setShowModal(true)}
-        style={{
-          backgroundImage: imageSrc ? `url(${imageSrc})` : "none",
-          opacity: disabled ? 0.5 : 1,
-          cursor: disabled ? "not-allowed" : "pointer",
+        onClick={() => {
+          if (!isCurrentUser) return;
+          setShowModal(true);
         }}
       >
-        {!imageSrc && <span>Upload</span>}
+        {entryUser.pseudo || entryUser.firstname ? (
+          <p>Upload for {entryUser.pseudo || entryUser.firstname}</p>
+        ) : (
+          <p>Upload</p>
+        )}
       </button>
 
       {showModal && (
         <div className="modal-overlay">
           <div className="modal">
-            <h2>Upload une image</h2>
+            <h2>Ajouter une photo</h2>
+
             <input
               type="file"
               accept=".png,.jpg,.jpeg"
-              onChange={handleFileChange}
+              onChange={(e) => setSelectedFile(e.target.files[0])}
             />
+
             <input
               type="text"
               placeholder="Légende (facultatif)"
               value={caption}
               onChange={(e) => setCaption(e.target.value)}
             />
-            <button onClick={() => setShowModal(false)}>Annuler</button>
+
+            <div className="flex justify-end gap-2 mt-4">
+              <button onClick={() => setShowModal(false)}>Annuler</button>
+              <button onClick={handleFileChange}>Valider</button>
+            </div>
           </div>
         </div>
       )}
@@ -75,4 +94,4 @@ const BtnUpload = ({ userId, id, token }) => {
   );
 };
 
-export default BtnUpload;
+export default EntryUpload;

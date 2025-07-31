@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthContext";
 import panda3 from "../assets/img/panda3.jpg";
+import { useAuth } from "../context/AuthContext";
 
 function Home() {
   const { user } = useAuth();
@@ -34,10 +34,10 @@ function Home() {
         Bienvenue {user?.firstname} !
       </h2>
 
-      <div className="border-2 border-primary mx-8">
+      <div className=" mx-8">
         <h3 className="flex justify-start p-4 text-lg font-medium">Recent</h3>
 
-        <ul className="flex justify-evenly items-center p-4">
+        <ul className="flex justify-start gap-6 items-center mb-8">
           {souvenirs.map((souvenir) => (
             <a href={`souvenir/${souvenir.id}`} key={souvenir.id}>
               <li className="card w-80 p-4 relative group overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient">
@@ -64,10 +64,6 @@ function Home() {
             </a>
           ))}
         </ul>
-      </div>
-
-      <div className="flex items-center justify-center m-4">
-        <hr className="w-64 border" />
       </div>
 
       <div className="border-2 border-primary mx-8">

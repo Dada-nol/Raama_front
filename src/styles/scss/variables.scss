@@ -3,10 +3,3 @@ $color-primary: #64b000;
 $color-secondary: #1e251a;
 $color-text: #fff;
 $color-danger: #d67229;
-
-@mixin main-content {
-  padding-top: 140px; // hauteur de la navbar
-  padding-left: 80px; // largeur de la sidebar
-
-  flex: 1;
-}

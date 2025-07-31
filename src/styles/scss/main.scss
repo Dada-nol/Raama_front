@@ -9,17 +9,100 @@ body {
   height: 100%;
 }
 
-.main-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 .title {
   margin: 0;
 }
 
 li {
   list-style: none;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    transparent 100%
+  );
+  transform: skewX(-25deg);
+  transition: none;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card:hover::before {
+  animation: shine 0.8s forwards;
+}
+
+@keyframes shine {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 125%;
+  }
+}
+
+.image-upload-button {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px dashed $color-primary;
+  background-color: #2c2c2c;
+  background-size: cover;
+  background-position: center;
+  color: #d1d0c5;
+  font-size: 14px;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (min-width: 768px) {
+  .image-upload-button {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  input[type="file"] {
+    background-color: #2c2c2c;
+    border: 1px solid #64b000;
+    color: white;
+    padding: 8px;
+  }
+
+  button {
+    background: none;
+    color: #64b000;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+  }
 }
