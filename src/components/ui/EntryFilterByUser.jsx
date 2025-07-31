@@ -2,7 +2,7 @@ import { useState } from "react";
 import EntryFeed from "./EntryFeed";
 import ProfileSlector from "./ProfileSlector";
 
-function EntryFilterByUser({ entries, members, id }) {
+function EntryFilterByUser({ entries, members, id, refreshEntries }) {
   const [selectedUserId, setSelectedUserId] = useState(null);
 
   const handleSelect = (id) => {
@@ -21,18 +21,22 @@ function EntryFilterByUser({ entries, members, id }) {
         selectedUserId={selectedUserId}
         id={id}
         filteredEntries={filteredEntries}
+        refreshEntries={refreshEntries}
       />
-      <div className="pr-12">
-        <div className="flex flex-col gap-6 mb-4">
-          {members?.map((member) => (
-            <ProfileSlector
-              key={member.id}
-              isSelected={member.id === selectedUserId}
-              ctaOnClick={() => handleSelect(member.id)}
-            />
-          ))}
+
+      {members?.length > 2 ? (
+        <div className="pr-12">
+          <div className="flex flex-col gap-6 mb-4">
+            {members?.map((member) => (
+              <ProfileSlector
+                key={member.id}
+                isSelected={member.id === selectedUserId}
+                ctaOnClick={() => handleSelect(member.id)}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 }

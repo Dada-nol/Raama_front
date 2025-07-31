@@ -2,13 +2,10 @@ import axios from "axios";
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 
-const EntryUpload = ({ id, entryUser, date, onUploadSuccess }) => {
+const EntryUpload = ({ id, entryUser, date, refreshEntries }) => {
   const { user } = useAuth();
 
   const isCurrentUser = user?.id === entryUser.id;
-
-  console.log("authUser:", user);
-  console.log("entry entryUser:", entryUser);
 
   const [showModal, setShowModal] = useState(false);
   const [caption, setCaption] = useState("");
@@ -41,8 +38,8 @@ const EntryUpload = ({ id, entryUser, date, onUploadSuccess }) => {
       setSelectedFile(null);
       setCaption("");
 
-      if (typeof onUploadSuccess === "function") {
-        onUploadSuccess(); // Pour prévenir le parent qu'on a uploadé une image
+      if (typeof refreshEntries === "function") {
+        refreshEntries(); // Pour prévenir le parent qu'on a uploadé une image
       }
     } catch (error) {
       console.error("Erreur lors de l'upload :", error.response?.data);

@@ -6,6 +6,7 @@ const EntryFeed = ({
   id,
   filteredEntries,
   selectedUserId,
+  refreshEntries,
 }) => {
   if (!entries || !Array.isArray(entries)) {
     return <div>Chargement des souvenirs...</div>;
@@ -40,57 +41,60 @@ const EntryFeed = ({
   return (
     <div
       className={`${
-        members.length < 3 || selectedUserId
+        members?.length < 3 || selectedUserId
           ? "flex-row-reverse flex-wrap-reverse justify-end items-end"
           : "flex-col-reverse items-center"
       } flex overflow-y-scroll h-[90vh] border border-primary md:w-[60vw] m-auto rounded-md bg-secondary`}
     >
       {/* DEMAIN – Upload seulement */}
-      <section className={`${members.length >= 3 ? "py-4" : "px-4"} `}>
-        {selectedUserId ? null : (
+      {selectedUserId ? null : (
+        <section className={`${members?.length >= 3 ? "py-4" : "px-4"} `}>
           <h2 className="text-center text-sm text-gray-400">Demain</h2>
-        )}
-        {/* <EntryUpload id={id} date={tomorrowStr} user={members} /> */}
-        <EntryList
-          members={members}
-          entries={groupedByDate[tomorrowStr] || []}
-          id={id}
-          date={tomorrowStr}
-          readonly={true}
-          selectedUserId={selectedUserId}
-        />
-      </section>
+
+          {/* <EntryUpload id={id} date={tomorrowStr} user={members} /> */}
+          <EntryList
+            members={members}
+            entries={groupedByDate[tomorrowStr] || []}
+            id={id}
+            date={tomorrowStr}
+            readonly={true}
+            selectedUserId={selectedUserId}
+          />
+        </section>
+      )}
 
       {/* AUJOURD’HUI – Upload + Photos */}
-      <section className={`${members.length >= 3 ? "py-4" : "px-4"} `}>
-        {selectedUserId ? null : (
+      {selectedUserId ? null : (
+        <section className={`${members?.length >= 3 ? "py-4" : "px-4"} `}>
           <h2 className="text-center text-sm text-gray-400">Aujourd'hui</h2>
-        )}
-        {/* <EntryUpload id={id} date={todayStr} user={members} /> */}
-        <EntryList
-          members={members}
-          entries={groupedByDate[todayStr] || []}
-          id={id}
-          date={todayStr}
-          selectedUserId={selectedUserId}
-        />
-      </section>
+
+          {/* <EntryUpload id={id} date={todayStr} user={members} /> */}
+          <EntryList
+            members={members}
+            entries={groupedByDate[todayStr] || []}
+            id={id}
+            date={todayStr}
+            selectedUserId={selectedUserId}
+            refreshEntries={refreshEntries}
+          />
+        </section>
+      )}
 
       {/* HIER – Photos seulement */}
-      <section className={`${members.length >= 3 ? "py-4" : "px-4"} `}>
-        {selectedUserId ? null : (
+      {selectedUserId ? null : (
+        <section className={`${members?.length >= 3 ? "py-4" : "px-4"} `}>
           <h2 className="text-center text-sm text-gray-400">Hier</h2>
-        )}
-        <EntryList
-          members={members}
-          entries={groupedByDate[yesterdayStr] || []}
-          id={id}
-          date={yesterdayStr}
-          readonly={true}
-          selectedUserId={selectedUserId}
-        />
-      </section>
 
+          <EntryList
+            members={members}
+            entries={groupedByDate[yesterdayStr] || []}
+            id={id}
+            date={yesterdayStr}
+            readonly={true}
+            selectedUserId={selectedUserId}
+          />
+        </section>
+      )}
       {/* ANCIEN – Scroll vers le haut */}
       {sortedDates
         .filter(
@@ -100,11 +104,9 @@ const EntryFeed = ({
         .map((date) => (
           <section
             key={date}
-            className={`${members.length >= 3 ? "py-4" : "px-4"} `}
+            className={`${members?.length >= 3 ? "py-4" : "px-4"} `}
           >
-            {selectedUserId ? null : (
-              <h2 className="text-center text-xs text-gray-500">{date}</h2>
-            )}
+            <h2 className="text-center text-xs text-gray-500">{date}</h2>
             <EntryList
               members={members}
               entries={groupedByDate[date]}

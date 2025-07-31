@@ -1,11 +1,12 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import panda3 from "../../assets/img/panda3.jpg";
 import EntryFilterByUser from "../../components/ui/EntryFilterByUser";
 
 function Show() {
   const [souvenir, setSouvenir] = useState("");
+  const [entries, setEntries] = useState([]);
   const [title, setTitle] = useState("");
   const [cover_image, setCover_image] = useState("");
 
@@ -30,6 +31,26 @@ function Show() {
 
     fetchData();
   }, [id]);
+
+  const fetchEntries = useCallback(async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/souvenir/${id}/entry`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setEntries(res.data);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [id]); // ← 'id' est une dépendance
+
+  useEffect(() => {
+    fetchEntries();
+  }, [fetchEntries]);
 
   return (
     <>
@@ -66,8 +87,9 @@ function Show() {
 
       <EntryFilterByUser
         members={souvenir.users}
-        entries={souvenir.entries}
+        entries={entries}
         id={id}
+        refreshEntries={fetchEntries}
       ></EntryFilterByUser>
     </>
   );

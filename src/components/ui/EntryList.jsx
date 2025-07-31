@@ -7,21 +7,31 @@ function EntryList({
   date,
   readonly = false,
   selectedUserId,
+  refreshEntries,
 }) {
   return (
-    <div className="flex justify-center items-center gap-10">
+    <div
+      className={`${
+        selectedUserId ? "text-center" : "flex justify-center items-center"
+      } `}
+    >
       {members?.map((user) => {
         const userEntries = entries.filter(
           (entry) => entry.user_id === user.id
         );
 
         return (
-          <div key={user.id}>
+          <div className="px-4" key={user.id}>
             {userEntries.length === 0 ? (
               selectedUserId ? null : readonly ? (
                 <div className="image-upload-button">No entry</div>
               ) : (
-                <EntryUpload entryUser={user} id={id} date={date} />
+                <EntryUpload
+                  entryUser={user}
+                  id={id}
+                  date={date}
+                  refreshEntries={refreshEntries}
+                />
               )
             ) : (
               userEntries.map((entry) => (
