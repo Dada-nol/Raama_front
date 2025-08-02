@@ -54,8 +54,8 @@ function Register() {
   };
 
   return (
-    <main className="container-form">
-      <Logo></Logo>
+    <main className="flex justify-center items-center">
+      <Logo width={200}></Logo>
       <div>
         <form className="auth" onSubmit={handleRegister}>
           <h2>Create an account to continue</h2>

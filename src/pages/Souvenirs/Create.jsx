@@ -92,7 +92,7 @@ function Create() {
               onClick={() => setSelectedMemoryType(memory.id)}
             >
               <div
-                className={`card w-80 p-4 relative group overflow-hidden rounded-xl 
+                className={`card w-80 p-4 relative overflow-hidden rounded-xl 
     ${selectedMemoryType === memory.id ? "ring-4 ring-primary" : ""}
     bg-secondary gradient-border transition-transform duration-300 hover:scale-105 hover:text-gradient`}
               >

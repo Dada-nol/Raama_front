@@ -112,7 +112,7 @@ function List() {
                   .filter((souvenir) => souvenir.memory_type_id === type.id)
                   .map((souvenir) => (
                     <a href={`souvenir/${souvenir.id}`} key={souvenir.id}>
-                      <li className="card w-80 p-4 relative group overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient">
+                      <li className="card w-80 p-4 relative overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient">
                         {souvenir.cover_image ? (
                           <img
                             src={`http://localhost:8000/storage/${souvenir.cover_image}`}
@@ -147,7 +147,7 @@ function List() {
               })
               .map((souvenir) => (
                 <a href={`souvenir/${souvenir.id}`} key={souvenir.id}>
-                  <li className="card w-80 p-4 relative group overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient">
+                  <li className="card w-80 p-4 relative overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient">
                     {souvenir.cover_image ? (
                       <img
                         src={`http://localhost:8000/storage/${souvenir.cover_image}`}
