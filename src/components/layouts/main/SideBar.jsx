@@ -1,5 +1,6 @@
 import { useState } from "react";
 import logo from "../../../assets/img/logo.png";
+import SocialIcons from "../../ui/SocialIcons";
 import NavLinks from "./NavLinks";
 import ProfilButton from "./ProfilButton";
 
@@ -12,7 +13,7 @@ function SideBar() {
 
   return (
     <aside
-      className={`sidebar ${
+      className={`sidebar relative ${
         isSidebarExpanded ? "expanded gradient-r-border" : "collapsed"
       }`}
     >
@@ -46,6 +47,9 @@ function SideBar() {
 
       <NavLinks expanded={isSidebarExpanded} />
       <ProfilButton expanded={isSidebarExpanded} />
+      <div className="absolute bottom-2 translate-x-20 ">
+        <SocialIcons></SocialIcons>
+      </div>
     </aside>
   );
 }

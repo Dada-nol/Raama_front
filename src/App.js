@@ -1,7 +1,5 @@
 import { AuthProvider } from "./context/AuthContext";
 import Router from "./Router";
-import "./styles/scss/auth.scss";
-import "./styles/scss/landingPage.scss";
 import "./styles/scss/layout.scss";
 import "./styles/scss/main.scss";
 import "./styles/scss/profil.scss";

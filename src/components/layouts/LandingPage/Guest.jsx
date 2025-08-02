@@ -4,11 +4,11 @@ import Nav from "./Nav";
 
 function Guest() {
   return (
-    <>
+    <div className="flex flex-col w-full">
       <Nav />
       <Outlet />
       <Footer />
-    </>
+    </div>
   );
 }
 

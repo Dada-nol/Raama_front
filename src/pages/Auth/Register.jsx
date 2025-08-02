@@ -1,4 +1,8 @@
-import { LockClosedIcon, UserIcon } from "@heroicons/react/24/outline";
+import {
+  LockClosedIcon,
+  UserIcon,
+  EnvelopeIcon,
+} from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -58,7 +62,7 @@ function Register() {
   return (
     <main className="w-full grid grid-cols-1 md:grid-cols-2 content-center bg-secondary">
       <form
-        className="w-full flex flex-col items-center gap-4  pb-2"
+        className="w-full flex flex-col items-center gap-4  pb-20"
         onSubmit={handleRegister}
       >
         <Logo width={200}></Logo>
@@ -92,6 +96,7 @@ function Register() {
         <hr className="border border-gray-300 w-[300px] my-4"></hr>
 
         <div className="relative w-[400px]">
+          <EnvelopeIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
           <input
             className="w-full pl-10 border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-primary"
             type="text"
