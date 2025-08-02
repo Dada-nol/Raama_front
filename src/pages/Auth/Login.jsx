@@ -50,7 +50,7 @@ function Login() {
     }
   };
   return (
-    <main className="w-full grid grid-cols-1 md:grid-cols-2 justify-items-start content-center bg-secondary">
+    <main className="h-screen w-full grid grid-cols-1 md:grid-cols-2 content-center bg-secondary">
       {!isMobile && (
         <section className="h-screen overflow-hidden">
           <img src={panda4} alt="Panda" className="h-full object-cover" />
@@ -94,6 +94,12 @@ function Login() {
             Forget password ?
           </a>
         </div>
+        <button
+          className="inline-block gradient-border transition-transform duration-300 hover:scale-105 px-4 py-2"
+          type="submit"
+        >
+          Se connecter
+        </button>
         <p className="text-center">
           <a
             className="inline-block text-gradient transition-transform duration-300 hover:scale-105 pr-2"
@@ -103,12 +109,6 @@ function Login() {
           </a>
           if you don't have an account yet.
         </p>
-        <button
-          className="inline-block gradient-border transition-transform duration-300 hover:scale-105 px-4 py-2"
-          type="submit"
-        >
-          Se connecter
-        </button>
       </form>
     </main>
   );
