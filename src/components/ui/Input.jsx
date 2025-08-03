@@ -1,4 +1,4 @@
-function Input({ type, value, placeholder, onChange }) {
+function Input({ type, value, placeholder, onChange, ...rest }) {
   return (
     <input
       className="w-full pl-10 border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-primary"
@@ -6,6 +6,7 @@ function Input({ type, value, placeholder, onChange }) {
       value={value}
       placeholder={placeholder}
       onChange={onChange}
+      {...rest}
     />
   );
 }

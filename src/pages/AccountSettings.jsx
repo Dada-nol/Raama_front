@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import DeleteAccountModale from "../components/ui/DeleteAccountModale";
 
 function AccountSettings() {
   const { user } = useAuth();
@@ -56,18 +56,6 @@ function AccountSettings() {
         console.error("Erreur inattendue", e);
       }
     }
-  };
-
-  const navigate = useNavigate();
-  // Method de suppression de compte
-  const deleteAccount = async () => {
-    await axios.delete("http://localhost:8000/api/user", {
-      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-    });
-
-    localStorage.removeItem("token");
-
-    navigate("/register");
   };
 
   return (
@@ -180,11 +168,8 @@ function AccountSettings() {
         <button type="submit">Modifier les info</button>
       </form>
 
-      <section className="container-fluide">
-        <h2>Delete account</h2>
-        <button className="btn-danger" onClick={deleteAccount}>
-          Supprimer le compte
-        </button>
+      <section className="border-2 border-danger p-4 mx-8 mb-4">
+        <DeleteAccountModale></DeleteAccountModale>
       </section>
     </>
   );

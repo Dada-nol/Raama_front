@@ -97,7 +97,7 @@ function ProfilButton({ expanded }) {
               }`}
             >
               <a
-                className="hover:text-gradient hover:scale-105"
+                className="text-center hover:text-gradient hover:scale-105"
                 href="/account-setting"
               >
                 Paramètre du compte

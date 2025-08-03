@@ -39,8 +39,11 @@ function Home() {
 
         <ul className="flex justify-start gap-6 items-center mb-8">
           {souvenirs.map((souvenir) => (
-            <a href={`souvenir/${souvenir.id}`} key={souvenir.id}>
-              <li className="card w-80 p-4 relative group overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient">
+            <li
+              key={souvenir.id}
+              className="card w-80 p-4 relative group overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient"
+            >
+              <a href={`souvenir/${souvenir.id}`}>
                 {souvenir.cover_image ? (
                   <img
                     src={
@@ -60,27 +63,27 @@ function Home() {
                 )}
                 <p className="w-fit">{souvenir.title}</p>
                 <p className="w-fit">{souvenir.memory_points}</p>
-              </li>
-            </a>
+              </a>
+            </li>
           ))}
         </ul>
       </div>
 
       <div className="border-2 border-primary mx-8">
         <h3 className="flex justify-start p-4 text-lg font-medium">
-          Créer de nouveaux <h3 className="text-gradient pl-1">souvenirs</h3>
+          Créer de nouveaux <p className="text-gradient pl-1">souvenirs</p>
         </h3>
 
-        <ul className="flex justify-between items-center p-4">
+        <ul className="flex justify-between items-center p-4 gap-6">
           {memoryType.map((memory) => (
-            <a
-              href={`souvenir/create?memory_type_id=${memory.id}`}
+            <li
               key={memory.id}
+              className="card w-80 p-4 relative group overflow-hidden rounded-xl bg-secondary gradient-border transition-transform duration-300 hover:scale-105 hover:text-gradient"
             >
-              <li className="card w-80 p-4 relative group overflow-hidden rounded-xl bg-secondary gradient-border transition-transform duration-300 hover:scale-105 hover:text-gradient">
+              <a href={`souvenir/create?memory_type_id=${memory.id}`}>
                 {memory.title}
-              </li>
-            </a>
+              </a>
+            </li>
           ))}
         </ul>
       </div>

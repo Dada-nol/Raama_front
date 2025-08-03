@@ -65,7 +65,7 @@ function List() {
   return (
     <>
       <h2 className="flex justify-center p-4 text-lg font-medium">
-        My <h2 className="text-gradient pl-1">souvenirs</h2>
+        My <p className="text-gradient pl-1">souvenirs</p>
       </h2>
 
       <section className="flex border-2 border-primary rounded-lg mx-8 gap-48">
@@ -73,7 +73,7 @@ function List() {
           <h3>Sort by</h3>
           <ul className="flex gap-6">
             {options.map((option) => (
-              <li>
+              <li key={option}>
                 <button
                   className="bg-my-gradient w-fit h-8 rounded-lg px-4"
                   onClick={() => handleSort(option)}
@@ -100,8 +100,8 @@ function List() {
       <section className="flex flex-col items-start gap-4 mx-8">
         {sortOption === "memory_type" ? (
           memoryType.map((type) => (
-            <>
-              <h3 className="text-lg font-medium" key={type.id}>
+            <div key={type.id}>
+              <h3 className="text-lg font-medium text-left" key={type.id}>
                 {type.title}
               </h3>
 
@@ -111,8 +111,11 @@ function List() {
                 {filteredData
                   .filter((souvenir) => souvenir.memory_type_id === type.id)
                   .map((souvenir) => (
-                    <a href={`souvenir/${souvenir.id}`} key={souvenir.id}>
-                      <li className="card w-80 p-4 relative overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient">
+                    <li
+                      key={souvenir.id}
+                      className="card w-80 p-4 relative overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient"
+                    >
+                      <a href={`souvenir/${souvenir.id}`}>
                         {souvenir.cover_image ? (
                           <img
                             src={`http://localhost:8000/storage/${souvenir.cover_image}`}
@@ -129,11 +132,11 @@ function List() {
                         <p className="w-fit">{souvenir.title}</p>
                         <p className="w-fit">{souvenir.memory_points}</p>
                         <p className="w-fit">{souvenir.memory_type_id}</p>
-                      </li>
-                    </a>
+                      </a>
+                    </li>
                   ))}
               </ul>
-            </>
+            </div>
           ))
         ) : (
           <ul className="flex flex-wrap gap-6 justify-center m-8">
@@ -146,8 +149,11 @@ function List() {
                 }
               })
               .map((souvenir) => (
-                <a href={`souvenir/${souvenir.id}`} key={souvenir.id}>
-                  <li className="card w-80 p-4 relative overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient">
+                <li
+                  key={souvenir.id}
+                  className="card w-80 p-4 relative overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient"
+                >
+                  <a href={`souvenir/${souvenir.id}`}>
                     {souvenir.cover_image ? (
                       <img
                         src={`http://localhost:8000/storage/${souvenir.cover_image}`}
@@ -164,8 +170,8 @@ function List() {
                     <p className="w-fit">{souvenir.title}</p>
                     <p className="w-fit">{souvenir.memory_points}</p>
                     <p className="w-fit">{souvenir.memory_type_id}</p>
-                  </li>
-                </a>
+                  </a>
+                </li>
               ))}
           </ul>
         )}
