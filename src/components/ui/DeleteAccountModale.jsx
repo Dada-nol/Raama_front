@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
-const DeleteAccountModale = ({ entry }) => {
+const DeleteAccountModale = () => {
+  const { logout } = useAuth();
   const [showModal, setShowModal] = useState(false);
 
   const handleOverlayClick = () => {
@@ -13,16 +14,13 @@ const DeleteAccountModale = ({ entry }) => {
     e.stopPropagation();
   };
 
-  const navigate = useNavigate();
   // Method de suppression de compte
   const deleteAccount = async () => {
     await axios.delete("http://localhost:8000/api/user", {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
 
-    localStorage.removeItem("token");
-
-    navigate("/register");
+    await logout();
   };
 
   return (

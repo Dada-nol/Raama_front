@@ -1,13 +1,19 @@
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthContext";
 import DeleteAccountModale from "../components/ui/DeleteAccountModale";
+import Input from "../components/ui/Input";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function AccountSettings() {
   const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const [name, setName] = useState("");
   const [firstname, setFirstname] = useState("");
-  const [pseudo, setPseudo] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password_confirmation, setPassword_confirmation] = useState("");
@@ -20,12 +26,12 @@ function AccountSettings() {
       setName(user.name);
       setFirstname(user.firstname);
       setEmail(user.email);
-      setPseudo(user.pseudo);
     }
   }, [user]);
 
   const UpdateUser = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     setErrors({});
 
     try {
@@ -34,7 +40,6 @@ function AccountSettings() {
         {
           name,
           firstname,
-          pseudo,
           email,
           ...(password
             ? { password, password_confirmation, old_password: oldPassword }
@@ -46,129 +51,116 @@ function AccountSettings() {
           },
         }
       );
-      alert("Update completed !");
+      navigate("/profil");
     } catch (e) {
       if (e.response && e.response.status === 422) {
-        setErrors(e.response.data.errors); // <- Laravel met les erreurs ici
+        setErrors(e.response.data.errors);
       } else if (e.response && e.response.status === 401) {
         setPasswordError(e.response.data);
       } else {
         console.error("Erreur inattendue", e);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <>
-      <form onSubmit={UpdateUser} className="form-setting">
-        <section>
-          <div className="svg">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              className="size-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-              />
-            </svg>
+      <div className="w-full flex flex-row justify-center mb-8">
+        <h1 className="text-gradient text-2xl w-fit">Paramètres de compte</h1>
+      </div>
+
+      <form onSubmit={UpdateUser}>
+        <section className="flex flex-col md:flex-row justify-center gap-4 border border-primary mx-20 mb-8 p-4">
+          <div>
+            <p>Nom</p>
+            <Input
+              type={"text"}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            ></Input>
+            {errors.name && <p className="text-danger">{errors.name[0]}</p>}
           </div>
           <div>
-            <p>{user.name}</p>
-          </div>
-        </section>
-        <section className="container-fluide">
-          <h2>Your informations</h2>
-          <div className="row">
             <div>
-              <p>Name</p>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              {errors.name && <p className="error">{errors.name[0]}</p>}
-            </div>
-
-            <div>
-              <p>Firstname</p>
-              <input
-                type="text"
+              <p>Prénom</p>
+              <Input
+                type={"text"}
                 value={firstname}
                 onChange={(e) => setFirstname(e.target.value)}
-              />
+              ></Input>
               {errors.firstname && (
-                <p className="error">{errors.firstname[0]}</p>
+                <p className="text-danger">{errors.firstname[0]}</p>
               )}
             </div>
           </div>
-          <div className="row">
-            <div>
-              <p>Pseudo</p>
-              <input
-                type="text"
-                value={pseudo}
-                onChange={(e) => setPseudo(e.target.value)}
-              />
-              {errors.pseudo && <p className="error">{errors.pseudo[0]}</p>}
-            </div>
-            <div>
-              <p>Email</p>
-              <input
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              {errors.email && <p className="error">{errors.email[0]}</p>}
-            </div>
+          <div className="">
+            <p>Email</p>
+            <Input
+              type={"text"}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            ></Input>
+            {errors.email && <p className="text-danger">{errors.email[0]}</p>}
           </div>
         </section>
 
-        <section className="container-fluide">
-          <h2>Update password</h2>
-          <div className="row">
-            <div>
-              <p>Previous password</p>
-              <input
-                type="password"
-                onChange={(e) => setOldPassword(e.target.value)}
-              />
-              {password_error.message && (
-                <p className="error">{password_error.message}</p>
-              )}
-            </div>
+        <h2>Modifier le mot de passe</h2>
+        <section className="flex flex-col md:flex-row justify-center gap-4 border border-primary mx-20 mb-8 p-4">
+          <div className="">
+            <p>Ancien mot de passe</p>
+            <Input
+              type={"password"}
+              value={oldPassword}
+              onChange={(e) => setOldPassword(e.target.value)}
+            ></Input>
+            {password_error.message && (
+              <p className="text-danger">{password_error.message}</p>
+            )}
           </div>
 
-          <div className="row">
-            <div>
-              <p>New password</p>
-              <input
-                type="password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              {errors.password && <p className="error">{errors.password[0]}</p>}
-            </div>
+          <div className="">
+            <p>Nouveau mot de passe</p>
+            <Input
+              type={"password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            ></Input>
+            {errors.password && (
+              <p className="text-danger">{errors.password[0]}</p>
+            )}
+          </div>
 
-            <div>
-              <p>Confirm password</p>
-              <input
-                type="password"
-                onChange={(e) => setPassword_confirmation(e.target.value)}
-              />
-              {errors.password && <p className="error">{errors.password[0]}</p>}
-            </div>
+          <div className="">
+            <p>Confirmer le mot de passe</p>
+            <Input
+              type={"password"}
+              value={password_confirmation}
+              onChange={(e) => setPassword_confirmation(e.target.value)}
+            ></Input>
+            {errors.password && (
+              <p className="text-danger">{errors.password[0]}</p>
+            )}
           </div>
         </section>
 
-        <button type="submit">Modifier les info</button>
+        <button
+          className={`bg-primary rounded-md px-4 py-2 hover:scale-105 ${
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+          type="submit"
+          disabled={isLoading}
+        >
+          {isLoading ? "Chargement..." : "Modifier les informations"}
+        </button>
       </form>
 
-      <section className="border-2 border-danger p-4 mx-8 mb-4">
+      <section className="flex flex-row items-center justify-between border border-danger p-4 mx-20 my-4">
+        <div className="flex justify-center items-center">
+          <ExclamationTriangleIcon className="h-10 w-10 text-red-600 pr-2" />
+          <p>L'action suivante est irréversible !</p>
+        </div>
         <DeleteAccountModale></DeleteAccountModale>
       </section>
     </>

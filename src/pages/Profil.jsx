@@ -27,11 +27,11 @@ function Profil() {
       <section className="relative border-2 border-primary p-4 mx-8 mb-4">
         <div className="flex justify-evenly items-center">
           <div className="text-left">
-            <p>Name</p>
+            <p>Nom</p>
             <Input type={"text"} value={user.name} readOnly></Input>
           </div>
           <div className="text-left">
-            <p>Firstname</p>
+            <p>Prénom</p>
             <Input type={"text"} value={user.firstname} readOnly></Input>
           </div>
           <div className="text-left">
