@@ -1,11 +1,12 @@
 import photo1 from "../assets/img/photo1.jpg";
 import photo2 from "../assets/img/photo2.jpg";
+import BackToTop from "../components/ui/BackToTop";
 import Button from "../components/ui/Button";
 import Feature from "../components/ui/CardFeature";
 
 function LandingPage() {
   return (
-    <main>
+    <main className="relative">
       {/* Features */}
       <section className="flex flex-col justify-center items-center gap-8 mt-4">
         <h2 className="title font-bold text-[25px] text-gradient">
@@ -28,7 +29,10 @@ function LandingPage() {
       </section>
 
       {/* Photos superposées */}
-      <section className="flex items-center justify-center bg-[#142D00] px-4 py-16">
+      <section className="relative flex items-center justify-center px-4 py-16 overflow-hidden">
+        {/* Halo vert */}
+        <div className="absolute w-[600px] h-[600px] bg-[#64B000] rounded-full blur-[120px] opacity-30  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+
         <div className="flex items-center max-w-6xl">
           <div className="relative w-[300px] h-[400px]">
             <img
@@ -89,6 +93,8 @@ function LandingPage() {
           </div>
         </div>
       </section>
+
+      <BackToTop></BackToTop>
     </main>
   );
 }

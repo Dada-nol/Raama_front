@@ -2,17 +2,14 @@ import SocialIcons from "../../ui/SocialIcons";
 
 function Footer() {
   return (
-    <footer className="footer">
-      <div className="footer-item">
+    <footer className="flex flex-row justify-between items-center ">
+      <div>
         <h4>Connect with us</h4>
 
         <SocialIcons></SocialIcons>
-        {/* <a href="/register">
-          <Button className="get-started" name="Get started"></Button>
-        </a> */}
       </div>
 
-      <div className="footer-item">
+      <div className="">
         <h4>Contact us</h4>
         <ul>
           <li>
