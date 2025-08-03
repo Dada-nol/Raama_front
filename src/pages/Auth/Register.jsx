@@ -1,7 +1,7 @@
 import {
+  EnvelopeIcon,
   LockClosedIcon,
   UserIcon,
-  EnvelopeIcon,
 } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useState } from "react";
@@ -15,6 +15,7 @@ function Register() {
 
   const isMobile = window.innerWidth <= 768;
 
+  const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState("");
   const [firstname, setFirstName] = useState("");
   const [email, setEmail] = useState("");
@@ -26,6 +27,7 @@ function Register() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     setErrors({});
 
     try {
@@ -52,10 +54,12 @@ function Register() {
       navigate("/home");
     } catch (e) {
       if (e.response && e.response.status === 422) {
-        setErrors(e.response.data.errors); // <- Laravel met les erreurs ici
+        setErrors(e.response.data.errors);
       } else {
         console.error("Erreur inattendue", e);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -78,8 +82,8 @@ function Register() {
             placeholder="Name"
             onChange={(e) => setName(e.target.value)}
           />
-          {errors.name && <p className="error">{errors.name[0]}</p>}
         </div>
+        {errors.name && <p className="text-danger">{errors.name[0]}</p>}
 
         <div className="relative w-[400px]">
           <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -90,8 +94,10 @@ function Register() {
             placeholder="Firstname"
             onChange={(e) => setFirstName(e.target.value)}
           />
-          {errors.firstname && <p className="error">{errors.firstname[0]}</p>}
         </div>
+        {errors.firstname && (
+          <p className="text-danger">{errors.firstname[0]}</p>
+        )}
 
         <hr className="border border-gray-300 w-[300px] my-4"></hr>
 
@@ -104,8 +110,8 @@ function Register() {
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
           />
-          {errors.email && <p className="error">{errors.email[0]}</p>}
         </div>
+        {errors.email && <p className="text-danger">{errors.email[0]}</p>}
 
         <div className="relative w-[400px]">
           <LockClosedIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -127,18 +133,21 @@ function Register() {
             placeholder="Confirm password"
             onChange={(e) => setPassword_confirmation(e.target.value)}
           />
-          {errors.password && <p className="error">{errors.password[0]}</p>}
         </div>
+        {errors.password && <p className="text-danger">{errors.password[0]}</p>}
 
-        <div className="flex flex-col justify-center items-center my-2">
+        <div className="flex flex-col justify-center items-center my-4">
           <p>By creating an account,</p>
           <p>you agree to our Privacy Policy</p>
         </div>
         <button
-          className="inline-block gradient-border transition-transform duration-300 hover:scale-105 px-4 py-2"
+          className={`inline-block gradient-border transition-transform duration-300 hover:scale-105 px-4 py-2 ${
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
           type="submit"
+          disabled={isLoading}
         >
-          Register
+          {isLoading ? "Chargement..." : "Register"}
         </button>
         <p className="text-center">
           <a

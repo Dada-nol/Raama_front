@@ -9,6 +9,7 @@ import { useAuth } from "../../context/AuthContext";
 function Login() {
   const { setUser } = useAuth();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -19,6 +20,7 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     setErrors({});
 
     try {
@@ -47,8 +49,11 @@ function Login() {
       } else {
         console.error("Erreur inattendue", e);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
+
   return (
     <main className="h-screen w-full grid grid-cols-1 md:grid-cols-2 content-center bg-secondary">
       {!isMobile && (
@@ -72,8 +77,9 @@ function Login() {
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
           />
-          {errors.email && <p className="error">{errors.email[0]}</p>}
         </div>
+        {errors.email && <p className="text-danger">{errors.email[0]}</p>}
+
         <div className="relative w-[400px]">
           <LockClosedIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
           <input
@@ -83,9 +89,11 @@ function Login() {
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          {errors.password && <p className="error">{errors.password[0]}</p>}
         </div>
-        {globalErrors && <p className="error">{globalErrors}</p>}
+        {errors.password && <p className="text-danger">{errors.password[0]}</p>}
+
+        {globalErrors && <p className="text-danger">{globalErrors}</p>}
+
         <div className="w-[400px] text-right">
           <a
             className="inline-block text-gradient transition-transform duration-300 hover:scale-105"
@@ -95,10 +103,13 @@ function Login() {
           </a>
         </div>
         <button
-          className="inline-block gradient-border transition-transform duration-300 hover:scale-105 px-4 py-2"
+          className={`inline-block gradient-border transition-transform duration-300 hover:scale-105 px-4 py-2 ${
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
           type="submit"
+          disabled={isLoading}
         >
-          Se connecter
+          {isLoading ? "Chargement..." : "Se connecter"}
         </button>
         <p className="text-center">
           <a
