@@ -92,7 +92,7 @@ function Create() {
               onClick={() => setSelectedMemoryType(memory.id)}
             >
               <div
-                className={`card w-80 p-4 relative group overflow-hidden rounded-xl 
+                className={`card w-80 p-4 relative overflow-hidden rounded-xl 
     ${selectedMemoryType === memory.id ? "ring-4 ring-primary" : ""}
     bg-secondary gradient-border transition-transform duration-300 hover:scale-105 hover:text-gradient`}
               >
@@ -101,7 +101,9 @@ function Create() {
             </button>
           ))}
         </div>
-        {errors.memory_type && <p className="error">{errors.memory_type[0]}</p>}
+        {errors.memory_type && (
+          <p className="text-danger">{errors.memory_type[0]}</p>
+        )}
       </div>
 
       <div className="border-2 border-primary rounded-lg m-8 flex justify-evenly items-center p-4">
@@ -113,7 +115,7 @@ function Create() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
-          {errors.title && <p className="error">{errors.title[0]}</p>}
+          {errors.title && <p className="text-danger">{errors.title[0]}</p>}
         </div>
 
         <div className="">
@@ -129,7 +131,7 @@ function Create() {
             />
           </label>
           {errors.cover_image && (
-            <p className="error">{errors.cover_image[0]}</p>
+            <p className="text-danger">{errors.cover_image[0]}</p>
           )}
         </div>
       </div>

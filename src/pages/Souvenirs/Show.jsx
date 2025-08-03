@@ -77,9 +77,10 @@ function Show() {
       </div>
 
       <ul className="flex justify-start gap-6 px-4 pt-2 ">
-        <li className="text-gradient">
+        {/* Disable for now */}
+        {/*         <li className="text-gradient">
           {souvenir.memory_points} Memory points
-        </li>
+        </li> */}
         <li className="text-gradient">
           {souvenir.entries?.length} published photos
         </li>

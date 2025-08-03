@@ -10,7 +10,7 @@ function SocialIcons() {
     { src: linkedinIcon, alt: "LinkedIn" },
   ];
   return (
-    <div className="social-icons">
+    <div className="flex justify-center items-center gap-2">
       {socialIcons.map((icon, i) => (
         <Icon key={i} src={icon.src} alt={icon.alt} />
       ))}

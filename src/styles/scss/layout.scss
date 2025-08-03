@@ -40,16 +40,6 @@
   z-index: 100;
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
-
-  .logo {
-    font-size: 1rem;
-    margin-left: 100px;
-  }
-  .nav-links {
-    display: flex;
-    gap: 10px;
-    padding-right: 100px;
-  }
 }
 
 .sidebar {
@@ -214,14 +204,14 @@
   }
 }
 
-footer {
+/* footer {
   bottom: 0;
   display: flex;
   flex-direction: row;
   background-color: $color-bg;
   border-top: $color-text 3px solid;
   padding: 10px 0;
-}
+} */
 
 .footer-item {
   display: flex;

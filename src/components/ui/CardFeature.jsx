@@ -1,7 +1,7 @@
 function CardFeature({ icon, description }) {
   return (
     <div className="card-feature">
-      <div>
+      <div className="flex flex-col justify-center items-center gap-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="32"
@@ -11,8 +11,8 @@ function CardFeature({ icon, description }) {
         >
           <path d={icon}></path>
         </svg>
+        <p>{description}</p>
       </div>
-      <p>{description}</p>
     </div>
   );
 }

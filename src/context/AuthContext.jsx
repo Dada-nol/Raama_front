@@ -27,8 +27,27 @@ export const AuthProvider = ({ children }) => {
     fetchUser();
   }, []);
 
+  const logout = async () => {
+    try {
+      await axios.post(
+        "http://localhost:8000/api/logout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+    } catch (e) {
+      console.error("Erreur lors de la déconnexion API", e);
+    } finally {
+      localStorage.removeItem("token");
+      setUser(null);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, setUser, loading }}>
+    <AuthContext.Provider value={{ user, setUser, loading, logout }}>
       {children}
     </AuthContext.Provider>
   );

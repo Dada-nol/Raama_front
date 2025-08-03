@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import logo from "../../../assets/img/logo.png";
 import img_panda1 from "../../../assets/img/panda1.png";
 import video_loop1 from "../../../assets/video/loop1.mp4";
 import Button from "../../ui/Button";
+import Logo from "../../ui/Logo";
 
 function Nav() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [colorNav, setColorNav] = useState("transparent");
-  const [sizeLogo, setSizeLogo] = useState("156.5px");
+  const [sizeLogo, setSizeLogo] = useState(true);
 
   useEffect(() => {
     const handleSize = () => {
@@ -18,10 +18,10 @@ function Nav() {
       const vh100 = window.innerHeight - 100;
       if (window.scrollY > vh100) {
         setColorNav("#1e1e1e");
-        setSizeLogo("80px");
+        setSizeLogo(false);
       } else {
         setColorNav("transparent");
-        setSizeLogo("156.5px");
+        setSizeLogo(true);
       }
     };
 
@@ -42,20 +42,21 @@ function Nav() {
           backgroundColor: colorNav,
         }}
       >
-        <div>
-          <img
-            src={logo}
-            alt="Pandaraama"
-            className="logo"
-            style={{ width: sizeLogo }}
-          />
+        <div className="pl-10">
+          {sizeLogo ? <Logo width={150}></Logo> : <Logo width={80}></Logo>}
         </div>
 
-        <div className="nav-links">
-          <a href="/login">
+        <div className="flex justify-center items-center gap-4 pr-10">
+          <a
+            className="text-lg hover:scale-105 inline-block transition-transform duration-300 hover:scale-140"
+            href="/login"
+          >
             <Button name="Log in" />
           </a>
-          <a href="/register">
+          <a
+            className="text-lg hover:scale-105 inline-block transition-transform duration-300 hover:scale-140"
+            href="/register"
+          >
             <Button name="Register" />
           </a>
         </div>
@@ -63,7 +64,7 @@ function Nav() {
       {isMobile ? (
         <img
           src={img_panda1}
-          alt="Le panda suprême !"
+          alt="Panda allongé couvrant le haut de la landing page"
           className="background-img"
         ></img>
       ) : (
@@ -72,12 +73,16 @@ function Nav() {
         </video>
       )}
 
-      <div className="header-content">
-        <h1>
-          Chaque jour une mémoire, <br></br>chaque mémoire un lien
+      <div className="header-content flex flex-col items-center">
+        <h1 className="font-bold text-[40px] flex flex-col items-center pb-6">
+          <p>Chaque jour une mémoire,</p>
+          <p>chaque mémoire un lien</p>
         </h1>
-        <a href="/register">
-          <button>Get started</button>
+        <a
+          className="gradient-border p-4 inline-block transition-transform duration-300 hover:scale-105"
+          href="/register"
+        >
+          <button className="text-lg">Get started</button>
         </a>
       </div>
     </header>
