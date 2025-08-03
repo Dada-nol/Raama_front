@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import panda4 from "../../assets/img/panda4.jpg";
 import Logo from "../../components/ui/Logo";
 import { useAuth } from "../../context/AuthContext";
+import Input from "../../components/ui/Input";
 
 function Register() {
   const { setUser } = useAuth();
@@ -75,25 +76,23 @@ function Register() {
         </h2>
         <div className="relative w-[400px]">
           <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-          <input
-            className="w-full pl-10 border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-primary"
-            type="text"
+          <Input
+            type={"text"}
             value={name}
-            placeholder="Name"
+            placeholder={"Name"}
             onChange={(e) => setName(e.target.value)}
-          />
+          ></Input>
         </div>
         {errors.name && <p className="text-danger">{errors.name[0]}</p>}
 
         <div className="relative w-[400px]">
           <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-          <input
-            className="w-full pl-10 border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-primary"
-            type="text"
+          <Input
+            type={"text"}
             value={firstname}
-            placeholder="Firstname"
+            placeholder={"Firstname"}
             onChange={(e) => setFirstName(e.target.value)}
-          />
+          ></Input>
         </div>
         {errors.firstname && (
           <p className="text-danger">{errors.firstname[0]}</p>
@@ -103,36 +102,33 @@ function Register() {
 
         <div className="relative w-[400px]">
           <EnvelopeIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-          <input
-            className="w-full pl-10 border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-primary"
-            type="text"
+          <Input
+            type={"text"}
             value={email}
-            placeholder="Email"
+            placeholder={"Email"}
             onChange={(e) => setEmail(e.target.value)}
-          />
+          ></Input>
         </div>
         {errors.email && <p className="text-danger">{errors.email[0]}</p>}
 
         <div className="relative w-[400px]">
           <LockClosedIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-          <input
-            className="w-full pl-10 border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-primary"
-            type="password"
+          <Input
+            type={"password"}
             value={password}
-            placeholder="Password"
+            placeholder={"Password"}
             onChange={(e) => setPassword(e.target.value)}
-          />
+          ></Input>
         </div>
 
         <div className="relative w-[400px]">
           <LockClosedIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-          <input
-            className="w-full pl-10 border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-primary"
-            type="password"
+          <Input
+            type={"password"}
             value={password_confirmation}
-            placeholder="Confirm password"
+            placeholder={"Confirm password"}
             onChange={(e) => setPassword_confirmation(e.target.value)}
-          />
+          ></Input>
         </div>
         {errors.password && <p className="text-danger">{errors.password[0]}</p>}
 

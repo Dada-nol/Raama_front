@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import panda4 from "../../assets/img/panda4.jpg";
+import Input from "../../components/ui/Input";
 import Logo from "../../components/ui/Logo";
 import { useAuth } from "../../context/AuthContext";
 
@@ -70,25 +71,23 @@ function Login() {
         <h2 className="py-6 text-xl font-bold">Login</h2>
         <div className="relative w-[400px]">
           <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-          <input
-            className="w-full pl-10 border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-primary"
-            type="text"
+          <Input
+            type={"text"}
             value={email}
-            placeholder="Email"
+            placeholder={"Email"}
             onChange={(e) => setEmail(e.target.value)}
-          />
+          ></Input>
         </div>
         {errors.email && <p className="text-danger">{errors.email[0]}</p>}
 
         <div className="relative w-[400px]">
           <LockClosedIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-          <input
-            className="w-full pl-10 border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-primary"
-            type="password"
+          <Input
+            type={"password"}
             value={password}
-            placeholder="Password"
+            placeholder={"Password"}
             onChange={(e) => setPassword(e.target.value)}
-          />
+          ></Input>
         </div>
         {errors.password && <p className="text-danger">{errors.password[0]}</p>}
 
