@@ -1,6 +1,7 @@
 import { useState } from "react";
 import EntryFeed from "./EntryFeed";
 import ProfileSelector from "./ProfileSelector";
+import SouvenirSettingModale from "./SouvenirSettingModale";
 
 function EntryFilterByUser({ entries, members, id, refreshEntries }) {
   const [selectedUserId, setSelectedUserId] = useState(null);
@@ -72,6 +73,8 @@ function EntryFilterByUser({ entries, members, id, refreshEntries }) {
         filteredEntries={filteredEntries}
         refreshEntries={refreshEntries}
       />
+
+      <SouvenirSettingModale></SouvenirSettingModale>
     </div>
   );
 }

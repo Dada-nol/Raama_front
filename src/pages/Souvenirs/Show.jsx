@@ -84,6 +84,9 @@ function Show() {
         <li className="text-gradient">
           {souvenir.entries?.length} published photos
         </li>
+        <li className="text-gradient">
+          {souvenir.memory_points} memory points
+        </li>
       </ul>
 
       <EntryFilterByUser
