@@ -1,3 +1,4 @@
+import { LockClosedIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import panda3 from "../assets/img/panda3.jpg";
@@ -75,16 +76,28 @@ function Home() {
         </h3>
 
         <ul className="flex justify-between items-center p-4 gap-6">
-          {memoryType.map((memory) => (
-            <li
-              key={memory.id}
-              className="card w-80 p-4 relative group overflow-hidden rounded-xl bg-secondary gradient-border transition-transform duration-300 hover:scale-105 hover:text-gradient"
-            >
-              <a href={`souvenir/create?memory_type_id=${memory.id}`}>
-                {memory.title}
-              </a>
-            </li>
-          ))}
+          {memoryType.map((memory) =>
+            memory.isAvailable ? (
+              <li
+                key={memory.id}
+                className="card w-80 p-4 relative group overflow-hidden rounded-xl bg-secondary gradient-border transition-transform duration-300 hover:scale-105 hover:text-gradient"
+              >
+                <a href={`souvenir/create?memory_type_id=${memory.id}`}>
+                  {memory.title}
+                </a>
+              </li>
+            ) : (
+              <li className="cursor-not-allowed w-80 h-28 p-4 relative overflow-hidden bg-secondary border-2 border-danger opacity-60">
+                <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center gap-2">
+                  <LockClosedIcon className="w-6 h-6 text-white" />
+                  <p className="text-white font-bold">{memory.title}</p>
+                  <p className="text-sm text-gray-200">
+                    Indisponible pour le moment
+                  </p>
+                </div>
+              </li>
+            )
+          )}
         </ul>
       </div>
 
