@@ -130,6 +130,9 @@ function Create() {
               className="hidden"
             />
           </label>
+          {coverImage && (
+            <p className="mt-2 text-sm text-text">{coverImage.name}</p>
+          )}
           {errors.cover_image && (
             <p className="text-danger">{errors.cover_image[0]}</p>
           )}

@@ -8,7 +8,7 @@ const EntryModale = ({ entry }) => {
   };
 
   const handleModalClick = (e) => {
-    e.stopPropagation(); // Empêche de fermer quand on clique dans la modale
+    e.stopPropagation();
   };
 
   const date = new Date(entry.created_at).toLocaleDateString("fr-FR", {

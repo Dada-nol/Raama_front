@@ -139,7 +139,7 @@ function List() {
             </div>
           ))
         ) : (
-          <ul className="flex flex-wrap gap-6 justify-center m-8">
+          <ul className="flex flex-wrap gap-4 justify-center my-8">
             {[...filteredData]
               .sort((a, b) => {
                 if (sortOption === "title") {
