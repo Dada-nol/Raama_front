@@ -1,4 +1,4 @@
-import EntryUpload from "./BtnUpload";
+import EntryUpload from "./EntryUpload";
 import EntryModale from "./EntryModale";
 
 function EntryList({

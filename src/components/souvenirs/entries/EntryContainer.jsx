@@ -1,9 +1,9 @@
 import { useState } from "react";
+import SouvenirSettingModale from "../SouvenirSettingModale";
 import EntryFeed from "./EntryFeed";
 import ProfileSelector from "./ProfileSelector";
-import SouvenirSettingModale from "./SouvenirSettingModale";
 
-function EntryFilterByUser({ entries, members, id, refreshEntries }) {
+function EntryContainer({ entries, members, id, refreshEntries }) {
   const [selectedUserId, setSelectedUserId] = useState(null);
 
   const handleSelect = (id) => {
@@ -79,4 +79,4 @@ function EntryFilterByUser({ entries, members, id, refreshEntries }) {
   );
 }
 
-export default EntryFilterByUser;
+export default EntryContainer;

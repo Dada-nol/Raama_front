@@ -1,9 +1,9 @@
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import DeleteAccountModale from "../components/ui/DeleteAccountModale";
-import Input from "../components/ui/Input";
-import { useAuth } from "../context/AuthContext";
+import DeleteAccountModale from "../../components/profil/DeleteAccountModale";
+import Input from "../../components/ui/Input";
+import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 function AccountSettings() {
@@ -106,7 +106,9 @@ function AccountSettings() {
           </div>
         </section>
 
-        <h2>Modifier le mot de passe</h2>
+        <h2 className="text-lg font-bold text-left mx-20 my-4">
+          Modifier le mot de passe
+        </h2>
         <section className="flex flex-col md:flex-row justify-center gap-4 border border-primary mx-20 mb-8 p-4">
           <div className="">
             <p>Ancien mot de passe</p>

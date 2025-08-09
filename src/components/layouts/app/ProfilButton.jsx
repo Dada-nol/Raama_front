@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
-import LogoutButton from "../../ui/LogoutButton";
+import LogoutButton from "../../profil/LogoutButton";
 
 function ProfilButton({ expanded }) {
   const { user } = useAuth();

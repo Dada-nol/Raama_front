@@ -1,6 +1,6 @@
 import { PencilIcon, UserIcon } from "@heroicons/react/24/outline";
-import Input from "../components/ui/Input";
-import { useAuth } from "../context/AuthContext";
+import Input from "../../components/ui/Input";
+import { useAuth } from "../../context/AuthContext";
 
 function Profil() {
   const { user } = useAuth();
@@ -43,7 +43,7 @@ function Profil() {
           className="absolute top-3 right-3 border border-primary p-2 text-center hover:scale-105 hover:gradient-border"
           href="/account-setting"
         >
-          <PencilIcon className="w-6 h-6"></PencilIcon>
+          <PencilIcon className="w-4 h-4"></PencilIcon>
         </a>
       </section>
 

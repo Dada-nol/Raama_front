@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
-import Input from "./Input";
+import { useAuth } from "../../../context/AuthContext";
+import Input from "../../ui/Input";
 
 const EntryUpload = ({ id, entryUser, refreshEntries }) => {
   const { user } = useAuth();

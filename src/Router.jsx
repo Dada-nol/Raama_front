@@ -1,22 +1,21 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import MainLayout from "./components/layouts/AppLayout";
+import Guest from "./components/layouts/GuestLayout";
 import PrivateRoute from "./components/PivateRoute";
 import PublicRoute from "./components/PublicRoute";
-import Guest from "./components/layouts/LandingPage/Guest";
-import MainLayout from "./components/layouts/main/Layout";
 import Transition from "./components/transitions/Transition";
 import { useAuth } from "./context/AuthContext";
-import AccountSettings from "./pages/AccountSettings";
-import Login from "./pages/Auth/Login";
-import Register from "./pages/Auth/Register";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
 import Home from "./pages/Home";
 import LandingPage from "./pages/LandingPage";
 import NotFound from "./pages/NotFound";
-import Profil from "./pages/Profil";
-import Create from "./pages/Souvenirs/Create";
-import List from "./pages/Souvenirs/List";
-import Show from "./pages/Souvenirs/Show";
-import Update from "./pages/Souvenirs/Update";
+import AccountSettings from "./pages/profil/AccountSettings";
+import Profil from "./pages/profil/Profil";
+import Create from "./pages/souvenirs/Create";
+import List from "./pages/souvenirs/List";
+import SouvenirEntries from "./pages/souvenirs/SouvenirEntries";
 
 function Router() {
   /* const staticRoutes = [
@@ -115,7 +114,7 @@ function Router() {
               path=":id"
               element={
                 <PrivateRoute>
-                  <Show></Show>
+                  <SouvenirEntries></SouvenirEntries>
                 </PrivateRoute>
               }
             />
@@ -124,14 +123,6 @@ function Router() {
               element={
                 <PrivateRoute>
                   <Create></Create>
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path=":id/update"
-              element={
-                <PrivateRoute>
-                  <Update></Update>
                 </PrivateRoute>
               }
             />
