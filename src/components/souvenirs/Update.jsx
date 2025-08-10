@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Input from "../ui/Input";
 
 function Update() {
@@ -71,34 +71,37 @@ function Update() {
   };
 
   return (
-    <form onSubmit={handleUpdate}>
-      <Input
-        type={"text"}
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      ></Input>
-      {errors.title && <p className="text-danger">{errors.title[0]}</p>}
-
-      <label className="inline-block bg-my-gradient text-white my-2 px-4 py-2 rounded cursor-pointer hover:brightness-110 hover:scale-105">
-        Choisir une image
+    <>
+      <form onSubmit={handleUpdate}>
+        <h3 className="text-lg">Title</h3>
         <Input
-          type={"file"}
-          onChange={handleFileChange}
-          className="hidden"
+          type={"text"}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         ></Input>
-      </label>
+        {errors.title && <p className="text-danger">{errors.title[0]}</p>}
 
-      {coverImage ? (
-        <p className="mt-2 text-sm text-text">{coverImage.name}</p>
-      ) : (
-        coverImageUrl && (
-          <img
-            src={`http://localhost:8000/storage/${coverImageUrl}`}
-            alt="cover actuelle"
-            className="m-auto my-2 w-40 h-auto rounded"
-          />
-        )
-      )}
+        <label className="flex items-center justify-center h-10 mt-4 bg-my-gradient text-white px-4 py-2 rounded cursor-pointer hover:brightness-110 hover:scale-105">
+          Choisir une image
+          <Input
+            type={"file"}
+            onChange={handleFileChange}
+            className="hidden"
+          ></Input>
+        </label>
+
+        {coverImage ? (
+          <p className="my-2 text-sm text-text">{coverImage.name}</p>
+        ) : (
+          coverImageUrl && (
+            <img
+              src={`http://localhost:8000/storage/${coverImageUrl}`}
+              alt="cover actuelle"
+              className="m-auto my-2 h-40"
+            />
+          )
+        )}
+      </form>
 
       <button
         className={`bg-my-gradient w-32 h-10 rounded-lg text-text hover:brightness-110 hover:scale-105 transition ${
@@ -109,7 +112,7 @@ function Update() {
       >
         {isLoading ? "Chargement..." : "Modifier"}
       </button>
-    </form>
+    </>
   );
 }
 
