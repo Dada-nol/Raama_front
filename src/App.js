@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App flex min-h-screen text-text">
       <AuthProvider>
-        <Router></Router>
+        <Router />
       </AuthProvider>
     </div>
   );

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import MainLayout from "./components/layouts/AppLayout";
 import Guest from "./components/layouts/GuestLayout";
 import PrivateRoute from "./components/PivateRoute";
@@ -9,6 +9,7 @@ import { useAuth } from "./context/AuthContext";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Home from "./pages/Home";
+import InvitePage from "./pages/InvitePage";
 import LandingPage from "./pages/LandingPage";
 import NotFound from "./pages/NotFound";
 import AccountSettings from "./pages/profil/AccountSettings";
@@ -16,7 +17,6 @@ import Profil from "./pages/profil/Profil";
 import Create from "./pages/souvenirs/Create";
 import List from "./pages/souvenirs/List";
 import SouvenirEntries from "./pages/souvenirs/SouvenirEntries";
-import InvitePage from "./pages/InvitePage";
 
 function Router() {
   /* const staticRoutes = [
@@ -47,93 +47,91 @@ function Router() {
   if (showLoader) return <Transition />;
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Guest />}>
+    <Routes>
+      <Route path="/" element={<Guest />}>
+        <Route
+          index
+          element={
+            <PublicRoute>
+              <LandingPage />
+            </PublicRoute>
+          }
+        />
+      </Route>
+
+      <Route
+        path="register"
+        element={
+          <PublicRoute>
+            <Register />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="login"
+        element={
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        }
+      />
+
+      <Route element={<MainLayout />}>
+        <Route
+          path="home"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="profil"
+          element={
+            <PrivateRoute>
+              <Profil />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="account-setting"
+          element={
+            <PrivateRoute>
+              <AccountSettings />
+            </PrivateRoute>
+          }
+        />
+        <Route path="souvenir">
           <Route
             index
             element={
-              <PublicRoute>
-                <LandingPage />
-              </PublicRoute>
+              <PrivateRoute>
+                <List></List>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path=":id"
+            element={
+              <PrivateRoute>
+                <SouvenirEntries></SouvenirEntries>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="create"
+            element={
+              <PrivateRoute>
+                <Create></Create>
+              </PrivateRoute>
             }
           />
         </Route>
+      </Route>
 
-        <Route
-          path="register"
-          element={
-            <PublicRoute>
-              <Register />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="login"
-          element={
-            <PublicRoute>
-              <Login />
-            </PublicRoute>
-          }
-        />
-
-        <Route element={<MainLayout />}>
-          <Route
-            path="home"
-            element={
-              <PrivateRoute>
-                <Home />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="profil"
-            element={
-              <PrivateRoute>
-                <Profil />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="account-setting"
-            element={
-              <PrivateRoute>
-                <AccountSettings />
-              </PrivateRoute>
-            }
-          />
-          <Route path="souvenir">
-            <Route
-              index
-              element={
-                <PrivateRoute>
-                  <List></List>
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path=":id"
-              element={
-                <PrivateRoute>
-                  <SouvenirEntries></SouvenirEntries>
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="create"
-              element={
-                <PrivateRoute>
-                  <Create></Create>
-                </PrivateRoute>
-              }
-            />
-          </Route>
-        </Route>
-
-        <Route path="/invite/:token" element={<InvitePage />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+      <Route path="/invite/:token" element={<InvitePage />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 

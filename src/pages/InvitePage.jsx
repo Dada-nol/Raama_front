@@ -13,6 +13,7 @@ export default function InvitePage() {
       .get(`http://localhost:8000/api/invite/${token}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Accept: "application/json",
         },
       })
       .then((res) => {
@@ -21,6 +22,7 @@ export default function InvitePage() {
       .catch((err) => {
         console.log(err);
         if (err.response && err.response.status === 401) {
+          localStorage.setItem("pendingInviteToken", token);
           navigate("/login");
         } else {
           setError("Lien d'invitation invalide ou expiré.");
