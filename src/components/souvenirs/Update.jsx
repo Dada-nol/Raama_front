@@ -1,82 +1,114 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Input from "../ui/Input";
 
 function Update() {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [coverImage, setCoverImage] = useState("");
-  const [isClosed, setIsClosed] = useState(false);
+  const [title, setTitle] = useState("");
+  const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [coverImage, setCoverImage] = useState(null);
+  const [coverImageUrl, setCoverImageUrl] = useState("");
 
   const { id } = useParams(); // Pour récupérer l'id dans l'url c'est important de faire ça
-  const navigate = useNavigate();
 
   // Récupérer les données déjà existantes, pour les afficher dans le form
   useEffect(() => {
     const fetchData = async () => {
-      await axios
-        .get(`http://localhost:8000/api/souvenir/${id}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        })
-        .then((res) => {
-          const data = res.data;
-          setName(data.name);
-          setDescription(data.description);
-          setCoverImage(data.cover_image);
-          setIsClosed(data.is_closed);
-        })
-        .catch((e) => console.error(e));
+      try {
+        const res = await axios.get(
+          `http://localhost:8000/api/souvenir/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        setTitle(res.data.title);
+        setCoverImageUrl(res.data.cover_image);
+      } catch (e) {
+        console.error(e);
+      }
     };
-
     fetchData();
   }, [id]);
+
+  const handleFileChange = (e) => {
+    setCoverImage(e.target.files[0]);
+    setCoverImageUrl(""); // On efface l’ancienne url
+  };
 
   // Modification des données en faisant un appel API
   const handleUpdate = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setErrors({});
+
+    const formData = new FormData();
+    formData.append("title", title);
+    if (coverImage) {
+      formData.append("cover_image", coverImage);
+    }
+    formData.append("_method", "PUT");
+
     try {
-      await axios.put(
-        `http://localhost:8000/api/souvenir/${id}`,
-        {
-          name,
-          description,
-          cover_image: coverImage,
-          is_close: isClosed,
+      await axios.post(`http://localhost:8000/api/souvenir/${id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "multipart/form-data",
         },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      console.log("Souvenir modifié !");
-      navigate("/");
+      });
+      window.location.href = `/souvenir/${id}`;
     } catch (e) {
-      console.error(e);
+      if (e.response) {
+        setErrors(e.response.data.errors);
+      } else {
+        console.error("Erreur inattendue", e);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <form onSubmit={handleUpdate}>
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        type="text"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-      <input
-        type="text"
-        value={coverImage}
-        onChange={(e) => setCoverImage(e.target.value)}
-      />
+      <Input
+        type={"text"}
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      ></Input>
+      {errors.title && <p className="text-danger">{errors.title[0]}</p>}
 
-      <button type="submit">Modifier</button>
+      <label className="inline-block bg-my-gradient text-white my-2 px-4 py-2 rounded cursor-pointer hover:brightness-110 hover:scale-105">
+        Choisir une image
+        <Input
+          type={"file"}
+          onChange={handleFileChange}
+          className="hidden"
+        ></Input>
+      </label>
+
+      {coverImage ? (
+        <p className="mt-2 text-sm text-text">{coverImage.name}</p>
+      ) : (
+        coverImageUrl && (
+          <img
+            src={`http://localhost:8000/storage/${coverImageUrl}`}
+            alt="cover actuelle"
+            className="m-auto my-2 w-40 h-auto rounded"
+          />
+        )
+      )}
+
+      <button
+        className={`bg-my-gradient w-32 h-10 rounded-lg text-text hover:brightness-110 hover:scale-105 transition ${
+          isLoading ? "opacity-50 cursor-not-allowed" : ""
+        }`}
+        type="submit"
+        disabled={isLoading}
+      >
+        {isLoading ? "Chargement..." : "Modifier"}
+      </button>
     </form>
   );
 }

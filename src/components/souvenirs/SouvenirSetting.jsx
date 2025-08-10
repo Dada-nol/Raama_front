@@ -1,7 +1,13 @@
-import React from "react";
+import Delete from "./Delete";
+import Update from "./Update";
 
 function SouvenirSetting() {
-  return <div>SouvenirSetting</div>;
+  return (
+    <div>
+      <Update></Update>
+      <Delete></Delete>
+    </div>
+  );
 }
 
 export default SouvenirSetting;

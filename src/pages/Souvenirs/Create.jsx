@@ -62,7 +62,6 @@ function Create() {
         },
       });
 
-      console.log("Souvenir créée !");
       navigate("/souvenir");
     } catch (e) {
       if (e.response && e.response.status === 422) {
