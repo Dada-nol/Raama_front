@@ -16,6 +16,7 @@ import Profil from "./pages/profil/Profil";
 import Create from "./pages/souvenirs/Create";
 import List from "./pages/souvenirs/List";
 import SouvenirEntries from "./pages/souvenirs/SouvenirEntries";
+import InvitePage from "./pages/InvitePage";
 
 function Router() {
   /* const staticRoutes = [
@@ -129,6 +130,7 @@ function Router() {
           </Route>
         </Route>
 
+        <Route path="/invite/:token" element={<InvitePage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
