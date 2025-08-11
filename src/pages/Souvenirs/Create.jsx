@@ -1,3 +1,4 @@
+import { LockClosedIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -61,7 +62,6 @@ function Create() {
         },
       });
 
-      console.log("Souvenir créée !");
       navigate("/souvenir");
     } catch (e) {
       if (e.response && e.response.status === 422) {
@@ -85,21 +85,40 @@ function Create() {
           Choisissez votre type de Memoire
         </h3>
         <div className="flex flex-col lg:flex-row justify-evenly items-center p-4 gap-4">
-          {memoryType.map((memory) => (
-            <button
-              type="button"
-              key={memory.id}
-              onClick={() => setSelectedMemoryType(memory.id)}
-            >
-              <div
-                className={`card w-80 p-4 relative overflow-hidden rounded-xl 
+          {memoryType.map((memory) =>
+            memory.isAvailable ? (
+              <button
+                type="button"
+                key={memory.id}
+                onClick={() => setSelectedMemoryType(memory.id)}
+              >
+                <div
+                  className={`card w-80 p-4 relative overflow-hidden 
     ${selectedMemoryType === memory.id ? "ring-4 ring-primary" : ""}
     bg-secondary gradient-border transition-transform duration-300 hover:scale-105 hover:text-gradient`}
+                >
+                  {memory.title}
+                </div>
+              </button>
+            ) : (
+              <button
+                type="button"
+                key={memory.id}
+                disabled
+                className="cursor-not-allowed"
               >
-                {memory.title}
-              </div>
-            </button>
-          ))}
+                <div className="w-80 h-28 p-4 relative overflow-hidden bg-secondary border-2 border-danger opacity-60">
+                  <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center gap-2">
+                    <LockClosedIcon className="w-6 h-6 text-white" />
+                    <p className="text-white font-bold">{memory.title}</p>
+                    <p className="text-sm text-gray-200">
+                      Indisponible pour le moment
+                    </p>
+                  </div>
+                </div>
+              </button>
+            )
+          )}
         </div>
         {errors.memory_type && (
           <p className="text-danger">{errors.memory_type[0]}</p>
@@ -130,6 +149,9 @@ function Create() {
               className="hidden"
             />
           </label>
+          {coverImage && (
+            <p className="mt-2 text-sm text-text">{coverImage.name}</p>
+          )}
           {errors.cover_image && (
             <p className="text-danger">{errors.cover_image[0]}</p>
           )}

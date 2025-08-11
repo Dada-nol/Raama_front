@@ -1,13 +1,15 @@
-// src/context/AuthContext.jsx
-import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
+  // 1. On récupère l'utilisateur à l'initialisation
   const fetchUser = async () => {
     try {
       const res = await axios.get("http://localhost:8000/api/user", {
@@ -26,6 +28,28 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     fetchUser();
   }, []);
+
+  // 2. Quand user est chargé et connecté, on check le pendingInviteToken
+  useEffect(() => {
+    if (!loading && user) {
+      const token = localStorage.getItem("pendingInviteToken");
+      if (token) {
+        localStorage.removeItem("pendingInviteToken");
+        axios
+          .get(`http://localhost:8000/api/invite/${token}`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          })
+          .then((res) => {
+            navigate(`/souvenir/${res.data.souvenir_id}`);
+          })
+          .catch(() => {
+            navigate("/");
+          });
+      }
+    }
+  }, [loading, user, navigate]);
 
   const logout = async () => {
     try {

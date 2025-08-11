@@ -2,9 +2,9 @@ import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import panda3 from "../../assets/img/panda3.jpg";
-import EntryFilterByUser from "../../components/ui/EntryFilterByUser";
+import EntryContainer from "../../components/souvenirs/entries/EntryContainer";
 
-function Show() {
+function SouvenirEntries() {
   const [souvenir, setSouvenir] = useState("");
   const [entries, setEntries] = useState([]);
   const [title, setTitle] = useState("");
@@ -84,16 +84,19 @@ function Show() {
         <li className="text-gradient">
           {souvenir.entries?.length} published photos
         </li>
+        <li className="text-gradient">
+          {souvenir.memory_points} memory points
+        </li>
       </ul>
 
-      <EntryFilterByUser
+      <EntryContainer
         members={souvenir.users}
         entries={entries}
         id={id}
         refreshEntries={fetchEntries}
-      ></EntryFilterByUser>
+      ></EntryContainer>
     </>
   );
 }
 
-export default Show;
+export default SouvenirEntries;

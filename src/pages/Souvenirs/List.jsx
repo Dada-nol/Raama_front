@@ -6,10 +6,10 @@ function List() {
   const [data, setData] = useState([]);
   const [memoryType, setMemoryType] = useState([]);
   const [errors, setErrors] = useState({});
-  const [sortOption, setSortOption] = useState("memory_type");
+  const [sortOption, setSortOption] = useState("title");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const options = ["title", "created_at", "updated_at", "memory_type"];
+  const options = ["title", "created_at", "memory_type"];
 
   const handleSort = (e) => {
     setSortOption(e);
@@ -131,15 +131,20 @@ function List() {
                         )}
                         <p className="w-fit">{souvenir.title}</p>
                         <p className="w-fit">{souvenir.memory_points}</p>
-                        <p className="w-fit">{souvenir.memory_type_id}</p>
                       </a>
                     </li>
                   ))}
+
+                {!type.isAvailable && (
+                  <li className="w-80 p-4 border-2 border-danger bg-secondary opacity-60 flex items-center justify-center">
+                    <p className="text-danger">Bientôt disponible</p>
+                  </li>
+                )}
               </ul>
             </div>
           ))
         ) : (
-          <ul className="flex flex-wrap gap-6 justify-center m-8">
+          <ul className="flex flex-wrap gap-4 justify-center my-8">
             {[...filteredData]
               .sort((a, b) => {
                 if (sortOption === "title") {

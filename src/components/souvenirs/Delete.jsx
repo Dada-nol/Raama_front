@@ -14,7 +14,14 @@ function Delete() {
     navigate("/");
   };
 
-  return <button onClick={handleDelete}>Delete</button>;
+  return (
+    <button
+      className="bg-danger rounded-md px-4 py-2 hover:scale-105"
+      onClick={handleDelete}
+    >
+      Delete
+    </button>
+  );
 }
 
 export default Delete;

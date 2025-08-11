@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
-import Footer from "./Footer";
-import Nav from "./Nav";
+import Footer from "./guest/Footer";
+import Nav from "./guest/Nav";
 
-function Guest() {
+function GuestLayout() {
   return (
     <div className="flex flex-col w-full">
       <Nav />
@@ -12,4 +12,4 @@ function Guest() {
   );
 }
 
-export default Guest;
+export default GuestLayout;

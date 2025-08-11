@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
-import SideBar from "./SideBar";
+import SideBar from "./app/SideBar";
 // import Footer from "./Footer";
 
-function Layout() {
+function AppLayout() {
   return (
     <>
       <SideBar />
@@ -20,4 +20,4 @@ function Layout() {
   );
 }
 
-export default Layout;
+export default AppLayout;

@@ -101,7 +101,7 @@ function NavLinks({ expanded }) {
         </svg>
         <span>Notifications</span>
       </Link> */}
-      <NavLink
+      {/*       <NavLink
         to="/setting"
         className={({ isActive }) =>
           `flex gap-4 justify-start ml-2 font-bold ${
@@ -130,7 +130,7 @@ function NavLinks({ expanded }) {
           />
         </svg>
         <span>Settings</span>
-      </NavLink>
+      </NavLink> */}
     </div>
   );
 }

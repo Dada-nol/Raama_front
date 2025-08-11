@@ -1,10 +1,10 @@
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import DeleteAccountModale from "../components/ui/DeleteAccountModale";
-import Input from "../components/ui/Input";
-import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import DeleteAccountModale from "../../components/profil/DeleteAccountModale";
+import Input from "../../components/ui/Input";
+import { useAuth } from "../../context/AuthContext";
 
 function AccountSettings() {
   const { user } = useAuth();
@@ -68,13 +68,13 @@ function AccountSettings() {
   return (
     <>
       <div className="w-full flex flex-row justify-center mb-8">
-        <h1 className="text-gradient text-2xl w-fit">Paramètres de compte</h1>
+        <h1 className="text-gradient text-2xl w-fit">Account settings</h1>
       </div>
 
       <form onSubmit={UpdateUser}>
         <section className="flex flex-col md:flex-row justify-center gap-4 border border-primary mx-20 mb-8 p-4">
           <div>
-            <p>Nom</p>
+            <p>Name</p>
             <Input
               type={"text"}
               value={name}
@@ -84,7 +84,7 @@ function AccountSettings() {
           </div>
           <div>
             <div>
-              <p>Prénom</p>
+              <p>Firstname</p>
               <Input
                 type={"text"}
                 value={firstname}
@@ -106,10 +106,12 @@ function AccountSettings() {
           </div>
         </section>
 
-        <h2>Modifier le mot de passe</h2>
+        <h2 className="text-lg font-bold text-left mx-20 my-4">
+          Update password
+        </h2>
         <section className="flex flex-col md:flex-row justify-center gap-4 border border-primary mx-20 mb-8 p-4">
           <div className="">
-            <p>Ancien mot de passe</p>
+            <p>Previous password</p>
             <Input
               type={"password"}
               value={oldPassword}
@@ -121,7 +123,7 @@ function AccountSettings() {
           </div>
 
           <div className="">
-            <p>Nouveau mot de passe</p>
+            <p>New password</p>
             <Input
               type={"password"}
               value={password}
@@ -133,7 +135,7 @@ function AccountSettings() {
           </div>
 
           <div className="">
-            <p>Confirmer le mot de passe</p>
+            <p>Repeat new password</p>
             <Input
               type={"password"}
               value={password_confirmation}
@@ -159,7 +161,7 @@ function AccountSettings() {
       <section className="flex flex-row items-center justify-between border border-danger p-4 mx-20 my-4">
         <div className="flex justify-center items-center">
           <ExclamationTriangleIcon className="h-10 w-10 text-red-600 pr-2" />
-          <p>L'action suivante est irréversible !</p>
+          <p>This action is irreversible !</p>
         </div>
         <DeleteAccountModale></DeleteAccountModale>
       </section>
