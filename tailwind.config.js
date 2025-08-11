@@ -13,7 +13,6 @@ module.exports = {
         background: "#1A1F16",
         danger: "#D67229",
         text: "#FFFFFF",
-        // Ajoute d'autres couleurs selon ton design
       },
       backgroundImage: {
         "my-gradient": "linear-gradient(to right, #C6CC09, #64B000, #00BDB4)",

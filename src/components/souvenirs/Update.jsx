@@ -72,46 +72,47 @@ function Update() {
 
   return (
     <>
-      <form onSubmit={handleUpdate}>
-        <h3 className="text-lg">Title</h3>
-        <Input
-          type={"text"}
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        ></Input>
-        {errors.title && <p className="text-danger">{errors.title[0]}</p>}
-
-        <label className="flex items-center justify-center h-10 mt-4 bg-my-gradient text-white px-4 py-2 rounded cursor-pointer hover:brightness-110 hover:scale-105">
-          Choisir une image
+      <form onSubmit={handleUpdate} className="space-y-4 w-full">
+        <div>
+          <h3 className="text-lg font-medium mb-1">Title</h3>
           <Input
-            type={"file"}
-            onChange={handleFileChange}
-            className="hidden"
-          ></Input>
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="w-full text-black border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+          {errors.title && (
+            <p className="text-danger text-sm mt-1">{errors.title[0]}</p>
+          )}
+        </div>
+
+        <label className="flex items-center justify-center h-12 bg-my-gradient text-white px-4 py-2 rounded-lg cursor-pointer hover:brightness-110 hover:scale-105 transition">
+          Choisir une image
+          <Input type="file" onChange={handleFileChange} className="hidden" />
         </label>
 
         {coverImage ? (
-          <p className="my-2 text-sm text-text">{coverImage.name}</p>
+          <p className="text-sm text-text">{coverImage.name}</p>
         ) : (
           coverImageUrl && (
             <img
               src={`http://localhost:8000/storage/${coverImageUrl}`}
               alt="cover actuelle"
-              className="m-auto my-2 h-40"
+              className="mx-auto my-2 h-40 rounded-lg shadow"
             />
           )
         )}
-      </form>
 
-      <button
-        className={`bg-my-gradient w-32 h-10 rounded-lg text-text hover:brightness-110 hover:scale-105 transition ${
-          isLoading ? "opacity-50 cursor-not-allowed" : ""
-        }`}
-        type="submit"
-        disabled={isLoading}
-      >
-        {isLoading ? "Chargement..." : "Modifier"}
-      </button>
+        <button
+          className={`bg-my-gradient w-36 h-10 rounded-lg text-white font-medium hover:brightness-110 hover:scale-105 transition ${
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+          type="submit"
+          disabled={isLoading}
+        >
+          {isLoading ? "Chargement..." : "Modifier"}
+        </button>
+      </form>
     </>
   );
 }

@@ -29,7 +29,7 @@ function SouvenirSettingModale() {
         >
           <div
             onClick={handleModalClick}
-            className="bg-[#1E1E1E] w-full sm:w-[400px] md:w-[800px] p-6 overflow-auto max-h-[80vh] shadow-xl"
+            className="bg-secondary w-full sm:w-[400px] md:w-[800px] p-6 overflow-auto max-h-[80vh] shadow-xl"
           >
             <SouvenirSetting></SouvenirSetting>
           </div>
