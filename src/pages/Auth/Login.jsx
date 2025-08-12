@@ -17,8 +17,6 @@ function Login() {
   const [globalErrors, setGlobalErrors] = useState("");
   const navigate = useNavigate();
 
-  const isMobile = window.innerWidth <= 768;
-
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -56,44 +54,49 @@ function Login() {
   };
 
   return (
-    <main className="h-screen w-full grid grid-cols-1 md:grid-cols-2 content-center bg-secondary">
-      {!isMobile && (
-        <section className="h-screen overflow-hidden">
-          <img src={panda4} alt="Panda" className="h-full object-cover" />
-        </section>
-      )}
+    <main className="min-h-screen w-full grid grid-cols-1 md:grid-cols-2 bg-secondary">
+      {/* Image affichée uniquement sur desktop */}
+      <section className="hidden md:block h-screen overflow-hidden">
+        <img src={panda4} alt="Panda" className="h-full w-full object-cover" />
+      </section>
 
+      {/* Formulaire */}
       <form
-        className="w-full flex flex-col items-center gap-4 py-4 h-screen"
+        className="w-full flex flex-col items-center gap-4 py-8 px-4 md:px-8 justify-start"
         onSubmit={handleLogin}
       >
-        <Logo width={200}></Logo>
+        <Logo width={200} />
         <h2 className="py-6 text-xl font-bold">Login</h2>
-        <div className="relative w-[400px]">
+
+        {/* Email */}
+        <div className="relative w-full max-w-[400px]">
           <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
           <Input
-            type={"text"}
+            type="text"
             value={email}
-            placeholder={"Email"}
+            placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
-          ></Input>
+          />
         </div>
         {errors.email && <p className="text-danger">{errors.email[0]}</p>}
 
-        <div className="relative w-[400px]">
+        {/* Password */}
+        <div className="relative w-full max-w-[400px]">
           <LockClosedIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
           <Input
-            type={"password"}
+            type="password"
             value={password}
-            placeholder={"Password"}
+            placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
-          ></Input>
+          />
         </div>
         {errors.password && <p className="text-danger">{errors.password[0]}</p>}
 
+        {/* Global errors */}
         {globalErrors && <p className="text-danger">{globalErrors}</p>}
 
-        <div className="w-[400px] text-right">
+        {/* Forget password */}
+        <div className="w-full max-w-[400px] text-right">
           <a
             className="inline-block text-gradient transition-transform duration-300 hover:scale-105"
             href="/reset-password"
@@ -101,8 +104,10 @@ function Login() {
             Forget password ?
           </a>
         </div>
+
+        {/* Submit */}
         <button
-          className={`inline-block gradient-border transition-transform duration-300 hover:scale-105 px-4 py-2 ${
+          className={`gradient-border transition-transform duration-300 hover:scale-105 px-4 py-2 ${
             isLoading ? "opacity-50 cursor-not-allowed" : ""
           }`}
           type="submit"
@@ -110,6 +115,8 @@ function Login() {
         >
           {isLoading ? "Chargement..." : "Se connecter"}
         </button>
+
+        {/* Sign up link */}
         <p className="text-center">
           <a
             className="inline-block text-gradient transition-transform duration-300 hover:scale-105 pr-2"

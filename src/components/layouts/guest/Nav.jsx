@@ -1,19 +1,13 @@
 import { useEffect, useState } from "react";
 import img_panda1 from "../../../assets/img/panda1.png";
 import video_loop1 from "../../../assets/video/loop1.mp4";
-import Button from "../../ui/Button";
 import Logo from "../../ui/Logo";
 
 function Nav() {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [colorNav, setColorNav] = useState("transparent");
   const [sizeLogo, setSizeLogo] = useState(true);
 
   useEffect(() => {
-    const handleSize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
     const handleScroll = () => {
       const vh100 = window.innerHeight - 100;
       if (window.scrollY > vh100) {
@@ -25,12 +19,10 @@ function Nav() {
       }
     };
 
-    window.addEventListener("resize", handleSize);
     window.addEventListener("scroll", handleScroll);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleSize);
     };
   }, []);
 
@@ -51,38 +43,43 @@ function Nav() {
             className="text-lg hover:scale-105 inline-block transition-transform duration-300 hover:scale-140"
             href="/login"
           >
-            <Button name="Log in" />
+            Log in
           </a>
           <a
             className="text-lg hover:scale-105 inline-block transition-transform duration-300 hover:scale-140"
             href="/register"
           >
-            <Button name="Register" />
+            Register
           </a>
         </div>
       </nav>
-      {isMobile ? (
-        <img
-          src={img_panda1}
-          alt="Panda allongé couvrant le haut de la landing page"
-          className="background-img"
-        ></img>
-      ) : (
-        <video autoPlay muted loop playsInline className="background-video">
-          <source src={video_loop1} type="video/mp4" />
-        </video>
-      )}
 
-      <div className="header-content flex flex-col items-center">
-        <h1 className="font-bold text-[40px] flex flex-col items-center pb-6">
-          <p>Chaque jour une mémoire,</p>
-          <p>chaque mémoire un lien</p>
+      <img
+        src={img_panda1}
+        alt="Panda allongé couvrant le haut de la landing page"
+        className="block md:hidden background-img"
+      ></img>
+
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="hidden md:block background-video"
+      >
+        <source src={video_loop1} type="video/mp4" />
+      </video>
+
+      <div className="absolute top-1/2 left-1/2 transform  -translate-y-1/2 -translate-x-1/2 z-10 flex flex-col items-center text-center">
+        <h1 className="font-bold text-3xl md:text-4xl flex flex-col items-center pb-6">
+          <span>Chaque jour une mémoire,</span>
+          <span>chaque mémoire un lien</span>
         </h1>
         <a
-          className="gradient-border p-4 inline-block transition-transform duration-300 hover:scale-105"
+          className="text-lg bg-my-gradient border border-white shadow-md hover:shadow-lg rounded-lg p-4 inline-block transition-transform duration-300 hover:scale-105"
           href="/register"
         >
-          <button className="text-lg">Get started</button>
+          Get started
         </a>
       </div>
     </header>

@@ -11,9 +11,9 @@ function AppLayout() {
           <h1 className="text-gradient w-fit text-3xl font-bold tracking-wide">
             Raama
           </h1>
-          <div className="w-10 h-10 border rounded-full flex items-center justify-center hover:shadow-[0_0_10px_2px_#64b000] transition-shadow duration-200">
+          {/* <div className="w-10 h-10 border rounded-full flex items-center justify-center hover:shadow-[0_0_10px_2px_#64b000] transition-shadow duration-200">
             <button className="p-2">?</button>
-          </div>
+          </div> */}
         </div>
         <Outlet />
       </main>
