@@ -44,8 +44,8 @@ const EntryFeed = ({
       className={`${
         members?.length < 2 || selectedUserId
           ? "flex-row-reverse flex-wrap-reverse justify-end items-end"
-          : "flex-col-reverse items-center gap-12"
-      } flex`} /* flex overflow-y-scroll h-[90vh] border border-primary md:w-[60vw] m-auto rounded-md bg-secondary */
+          : "flex-col-reverse flex-wrap items-center"
+      } flex`}
     >
       {/* DEMAIN – Upload seulement */}
       {(groupedByDate[tomorrowStr]?.length > 0 || !selectedUserId) && (
