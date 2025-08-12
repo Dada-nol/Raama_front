@@ -16,7 +16,7 @@ function SouvenirSettingModale() {
   return (
     <>
       <button
-        className="w-8 h-8 text-primary absolute top-2 right-5 "
+        className="w-8 h-8 text-primary absolute top-1 right-2 "
         onClick={() => setShowModal(true)}
       >
         <EllipsisVerticalIcon></EllipsisVerticalIcon>

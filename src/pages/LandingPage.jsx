@@ -1,7 +1,7 @@
+import paysage from "../assets/img/paysage.jpg";
 import photo1 from "../assets/img/photo1.jpg";
 import photo2 from "../assets/img/photo2.jpg";
 import BackToTop from "../components/ui/BackToTop";
-import Button from "../components/ui/Button";
 import Feature from "../components/ui/CardFeature";
 
 function LandingPage() {
@@ -12,7 +12,7 @@ function LandingPage() {
         <h2 className="title font-bold text-[25px] text-gradient">
           Fonctionnalités
         </h2>
-        <div className="flex justify-evenly items-center bg-secondary w-full p-6">
+        <div className="flex flex-col md:flex-row gap-6 justify-evenly bg-secondary w-full p-6">
           <Feature
             icon="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Z"
             description="Privacy first"
@@ -33,27 +33,23 @@ function LandingPage() {
         {/* Halo vert */}
         <div className="absolute w-[600px] h-[600px] bg-[#64B000] rounded-full blur-[120px] opacity-30  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
 
-        <div className="flex items-center max-w-6xl">
-          <div className="relative w-[300px] h-[400px]">
+        <div className="flex flex-col md:flex-row items-center ">
+          <div className="relative w-full h-[300px] md:h-[400px]">
             <img
-              src={photo1}
+              src={paysage}
               alt="photo1"
-              className="absolute top-0 left-0 w-full h-full object-cover rotate-[12deg] border-2 border-white shadow-xl"
+              className="w-[200px] h-[300px] md:w-[300px] md:h-[400px] absolute top-0 left-0 h-full object-cover -rotate-[12deg] md:rotate-[12deg] border-2 border-white shadow-xl"
             />
             <img
               src={photo1}
               alt="photo2"
-              className="absolute top-8 left-8 w-full h-full object-cover rotate-[12deg] border-2 border-white shadow-lg z-10"
+              className="w-[200px] h-[300px] md:w-[300px] md:h-[400px] absolute right-0 md:top-8 md:left-8 h-full object-cover rotate-[12deg] border-2 border-white shadow-lg z-10"
             />
           </div>
 
-          <div className="w-[500px] bg-white/5 backdrop-blur-md rounded-xl p-8 border border-white/10 shadow-[0_0_10px_2px_rgba(255,255,255,0.1)] text-white">
+          <div className="bg-white/5 backdrop-blur-md rounded-xl p-8 border border-white/10 shadow-[0_0_10px_2px_rgba(255,255,255,0.1)] text-white">
             <p className="text-2xl font-semibold leading-relaxed text-center">
-              Tes meilleurs moments,
-              <br />
-              à portée de main, pour
-              <br />
-              toute la vie.
+              Tes meilleurs moments, à portée de main, pour toute la vie.
             </p>
           </div>
         </div>
@@ -61,15 +57,15 @@ function LandingPage() {
 
       {/* CTA */}
       <section className="w-full bg-secondary">
-        <div className="flex justify-evenly items-center p-10">
-          <p className="text-xl font-semibold leading-relaxed">
+        <div className="flex flex-col md:flex-row md:justify-evenly items-center p-10 gap-6">
+          <p className="text-xl font-semibold leading-relaxed text-center pb-2">
             Pour commencer à créer des souvenirs c'est ici :
           </p>
           <a
             className="text-md hover:scale-105 inline-block transition-transform duration-300 hover:scale-140 gradient-border p-4"
             href="/register"
           >
-            <Button name="Get started" />
+            Get started
           </a>
         </div>
       </section>
@@ -78,7 +74,7 @@ function LandingPage() {
       <section className="w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 m-20 content-center justify-items-center border border-white rounded-lg p-8 border-white/10 shadow-[0_0_10px_2px_rgba(255,255,255,0.1)]">
           <div className="flex items-center">
-            <p className="text-2xl font-semibold leading-relaxed text-center">
+            <p className="text-xl md:text-2xl pb-2 font-semibold leading-relaxed text-center">
               Crée un groupe, invite tes amis,
               <br></br>
               et construisez ensemble un album unique.

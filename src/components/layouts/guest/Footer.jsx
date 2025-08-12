@@ -2,14 +2,14 @@ import SocialIcons from "../../ui/SocialIcons";
 
 function Footer() {
   return (
-    <footer className="flex flex-row justify-between items-center ">
+    <footer className="flex flex-col md:flex-row justify-between items-center gap-8">
       <div>
         <h4>Connect with us</h4>
 
         <SocialIcons></SocialIcons>
       </div>
 
-      <div className="">
+      <div className="text-center">
         <h4>Contact us</h4>
         <ul>
           <li>

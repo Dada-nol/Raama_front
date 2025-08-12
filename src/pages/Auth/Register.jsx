@@ -14,8 +14,6 @@ import Input from "../../components/ui/Input";
 function Register() {
   const { setUser } = useAuth();
 
-  const isMobile = window.innerWidth <= 768;
-
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState("");
   const [firstname, setFirstName] = useState("");
@@ -65,79 +63,89 @@ function Register() {
   };
 
   return (
-    <main className="w-full grid grid-cols-1 md:grid-cols-2 content-center bg-secondary">
+    <main className="min-h-screen w-full grid grid-cols-1 md:grid-cols-2 bg-secondary">
+      {/* Formulaire */}
       <form
-        className="w-full flex flex-col items-center gap-4  pb-20"
+        className="w-full flex flex-col items-center gap-4 pb-20 px-4 md:px-8 justify-center"
         onSubmit={handleRegister}
       >
-        <Logo width={200}></Logo>
+        <Logo width={200} />
         <h2 className="py-6 text-xl font-bold">
           Create an account to continue
         </h2>
-        <div className="relative w-[400px]">
+
+        {/* Name */}
+        <div className="relative w-full max-w-[400px]">
           <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
           <Input
-            type={"text"}
+            type="text"
             value={name}
-            placeholder={"Name"}
+            placeholder="Name"
             onChange={(e) => setName(e.target.value)}
-          ></Input>
+          />
         </div>
         {errors.name && <p className="text-danger">{errors.name[0]}</p>}
 
-        <div className="relative w-[400px]">
+        {/* Firstname */}
+        <div className="relative w-full max-w-[400px]">
           <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
           <Input
-            type={"text"}
+            type="text"
             value={firstname}
-            placeholder={"Firstname"}
+            placeholder="Firstname"
             onChange={(e) => setFirstName(e.target.value)}
-          ></Input>
+          />
         </div>
         {errors.firstname && (
           <p className="text-danger">{errors.firstname[0]}</p>
         )}
 
-        <hr className="border border-gray-300 w-[300px] my-4"></hr>
+        <hr className="border border-gray-300 w-full max-w-[300px] my-4" />
 
-        <div className="relative w-[400px]">
+        {/* Email */}
+        <div className="relative w-full max-w-[400px]">
           <EnvelopeIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
           <Input
-            type={"text"}
+            type="text"
             value={email}
-            placeholder={"Email"}
+            placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
-          ></Input>
+          />
         </div>
         {errors.email && <p className="text-danger">{errors.email[0]}</p>}
 
-        <div className="relative w-[400px]">
+        {/* Password */}
+        <div className="relative w-full max-w-[400px]">
           <LockClosedIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
           <Input
-            type={"password"}
+            type="password"
             value={password}
-            placeholder={"Password"}
+            placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
-          ></Input>
+          />
         </div>
 
-        <div className="relative w-[400px]">
+        {/* Confirm password */}
+        <div className="relative w-full max-w-[400px]">
           <LockClosedIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
           <Input
-            type={"password"}
+            type="password"
             value={password_confirmation}
-            placeholder={"Confirm password"}
+            placeholder="Confirm password"
             onChange={(e) => setPassword_confirmation(e.target.value)}
-          ></Input>
+          />
         </div>
         {errors.password && <p className="text-danger">{errors.password[0]}</p>}
 
-        <div className="flex flex-col justify-center items-center my-4">
+        {/* Privacy */}
+        <div className="flex flex-col justify-center items-center my-4 text-center">
           <p>By creating an account,</p>
           <p>you agree to our Privacy Policy</p>
         </div>
+
+        {/* Submit */}
         <button
-          className={`inline-block gradient-border transition-transform duration-300 hover:scale-105 px-4 py-2 ${
+          className={`gradient-border transition-transform duration-300 hover:scale-105 px-4 py-2 ${
             isLoading ? "opacity-50 cursor-not-allowed" : ""
           }`}
           type="submit"
@@ -145,6 +153,8 @@ function Register() {
         >
           {isLoading ? "Chargement..." : "Register"}
         </button>
+
+        {/* Link to login */}
         <p className="text-center">
           <a
             className="inline-block text-gradient transition-transform duration-300 hover:scale-105 pr-2"
@@ -156,11 +166,10 @@ function Register() {
         </p>
       </form>
 
-      {!isMobile && (
-        <section className="overflow-hidden m-0">
-          <img src={panda4} alt="Panda" className="h-full object-cover" />
-        </section>
-      )}
+      {/* Image uniquement sur desktop */}
+      <section className="hidden md:block overflow-hidden">
+        <img src={panda4} alt="Panda" className="h-full w-full object-cover" />
+      </section>
     </main>
   );
 }

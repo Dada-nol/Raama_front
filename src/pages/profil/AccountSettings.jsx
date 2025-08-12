@@ -67,103 +67,107 @@ function AccountSettings() {
 
   return (
     <>
-      <div className="w-full flex flex-row justify-center mb-8">
+      <div className="w-full flex justify-center mb-8">
         <h1 className="text-gradient text-2xl w-fit">Account settings</h1>
       </div>
 
-      <form onSubmit={UpdateUser}>
-        <section className="flex flex-col md:flex-row justify-center gap-4 border border-primary mx-20 mb-8 p-4">
-          <div>
-            <p>Name</p>
+      <form onSubmit={UpdateUser} className="space-y-8">
+        {/* Infos utilisateur */}
+        <section className="flex flex-col md:flex-row flex-wrap justify-center gap-6 border border-primary mx-4 md:mx-20 p-4 rounded-lg">
+          <div className="flex-1 min-w-[220px]">
+            <p className="font-semibold text-sm mb-1">Name</p>
             <Input
-              type={"text"}
+              type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-            ></Input>
+            />
             {errors.name && <p className="text-danger">{errors.name[0]}</p>}
           </div>
-          <div>
-            <div>
-              <p>Firstname</p>
-              <Input
-                type={"text"}
-                value={firstname}
-                onChange={(e) => setFirstname(e.target.value)}
-              ></Input>
-              {errors.firstname && (
-                <p className="text-danger">{errors.firstname[0]}</p>
-              )}
-            </div>
-          </div>
-          <div className="">
-            <p>Email</p>
+
+          <div className="flex-1 min-w-[220px]">
+            <p className="font-semibold text-sm mb-1">Firstname</p>
             <Input
-              type={"text"}
+              type="text"
+              value={firstname}
+              onChange={(e) => setFirstname(e.target.value)}
+            />
+            {errors.firstname && (
+              <p className="text-danger">{errors.firstname[0]}</p>
+            )}
+          </div>
+
+          <div className="flex-1 min-w-[220px]">
+            <p className="font-semibold text-sm mb-1">Email</p>
+            <Input
+              type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-            ></Input>
+            />
             {errors.email && <p className="text-danger">{errors.email[0]}</p>}
           </div>
         </section>
 
-        <h2 className="text-lg font-bold text-left mx-20 my-4">
-          Update password
-        </h2>
-        <section className="flex flex-col md:flex-row justify-center gap-4 border border-primary mx-20 mb-8 p-4">
-          <div className="">
-            <p>Previous password</p>
+        {/* Changement mot de passe */}
+        <h2 className="text-lg font-bold mx-4 md:mx-20">Update password</h2>
+        <section className="flex flex-col md:flex-row flex-wrap justify-center gap-6 border border-primary mx-4 md:mx-20 p-4 rounded-lg">
+          <div className="flex-1 min-w-[220px]">
+            <p className="font-semibold text-sm mb-1">Previous password</p>
             <Input
-              type={"password"}
+              type="password"
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
-            ></Input>
+            />
             {password_error.message && (
               <p className="text-danger">{password_error.message}</p>
             )}
           </div>
 
-          <div className="">
-            <p>New password</p>
+          <div className="flex-1 min-w-[220px]">
+            <p className="font-semibold text-sm mb-1">New password</p>
             <Input
-              type={"password"}
+              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-            ></Input>
+            />
             {errors.password && (
               <p className="text-danger">{errors.password[0]}</p>
             )}
           </div>
 
-          <div className="">
-            <p>Repeat new password</p>
+          <div className="flex-1 min-w-[220px]">
+            <p className="font-semibold text-sm mb-1">Repeat new password</p>
             <Input
-              type={"password"}
+              type="password"
               value={password_confirmation}
               onChange={(e) => setPassword_confirmation(e.target.value)}
-            ></Input>
+            />
             {errors.password && (
               <p className="text-danger">{errors.password[0]}</p>
             )}
           </div>
         </section>
 
-        <button
-          className={`bg-primary rounded-md px-4 py-2 hover:scale-105 ${
-            isLoading ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-          type="submit"
-          disabled={isLoading}
-        >
-          {isLoading ? "Chargement..." : "Modifier les informations"}
-        </button>
+        {/* Bouton de soumission */}
+        <div className="flex justify-center">
+          <button
+            className={`bg-primary rounded-md px-6 py-2 hover:scale-105 transition ${
+              isLoading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            type="submit"
+            disabled={isLoading}
+          >
+            {isLoading ? "Chargement..." : "Modifier les informations"}
+          </button>
+        </div>
       </form>
 
-      <section className="flex flex-row items-center justify-between border border-danger p-4 mx-20 my-4">
-        <div className="flex justify-center items-center">
-          <ExclamationTriangleIcon className="h-10 w-10 text-red-600 pr-2" />
-          <p>This action is irreversible !</p>
+      {/* Suppression de compte */}
+      <section className="flex flex-col sm:flex-row items-center justify-between border border-danger p-4 mx-4 md:mx-20 my-4 rounded-lg gap-4">
+        <div className="flex items-center text-center sm:text-left">
+          <ExclamationTriangleIcon className="h-10 w-10 text-red-600 mr-2" />
+          <p>This action is irreversible!</p>
         </div>
-        <DeleteAccountModale></DeleteAccountModale>
+        <DeleteAccountModale />
       </section>
     </>
   );
