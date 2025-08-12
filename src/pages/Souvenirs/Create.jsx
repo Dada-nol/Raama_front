@@ -2,6 +2,7 @@ import { LockClosedIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Input from "../../components/ui/Input";
 
 function Create() {
   const [isLoading, setIsLoading] = useState(false);
@@ -75,48 +76,42 @@ function Create() {
   };
 
   return (
-    <form className="" onSubmit={handleCreate}>
-      <h2 className="flex justify-center items-center text-2xl font-medium">
-        Création de votre <h3 className="text-gradient pl-1">Souvenir</h3>
+    <form onSubmit={handleCreate}>
+      <h2 className="flex flex-wrap justify-center items-center text-2xl font-medium">
+        Création de votre <span className="text-gradient pl-1">Souvenir</span>
       </h2>
 
       <div className="m-8">
         <h3 className="text-lg font-medium">
           Choisissez votre type de Memoire
         </h3>
-        <div className="flex flex-col lg:flex-row justify-evenly items-center p-4 gap-4">
+        <div className="flex flex-wrap justify-center p-4 gap-4">
           {memoryType.map((memory) =>
             memory.isAvailable ? (
               <button
                 type="button"
                 key={memory.id}
                 onClick={() => setSelectedMemoryType(memory.id)}
+                className="card h-28 relative w-80 p-4 shadow-md hover:shadow-lg group overflow-hidden  bg-secondary gradient-border transition-transform duration-300 hover:scale-105 hover:text-gradient"
               >
                 <div
-                  className={`card w-80 p-4 relative overflow-hidden 
+                  className={` 
     ${selectedMemoryType === memory.id ? "ring-4 ring-primary" : ""}
-    bg-secondary gradient-border transition-transform duration-300 hover:scale-105 hover:text-gradient`}
+    flex items-center justify-center w-full h-full block text-lg font-medium text-text hover:text-gradient transition-colors`}
                 >
                   {memory.title}
                 </div>
               </button>
             ) : (
-              <button
-                type="button"
-                key={memory.id}
-                disabled
-                className="cursor-not-allowed"
-              >
-                <div className="w-80 h-28 p-4 relative overflow-hidden bg-secondary border-2 border-danger opacity-60">
-                  <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center gap-2">
-                    <LockClosedIcon className="w-6 h-6 text-white" />
-                    <p className="text-white font-bold">{memory.title}</p>
-                    <p className="text-sm text-gray-200">
-                      Indisponible pour le moment
-                    </p>
-                  </div>
+              <div className="cursor-not-allowed w-80 h-28 p-4 relative overflow-hidden bg-secondary border-2 border-danger opacity-60">
+                <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center gap-1">
+                  <LockClosedIcon className="w-6 h-6 text-white" />
+                  <p className="text-white font-bold">{memory.title}</p>
+                  <p className="text-sm text-gray-200">
+                    Indisponible pour le moment
+                  </p>
                 </div>
-              </button>
+              </div>
             )
           )}
         </div>
@@ -125,15 +120,15 @@ function Create() {
         )}
       </div>
 
-      <div className="border-2 border-primary rounded-lg m-8 flex justify-evenly items-center p-4">
-        <div>
+      <div className="border-2 border-primary rounded-lg m-8 flex flex-col lg:flex-row justify-center items-center gap-10 p-4">
+        <div className="w-full max-w-md lg:max-w-sm">
           <h3 className="text-lg font-medium">Titre</h3>
-          <input
-            className="text-[#000] h-8 border-2 border-transparent focus:border-[#64b000] focus:outline-none transition-colors duration-200"
-            type="text"
+          <Input
+            type={"text"}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-          />
+          ></Input>
+
           {errors.title && <p className="text-danger">{errors.title[0]}</p>}
         </div>
 

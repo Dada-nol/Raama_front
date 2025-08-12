@@ -44,7 +44,7 @@ function Home() {
           {souvenirs.map((souvenir) => (
             <li
               key={souvenir.id}
-              className="card group w-80 p-4 group overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient"
+              className="card relative group w-80 p-4 group overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient"
             >
               <a href={`souvenir/${souvenir.id}`}>
                 <img
@@ -81,7 +81,7 @@ function Home() {
             memory.isAvailable ? (
               <li
                 key={memory.id}
-                className="card w-80 p-4 shadow-md hover:shadow-lg group overflow-hidden  bg-secondary gradient-border transition-transform duration-300 hover:scale-105 hover:text-gradient"
+                className="card relative w-80 p-4 shadow-md hover:shadow-lg overflow-hidden  bg-secondary gradient-border transition-transform duration-300 hover:scale-105 hover:text-gradient"
               >
                 <a
                   className="flex items-center justify-center w-full h-full block text-lg font-medium text-text hover:text-gradient transition-colors"

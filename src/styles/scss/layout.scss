@@ -47,7 +47,6 @@
   transition: width 0.5s ease;
   opacity: 1;
 
-  // Largeur réduite
   &.collapsed {
     width: 6.5rem;
     border-right: none;
