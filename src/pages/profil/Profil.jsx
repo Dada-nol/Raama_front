@@ -21,29 +21,31 @@ function Profil() {
         <p>{user.name}</p>
       </section>
 
-      <h3 className="text-gradient text-left text-xl w-fit mx-8">
+      <h3 className="text-gradient text-left text-xl w-fit mx-8 mt-4">
         Mes informations
       </h3>
-      <section className="relative border-2 border-primary p-4 mx-8 mb-4">
-        <div className="flex justify-evenly items-center">
-          <div className="text-left">
-            <p>Nom</p>
-            <Input type={"text"} value={user.name} readOnly></Input>
+
+      <section className="relative border-2 border-primary p-4 mx-4 sm:mx-8 mb-4 rounded-lg">
+        <div className="flex flex-col lg:flex-row md:justify-evenly md:items-center gap-4 mt-3">
+          <div className="flex-1 min-w-[200px] text-left">
+            <p className="font-semibold text-sm mb-1">Nom</p>
+            <Input type="text" value={user.name} readOnly />
           </div>
-          <div className="text-left">
-            <p>Prénom</p>
-            <Input type={"text"} value={user.firstname} readOnly></Input>
+          <div className="flex-1 min-w-[200px] text-left">
+            <p className="font-semibold text-sm mb-1">Prénom</p>
+            <Input type="text" value={user.firstname} readOnly />
           </div>
-          <div className="text-left">
-            <p>Email</p>
-            <Input type={"text"} value={user.email} readOnly></Input>
+          <div className="flex-1 min-w-[200px] text-left">
+            <p className="font-semibold text-sm mb-1">Email</p>
+            <Input type="text" value={user.email} readOnly />
           </div>
         </div>
+
         <a
-          className="absolute top-3 right-3 border border-primary p-2 text-center hover:scale-105 hover:gradient-border"
+          className="absolute top-2 right-3 border border-primary p-2 rounded hover:scale-105 hover:gradient-border transition"
           href="/account-setting"
         >
-          <PencilIcon className="w-4 h-4"></PencilIcon>
+          <PencilIcon className="w-4 h-4" />
         </a>
       </section>
 

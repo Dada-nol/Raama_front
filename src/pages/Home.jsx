@@ -76,7 +76,7 @@ function Home() {
           Créer de nouveaux <p className="text-gradient pl-1">souvenirs</p>
         </h3>
 
-        <ul className="flex flex-wrap justify-start p-6 gap-6">
+        <ul className="flex flex-wrap justify-center p-6 gap-6">
           {memoryType.map((memory) =>
             memory.isAvailable ? (
               <li

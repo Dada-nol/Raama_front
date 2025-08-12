@@ -174,7 +174,6 @@ function List() {
                     )}
                     <p className="w-fit">{souvenir.title}</p>
                     <p className="w-fit">{souvenir.memory_points}</p>
-                    <p className="w-fit">{souvenir.memory_type_id}</p>
                   </a>
                 </li>
               ))}
