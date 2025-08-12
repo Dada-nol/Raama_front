@@ -5,7 +5,7 @@ import NavLinks from "./NavLinks";
 import ProfilButton from "./ProfilButton";
 
 function SideBar() {
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
 
   const handleSideBar = () => {
     setIsSidebarExpanded((prev) => !prev);
