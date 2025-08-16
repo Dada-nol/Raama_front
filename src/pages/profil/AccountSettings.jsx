@@ -6,6 +6,25 @@ import DeleteAccountModale from "../../components/profil/DeleteAccountModale";
 import Input from "../../components/ui/Input";
 import { useAuth } from "../../context/AuthContext";
 
+/**
+ * Page de paramètres du compte utilisateur.
+ *
+ * Fonctionnalités :
+ * - Affiche et permet de modifier les informations de l'utilisateur : nom, prénom, email.
+ * - Permet de changer le mot de passe avec validation de l'ancien mot de passe.
+ * - Gère l'affichage des erreurs de validation renvoyées par l'API (422) ou des erreurs d'authentification (401).
+ * - Utilise le contexte `AuthContext` pour récupérer les informations de l'utilisateur connecté.
+ * - Redirige l'utilisateur vers la page profil après mise à jour réussie.
+ * - Inclut un composant `DeleteAccountModale` pour la suppression du compte.
+ *
+ * Composants internes utilisés :
+ * - Input : champ de saisie réutilisable.
+ * - DeleteAccountModale : modale pour supprimer le compte utilisateur.
+ * - ExclamationTriangleIcon : icône d'avertissement pour suppression de compte.
+ *
+ * @module AccountSettings
+ * @returns {JSX.Element} Page de gestion des paramètres du compte
+ */
 function AccountSettings() {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -29,6 +48,13 @@ function AccountSettings() {
     }
   }, [user]);
 
+  /**
+   * Met à jour les informations de l'utilisateur.
+   * - Si un mot de passe est saisi, inclut la confirmation et l'ancien mot de passe.
+   * - Gère les erreurs de validation et d'authentification.
+   *
+   * @param {React.FormEvent} e - Événement de soumission du formulaire
+   */
   const UpdateUser = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -68,14 +94,14 @@ function AccountSettings() {
   return (
     <>
       <div className="w-full flex justify-center mb-8">
-        <h1 className="text-gradient text-2xl w-fit">Account settings</h1>
+        <h1 className="text-gradient text-2xl w-fit">Paramètres de compte</h1>
       </div>
 
       <form onSubmit={UpdateUser} className="space-y-8">
         {/* Infos utilisateur */}
         <section className="flex flex-col md:flex-row flex-wrap justify-center gap-6 border border-primary mx-4 md:mx-20 p-4 rounded-lg">
           <div className="flex-1 min-w-[220px]">
-            <p className="font-semibold text-sm mb-1">Name</p>
+            <p className="font-semibold text-sm mb-1">Nom</p>
             <Input
               type="text"
               value={name}
@@ -85,7 +111,7 @@ function AccountSettings() {
           </div>
 
           <div className="flex-1 min-w-[220px]">
-            <p className="font-semibold text-sm mb-1">Firstname</p>
+            <p className="font-semibold text-sm mb-1">Prénom</p>
             <Input
               type="text"
               value={firstname}
@@ -108,10 +134,12 @@ function AccountSettings() {
         </section>
 
         {/* Changement mot de passe */}
-        <h2 className="text-lg font-bold mx-4 md:mx-20">Update password</h2>
+        <h2 className="text-lg font-bold mx-4 md:mx-20">
+          Modifier le mot de passe
+        </h2>
         <section className="flex flex-col md:flex-row flex-wrap justify-center gap-6 border border-primary mx-4 md:mx-20 p-4 rounded-lg">
           <div className="flex-1 min-w-[220px]">
-            <p className="font-semibold text-sm mb-1">Previous password</p>
+            <p className="font-semibold text-sm mb-1">Ancien mot de passe</p>
             <Input
               type="password"
               value={oldPassword}
@@ -123,7 +151,7 @@ function AccountSettings() {
           </div>
 
           <div className="flex-1 min-w-[220px]">
-            <p className="font-semibold text-sm mb-1">New password</p>
+            <p className="font-semibold text-sm mb-1">Nouveau mot de passe</p>
             <Input
               type="password"
               value={password}
@@ -135,7 +163,9 @@ function AccountSettings() {
           </div>
 
           <div className="flex-1 min-w-[220px]">
-            <p className="font-semibold text-sm mb-1">Repeat new password</p>
+            <p className="font-semibold text-sm mb-1">
+              Répéter le mot de passe
+            </p>
             <Input
               type="password"
               value={password_confirmation}
@@ -165,7 +195,7 @@ function AccountSettings() {
       <section className="flex flex-col sm:flex-row items-center justify-between border border-danger p-4 mx-4 md:mx-20 my-4 rounded-lg gap-4">
         <div className="flex items-center text-center sm:text-left">
           <ExclamationTriangleIcon className="h-10 w-10 text-red-600 mr-2" />
-          <p>This action is irreversible!</p>
+          <p>Cette action est irreversible !</p>
         </div>
         <DeleteAccountModale />
       </section>

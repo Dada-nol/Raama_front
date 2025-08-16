@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/profil/Profil.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/profil/Profil.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { PencilIcon, UserIcon } from "@heroicons/react/24/outline";
+import Input from "../../components/ui/Input";
+import { useAuth } from "../../context/AuthContext";
+
+/**
+ * Page Profil de l'utilisateur connecté.
+ *
+ * Fonctionnalités :
+ * - Affiche les informations principales de l'utilisateur : nom, prénom, email.
+ * - Utilise le contexte `AuthContext` pour récupérer les informations du compte connecté.
+ * - Inclut un lien vers la page `AccountSettings` pour modifier les informations.
+ * - Les champs sont en lecture seule (`readOnly`) et ne peuvent pas être modifiés directement sur cette page.
+ *
+ * Composants internes utilisés :
+ * - Input : champ de saisie réutilisable en lecture seule.
+ * - PencilIcon : icône pour le lien vers la modification des informations.
+ * - UserIcon : icône représentant l'utilisateur.
+ *
+ * @module Profil
+ * @returns {JSX.Element} Page affichant les informations du profil utilisateur
+ */
+function Profil() {
+  const { user } = useAuth();
+
+  /*   const createdAtDate = new Date(user.created_at);
+  const formattedDate = createdAtDate.toLocaleDateString("fr-FR", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  }); */
+
+  return (
+    &lt;>
+      &lt;section className="flex flex-col justify-center items-center">
+        &lt;div className="h-20 w-20 text-white border border-white rounded-full p-5 mb-2">
+          &lt;UserIcon />
+        &lt;/div>
+        &lt;p>{user.name}&lt;/p>
+      &lt;/section>
+
+      &lt;h3 className="text-gradient text-left text-xl w-fit mx-8 mt-4">
+        Mes informations
+      &lt;/h3>
+
+      &lt;section className="relative border-2 border-primary p-4 mx-4 sm:mx-8 mb-4 rounded-lg">
+        &lt;div className="flex flex-col lg:flex-row md:justify-evenly md:items-center gap-4 mt-3">
+          &lt;div className="flex-1 min-w-[200px] text-left">
+            &lt;p className="font-semibold text-sm mb-1">Nom&lt;/p>
+            &lt;Input type="text" value={user.name} readOnly />
+          &lt;/div>
+          &lt;div className="flex-1 min-w-[200px] text-left">
+            &lt;p className="font-semibold text-sm mb-1">Prénom&lt;/p>
+            &lt;Input type="text" value={user.firstname} readOnly />
+          &lt;/div>
+          &lt;div className="flex-1 min-w-[200px] text-left">
+            &lt;p className="font-semibold text-sm mb-1">Email&lt;/p>
+            &lt;Input type="text" value={user.email} readOnly />
+          &lt;/div>
+        &lt;/div>
+
+        &lt;a
+          className="absolute top-2 right-3 border border-primary p-2 rounded hover:scale-105 hover:gradient-border transition"
+          href="/account-setting"
+        >
+          &lt;PencilIcon className="w-4 h-4" />
+        &lt;/a>
+      &lt;/section>
+
+      {/* Disabled for now */}
+      {/*       &lt;h3 className="text-gradient text-left text-xl w-fit mx-8">
+        Statistiques
+      &lt;/h3>
+      &lt;section className="border-2 border-primary p-4 mx-8 mb-4">
+        &lt;p>Membre depuis le {formattedDate}&lt;/p>
+      &lt;/section> */}
+    &lt;/>
+  );
+}
+
+export default Profil;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AccountSettings.html">AccountSettings</a></li><li><a href="module-AuthContext.html">AuthContext</a></li><li><a href="module-Create.html">Create</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-InvitePage.html">InvitePage</a></li><li><a href="module-LandingPage.html">LandingPage</a></li><li><a href="module-List.html">List</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-NotFound.html">NotFound</a></li><li><a href="module-Profil.html">Profil</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-SouvenirEntries.html">SouvenirEntries</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AppLayout">AppLayout</a></li><li><a href="global.html#BackToTop">BackToTop</a></li><li><a href="global.html#CardFeature">CardFeature</a></li><li><a href="global.html#Delete">Delete</a></li><li><a href="global.html#DeleteAccountModale">DeleteAccountModale</a></li><li><a href="global.html#EntryContainer">EntryContainer</a></li><li><a href="global.html#EntryFeed">EntryFeed</a></li><li><a href="global.html#EntryList">EntryList</a></li><li><a href="global.html#EntryModale">EntryModale</a></li><li><a href="global.html#EntryUpload">EntryUpload</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GuestLayout">GuestLayout</a></li><li><a href="global.html#Icon">Icon</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Nav">Nav</a></li><li><a href="global.html#NavLinks">NavLinks</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProfilButton">ProfilButton</a></li><li><a href="global.html#ProfileSelector">ProfileSelector</a></li><li><a href="global.html#PublicRoute">PublicRoute</a></li><li><a href="global.html#SharedLink">SharedLink</a></li><li><a href="global.html#SideBar">SideBar</a></li><li><a href="global.html#SocialIcons">SocialIcons</a></li><li><a href="global.html#SouvenirSetting">SouvenirSetting</a></li><li><a href="global.html#SouvenirSettingModale">SouvenirSettingModale</a></li><li><a href="global.html#Transition">Transition</a></li><li><a href="global.html#Update">Update</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Aug 16 2025 17:07:34 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

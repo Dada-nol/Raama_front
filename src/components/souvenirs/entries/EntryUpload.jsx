@@ -3,6 +3,29 @@ import { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import Input from "../../ui/Input";
 
+/**
+ * Composant permettant de créer une nouvelle entry (photo) pour un utilisateur donné.
+ *
+ * Fonctionnalités :
+ * - Bouton d’upload cliquable si l'utilisateur actuel correspond à l'utilisateur cible.
+ * - Ouvre une modale pour choisir un fichier et saisir une légende facultative.
+ * - Upload de l'image via l’API avec `axios` et `multipart/form-data`.
+ * - Gestion des erreurs de validation renvoyées par l’API.
+ * - Après upload, réinitialise les champs et appelle `refreshEntries` si fourni.
+ *
+ * @component
+ *
+ * @param {Object} props
+ * @param {number|string} props.id - ID du souvenir auquel l’entry appartient.
+ * @param {Object} props.entryUser - Utilisateur pour lequel l’entry est créée.
+ * @param {number} props.entryUser.id - ID de l'utilisateur.
+ * @param {string} [props.entryUser.pseudo] - Pseudo de l'utilisateur.
+ * @param {string} [props.entryUser.firstname] - Prénom de l'utilisateur.
+ * @param {function} [props.refreshEntries] - Fonction pour rafraîchir la liste des entries après l'upload.
+ *
+ * @example
+ * <EntryUpload id={souvenirId} entryUser={user} refreshEntries={loadEntries} />
+ */
 const EntryUpload = ({ id, entryUser, refreshEntries }) => {
   const { user } = useAuth();
 

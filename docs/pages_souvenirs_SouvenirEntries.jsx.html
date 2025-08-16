@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/souvenirs/SouvenirEntries.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/souvenirs/SouvenirEntries.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import axios from "axios";
+import { useCallback, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import panda3 from "../../assets/img/panda3.jpg";
+import EntryContainer from "../../components/souvenirs/entries/EntryContainer";
+
+/**
+ * Page affichant un souvenir spécifique avec ses entrées.
+ *
+ * Fonctionnalités :
+ * - Récupère les détails d'un souvenir via l'API `/souvenir/:id`.
+ * - Récupère les entrées (photos, contributions) associées au souvenir via `/souvenir/:id/entry`.
+ * - Affiche le titre et l'image de couverture du souvenir (ou image par défaut si absente).
+ * - Affiche le nombre de photos publiées et les points mémoire du souvenir.
+ * - Passe les données au composant `EntryContainer` pour l'affichage des contributions.
+ * - Permet de rafraîchir les entrées après ajout ou modification via `refreshEntries`.
+ *
+ * Composants internes utilisés :
+ * - panda3 : image par défaut pour la couverture.
+ * - EntryContainer : affichage des contributions du souvenir.
+ *
+ * @module SouvenirEntries
+ * @returns {JSX.Element} Détail d'un souvenir avec ses entrées
+ */
+function SouvenirEntries() {
+  const [souvenir, setSouvenir] = useState("");
+  const [entries, setEntries] = useState([]);
+  const [title, setTitle] = useState("");
+  const [cover_image, setCover_image] = useState("");
+
+  const { id } = useParams(); // Pour récupérer l'id dans l'url c'est important de faire ça
+
+  // Récupérer les données déjà existantes, pour les afficher dans le form
+  useEffect(() => {
+    const fetchData = async () => {
+      await axios
+        .get(`http://localhost:8000/api/souvenir/${id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((res) => {
+          setSouvenir(res.data);
+          setTitle(res.data.title);
+          setCover_image(res.data.cover_image);
+        })
+        .catch((e) => console.error(e));
+    };
+
+    fetchData();
+  }, [id]);
+
+  const fetchEntries = useCallback(async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/souvenir/${id}/entry`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setEntries(res.data);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    fetchEntries();
+  }, [fetchEntries]);
+
+  return (
+    &lt;>
+      &lt;div className="flex items-center justify-center relative w-full h-60">
+        {cover_image ? (
+          &lt;div
+            className="absolute inset-0 bg-center bg-repeat bg-contain opacity-60"
+            style={{
+              backgroundImage: `url('http://localhost:8000/storage/${cover_image}')`,
+            }}
+          >&lt;/div>
+        ) : (
+          &lt;div
+            className="absolute inset-0 bg-center bg-repeat bg-contain opacity-60"
+            style={{
+              backgroundImage: `url('${panda3}')`,
+            }}
+          >&lt;/div>
+        )}
+
+        &lt;div className="relative z-10 p-4 text-white text-lg font-medium">
+          &lt;h1>{title}&lt;/h1>
+        &lt;/div>
+      &lt;/div>
+
+      &lt;ul className="flex justify-start gap-6 px-4 pt-2 ">
+        {/* Disable for now */}
+        {/*         &lt;li className="text-gradient">
+          {souvenir.memory_points} Memory points
+        &lt;/li> */}
+        &lt;li className="text-gradient">
+          {souvenir.entries?.length} photos publiés
+        &lt;/li>
+        &lt;li className="text-gradient">
+          {souvenir.memory_points} memory points
+        &lt;/li>
+      &lt;/ul>
+
+      &lt;EntryContainer
+        members={souvenir.users}
+        entries={entries}
+        id={id}
+        refreshEntries={fetchEntries}
+      >&lt;/EntryContainer>
+    &lt;/>
+  );
+}
+
+export default SouvenirEntries;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AccountSettings.html">AccountSettings</a></li><li><a href="module-AuthContext.html">AuthContext</a></li><li><a href="module-Create.html">Create</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-InvitePage.html">InvitePage</a></li><li><a href="module-LandingPage.html">LandingPage</a></li><li><a href="module-List.html">List</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-NotFound.html">NotFound</a></li><li><a href="module-Profil.html">Profil</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-SouvenirEntries.html">SouvenirEntries</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AppLayout">AppLayout</a></li><li><a href="global.html#BackToTop">BackToTop</a></li><li><a href="global.html#CardFeature">CardFeature</a></li><li><a href="global.html#Delete">Delete</a></li><li><a href="global.html#DeleteAccountModale">DeleteAccountModale</a></li><li><a href="global.html#EntryContainer">EntryContainer</a></li><li><a href="global.html#EntryFeed">EntryFeed</a></li><li><a href="global.html#EntryList">EntryList</a></li><li><a href="global.html#EntryModale">EntryModale</a></li><li><a href="global.html#EntryUpload">EntryUpload</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GuestLayout">GuestLayout</a></li><li><a href="global.html#Icon">Icon</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Nav">Nav</a></li><li><a href="global.html#NavLinks">NavLinks</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProfilButton">ProfilButton</a></li><li><a href="global.html#ProfileSelector">ProfileSelector</a></li><li><a href="global.html#PublicRoute">PublicRoute</a></li><li><a href="global.html#SharedLink">SharedLink</a></li><li><a href="global.html#SideBar">SideBar</a></li><li><a href="global.html#SocialIcons">SocialIcons</a></li><li><a href="global.html#SouvenirSetting">SouvenirSetting</a></li><li><a href="global.html#SouvenirSettingModale">SouvenirSettingModale</a></li><li><a href="global.html#Transition">Transition</a></li><li><a href="global.html#Update">Update</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Aug 16 2025 17:07:34 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

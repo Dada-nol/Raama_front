@@ -1,5 +1,16 @@
 import { useEffect, useState } from "react";
 
+/**
+ * Composant d'animation de transition.
+ *
+ * Affiche une animation avec un élément "ball", une "shadow" et une "progress-bar".
+ * Gère l'apparition (fade-in) et la disparition (fade-out) automatiquement via des états internes.
+ *
+ * @component
+ *
+ * @example
+ * <Transition />
+ */
 function Transition() {
   const [fadeOut, setFadeOut] = useState(false);
   const [fadeIn, setFadeIn] = useState(false);

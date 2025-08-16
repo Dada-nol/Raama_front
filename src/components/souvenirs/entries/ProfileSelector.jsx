@@ -1,3 +1,15 @@
+/**
+ * Composant représentant un bouton pour sélectionner un profil utilisateur
+ * dans la navigation des entries d'un souvenir.
+ *
+ * Affiche une icône SVG représentant un utilisateur.
+ * Utilisé dans `EntryContainer` pour filtrer les entries par utilisateur.
+ *
+ * @component
+ *
+ * @example
+ * <ProfileSelector />
+ */
 function ProfileSelector() {
   return (
     <button className={`souvenir-nav-items p-[5px] ml-4 `}>

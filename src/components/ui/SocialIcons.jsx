@@ -3,6 +3,16 @@ import instagramIcon from "../../assets/img/instagram.png";
 import linkedinIcon from "../../assets/img/linkedin.png";
 import Icon from "./Icon";
 
+/**
+ * Composant affichant une liste d'icônes sociales cliquables.
+ *
+ * Chaque icône redirige vers le réseau social correspondant dans un nouvel onglet.
+ *
+ * @component
+ *
+ * @example
+ * <SocialIcons />
+ */
 function SocialIcons() {
   const socialIcons = [
     { href: "https://facebook.com", src: facebookIcon, alt: "Facebook" },

@@ -2,6 +2,23 @@ import { PencilIcon, UserIcon } from "@heroicons/react/24/outline";
 import Input from "../../components/ui/Input";
 import { useAuth } from "../../context/AuthContext";
 
+/**
+ * Page Profil de l'utilisateur connecté.
+ *
+ * Fonctionnalités :
+ * - Affiche les informations principales de l'utilisateur : nom, prénom, email.
+ * - Utilise le contexte `AuthContext` pour récupérer les informations du compte connecté.
+ * - Inclut un lien vers la page `AccountSettings` pour modifier les informations.
+ * - Les champs sont en lecture seule (`readOnly`) et ne peuvent pas être modifiés directement sur cette page.
+ *
+ * Composants internes utilisés :
+ * - Input : champ de saisie réutilisable en lecture seule.
+ * - PencilIcon : icône pour le lien vers la modification des informations.
+ * - UserIcon : icône représentant l'utilisateur.
+ *
+ * @module Profil
+ * @returns {JSX.Element} Page affichant les informations du profil utilisateur
+ */
 function Profil() {
   const { user } = useAuth();
 

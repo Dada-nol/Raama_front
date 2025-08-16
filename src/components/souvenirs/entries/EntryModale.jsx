@@ -1,5 +1,28 @@
 import { useState } from "react";
 
+/**
+ * Composant représentant une seule entry (photo) cliquable qui ouvre une modale.
+ *
+ * Fonctionnalités :
+ * - Affiche la miniature de l'image dans la liste.
+ * - Ouvre une modale en cliquant sur l'image.
+ * - La modale affiche :
+ *   - L'image en grand
+ *   - La légende (caption)
+ *   - La date de création formatée en français
+ * - Fermeture de la modale en cliquant sur le fond ou sur le bouton ❌.
+ *
+ * @component
+ *
+ * @param {Object} props
+ * @param {Object} props.entry - L’entry à afficher.
+ * @param {string} props.entry.image_path - Chemin de l'image dans le stockage.
+ * @param {string} props.entry.caption - Légende de l'image.
+ * @param {string} props.entry.created_at - Date de création de l’entry (format ISO).
+ *
+ * @example
+ * <EntryModale entry={entry} />
+ */
 const EntryModale = ({ entry }) => {
   const [showModal, setShowModal] = useState(false);
 

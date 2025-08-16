@@ -2,6 +2,22 @@ import axios from "axios";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
+/**
+ * Composant pour créer et afficher un lien de partage pour un souvenir.
+ *
+ * Fonctionnalités :
+ * - Génère un lien d'invitation via un appel API.
+ * - Affiche le lien dans un champ en lecture seule.
+ * - Permet de copier le lien dans le presse-papier avec retour visuel "Copié !".
+ * - Affiche les erreurs retournées par l'API.
+ *
+ * Utilise le paramètre d'URL `id` pour identifier le souvenir.
+ *
+ * @component
+ *
+ * @example
+ * <SharedLink />
+ */
 function SharedLink() {
   const [link, setLink] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -46,7 +62,7 @@ function SharedLink() {
           disabled={isLoading}
           onClick={handleCreateLink}
         >
-          {isLoading ? "Loading..." : "Create a link"}
+          {isLoading ? "Chargement..." : "Créer un lien"}
         </button>
 
         {link && (

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/layouts/guest/Nav.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/layouts/guest/Nav.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useEffect, useState } from "react";
+import img_panda1 from "../../../assets/img/panda1.png";
+import video_loop1 from "../../../assets/video/loop1.mp4";
+import Logo from "../../ui/Logo";
+
+/**
+ * Composant de navigation principal pour la landing page.
+ *
+ * Comportements :
+ * - Change la couleur de fond de la navbar selon le scroll (transparent ou sombre).
+ * - Change la taille du logo selon le scroll.
+ * - Affiche des liens "Log in" et "Register".
+ * - Affiche un panda en image pour mobile et une vidéo en arrière-plan pour desktop.
+ * - Affiche un message central avec un bouton "Get started".
+ *
+ * @component
+ *
+ * @example
+ * &lt;Nav />
+ */
+function Nav() {
+  const [colorNav, setColorNav] = useState("transparent");
+  const [sizeLogo, setSizeLogo] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const vh100 = window.innerHeight - 100;
+      if (window.scrollY > vh100) {
+        setColorNav("#1e1e1e");
+        setSizeLogo(false);
+      } else {
+        setColorNav("transparent");
+        setSizeLogo(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  return (
+    &lt;header className="header">
+      &lt;nav
+        className="nav"
+        style={{
+          backgroundColor: colorNav,
+        }}
+      >
+        &lt;div className="pl-10">
+          {sizeLogo ? &lt;Logo width={150}>&lt;/Logo> : &lt;Logo width={80}>&lt;/Logo>}
+        &lt;/div>
+
+        &lt;div className="flex justify-center items-center gap-4 pr-10">
+          &lt;a
+            className="text-lg hover:scale-105 inline-block transition-transform duration-300 hover:scale-140"
+            href="/login"
+          >
+            Log in
+          &lt;/a>
+          &lt;a
+            className="text-lg hover:scale-105 inline-block transition-transform duration-300 hover:scale-140"
+            href="/register"
+          >
+            Register
+          &lt;/a>
+        &lt;/div>
+      &lt;/nav>
+
+      &lt;img
+        src={img_panda1}
+        alt="Panda allongé couvrant le haut de la landing page"
+        className="block md:hidden background-img"
+      >&lt;/img>
+
+      &lt;video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="hidden md:block background-video"
+      >
+        &lt;source src={video_loop1} type="video/mp4" />
+      &lt;/video>
+
+      &lt;div className="absolute top-1/2 left-1/2 transform  -translate-y-1/2 -translate-x-1/2 z-10 flex flex-col items-center text-center">
+        &lt;h1 className="font-bold text-3xl md:text-4xl flex flex-col items-center pb-6">
+          &lt;span>Chaque jour une mémoire,&lt;/span>
+          &lt;span>chaque mémoire un lien&lt;/span>
+        &lt;/h1>
+        &lt;a
+          className="text-lg bg-my-gradient border border-white shadow-md hover:shadow-lg rounded-lg p-4 inline-block transition-transform duration-300 hover:scale-105"
+          href="/register"
+        >
+          Get started
+        &lt;/a>
+      &lt;/div>
+    &lt;/header>
+  );
+}
+
+export default Nav;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AccountSettings.html">AccountSettings</a></li><li><a href="module-AuthContext.html">AuthContext</a></li><li><a href="module-Create.html">Create</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-InvitePage.html">InvitePage</a></li><li><a href="module-LandingPage.html">LandingPage</a></li><li><a href="module-List.html">List</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-NotFound.html">NotFound</a></li><li><a href="module-Profil.html">Profil</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-SouvenirEntries.html">SouvenirEntries</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AppLayout">AppLayout</a></li><li><a href="global.html#BackToTop">BackToTop</a></li><li><a href="global.html#CardFeature">CardFeature</a></li><li><a href="global.html#Delete">Delete</a></li><li><a href="global.html#DeleteAccountModale">DeleteAccountModale</a></li><li><a href="global.html#EntryContainer">EntryContainer</a></li><li><a href="global.html#EntryFeed">EntryFeed</a></li><li><a href="global.html#EntryList">EntryList</a></li><li><a href="global.html#EntryModale">EntryModale</a></li><li><a href="global.html#EntryUpload">EntryUpload</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GuestLayout">GuestLayout</a></li><li><a href="global.html#Icon">Icon</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Nav">Nav</a></li><li><a href="global.html#NavLinks">NavLinks</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProfilButton">ProfilButton</a></li><li><a href="global.html#ProfileSelector">ProfileSelector</a></li><li><a href="global.html#PublicRoute">PublicRoute</a></li><li><a href="global.html#SharedLink">SharedLink</a></li><li><a href="global.html#SideBar">SideBar</a></li><li><a href="global.html#SocialIcons">SocialIcons</a></li><li><a href="global.html#SouvenirSetting">SouvenirSetting</a></li><li><a href="global.html#SouvenirSettingModale">SouvenirSettingModale</a></li><li><a href="global.html#Transition">Transition</a></li><li><a href="global.html#Update">Update</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Aug 16 2025 17:07:34 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

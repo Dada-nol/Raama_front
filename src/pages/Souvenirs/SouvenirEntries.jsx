@@ -4,6 +4,24 @@ import { useParams } from "react-router-dom";
 import panda3 from "../../assets/img/panda3.jpg";
 import EntryContainer from "../../components/souvenirs/entries/EntryContainer";
 
+/**
+ * Page affichant un souvenir spécifique avec ses entrées.
+ *
+ * Fonctionnalités :
+ * - Récupère les détails d'un souvenir via l'API `/souvenir/:id`.
+ * - Récupère les entrées (photos, contributions) associées au souvenir via `/souvenir/:id/entry`.
+ * - Affiche le titre et l'image de couverture du souvenir (ou image par défaut si absente).
+ * - Affiche le nombre de photos publiées et les points mémoire du souvenir.
+ * - Passe les données au composant `EntryContainer` pour l'affichage des contributions.
+ * - Permet de rafraîchir les entrées après ajout ou modification via `refreshEntries`.
+ *
+ * Composants internes utilisés :
+ * - panda3 : image par défaut pour la couverture.
+ * - EntryContainer : affichage des contributions du souvenir.
+ *
+ * @module SouvenirEntries
+ * @returns {JSX.Element} Détail d'un souvenir avec ses entrées
+ */
 function SouvenirEntries() {
   const [souvenir, setSouvenir] = useState("");
   const [entries, setEntries] = useState([]);
@@ -46,7 +64,7 @@ function SouvenirEntries() {
     } catch (e) {
       console.error(e);
     }
-  }, [id]); // ← 'id' est une dépendance
+  }, [id]);
 
   useEffect(() => {
     fetchEntries();
@@ -82,7 +100,7 @@ function SouvenirEntries() {
           {souvenir.memory_points} Memory points
         </li> */}
         <li className="text-gradient">
-          {souvenir.entries?.length} published photos
+          {souvenir.entries?.length} photos publiés
         </li>
         <li className="text-gradient">
           {souvenir.memory_points} memory points

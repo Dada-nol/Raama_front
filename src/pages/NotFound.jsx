@@ -1,5 +1,9 @@
-// src/pages/NotFound.jsx
-
+/**
+ * Composant affiché lorsqu'une page n'existe pas (erreur 404).
+ *
+ * @module NotFound
+ * @returns {JSX.Element} Une page 404 avec un message centré
+ */
 const NotFound = () => {
   return (
     <div

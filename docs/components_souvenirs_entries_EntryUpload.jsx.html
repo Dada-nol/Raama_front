@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/souvenirs/entries/EntryUpload.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/souvenirs/entries/EntryUpload.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import axios from "axios";
+import { useState } from "react";
+import { useAuth } from "../../../context/AuthContext";
+import Input from "../../ui/Input";
+
+/**
+ * Composant permettant de créer une nouvelle entry (photo) pour un utilisateur donné.
+ *
+ * Fonctionnalités :
+ * - Bouton d’upload cliquable si l'utilisateur actuel correspond à l'utilisateur cible.
+ * - Ouvre une modale pour choisir un fichier et saisir une légende facultative.
+ * - Upload de l'image via l’API avec `axios` et `multipart/form-data`.
+ * - Gestion des erreurs de validation renvoyées par l’API.
+ * - Après upload, réinitialise les champs et appelle `refreshEntries` si fourni.
+ *
+ * @component
+ *
+ * @param {Object} props
+ * @param {number|string} props.id - ID du souvenir auquel l’entry appartient.
+ * @param {Object} props.entryUser - Utilisateur pour lequel l’entry est créée.
+ * @param {number} props.entryUser.id - ID de l'utilisateur.
+ * @param {string} [props.entryUser.pseudo] - Pseudo de l'utilisateur.
+ * @param {string} [props.entryUser.firstname] - Prénom de l'utilisateur.
+ * @param {function} [props.refreshEntries] - Fonction pour rafraîchir la liste des entries après l'upload.
+ *
+ * @example
+ * &lt;EntryUpload id={souvenirId} entryUser={user} refreshEntries={loadEntries} />
+ */
+const EntryUpload = ({ id, entryUser, refreshEntries }) => {
+  const { user } = useAuth();
+
+  const isCurrentUser = user?.id === entryUser.id;
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [showModal, setShowModal] = useState(false);
+  const [caption, setCaption] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [errors, setErrors] = useState({});
+  const [disabled, setDisabled] = useState(false);
+
+  const handleFileChange = async (e) => {
+    setIsLoading(true);
+    setErrors({});
+
+    const formData = new FormData();
+    formData.append("image_path", selectedFile);
+    formData.append("caption", caption);
+
+    try {
+      await axios.post(
+        `http://localhost:8000/api/souvenir/${id}/entry/`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      setDisabled(true);
+      setShowModal(false);
+      setSelectedFile(null);
+      setCaption("");
+
+      if (typeof refreshEntries === "function") {
+        refreshEntries();
+      }
+    } catch (e) {
+      if (e.response &amp;&amp; e.response.status === 422) {
+        setErrors(e.response.data.errors);
+      } else {
+        console.error("Erreur inattendue", e);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleOverlayClick = () => {
+    setShowModal(false);
+  };
+
+  const handleModalClick = (e) => {
+    e.stopPropagation();
+  };
+
+  return (
+    &lt;>
+      &lt;button
+        className={`image-upload-button hover:scale-105 ${
+          !isCurrentUser ? "opacity-50 cursor-not-allowed" : ""
+        }`}
+        disabled={disabled}
+        onClick={() => {
+          if (!isCurrentUser) return;
+          setShowModal(true);
+        }}
+      >
+        {entryUser.pseudo || entryUser.firstname ? (
+          &lt;p>Upload for {entryUser.pseudo || entryUser.firstname}&lt;/p>
+        ) : (
+          &lt;p>Upload&lt;/p>
+        )}
+      &lt;/button>
+
+      {showModal &amp;&amp; (
+        &lt;div onClick={handleOverlayClick} className="modal-overlay">
+          &lt;div onClick={handleModalClick} className="modal">
+            &lt;h2>Ajouter une photo&lt;/h2>
+
+            &lt;Input
+              type={"file"}
+              accept={".png,.jpg,.jpeg"}
+              onChange={(e) => setSelectedFile(e.target.files[0])}
+            >&lt;/Input>
+
+            &lt;Input
+              type={"text"}
+              placeholder={"Légende (facultatif)"}
+              value={caption}
+              onChange={(e) => setCaption(e.target.value)}
+            >&lt;/Input>
+
+            {errors.image_path &amp;&amp; (
+              &lt;p className="text-danger">{errors.image_path[0]}&lt;/p>
+            )}
+            &lt;div className="flex justify-end gap-2 mt-4">
+              &lt;button
+                className={`inline-block text-primary transition-transform duration-300 hover:scale-105 px-4 py-2 ${
+                  isLoading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+                onClick={handleOverlayClick}
+              >
+                Annuler
+              &lt;/button>
+              &lt;button
+                className="inline-block text-primary transition-transform duration-300 hover:scale-105 px-4 py-2"
+                disabled={isLoading}
+                onClick={handleFileChange}
+              >
+                {isLoading ? "Chargement..." : "Valider"}
+              &lt;/button>
+            &lt;/div>
+          &lt;/div>
+        &lt;/div>
+      )}
+    &lt;/>
+  );
+};
+
+export default EntryUpload;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AccountSettings.html">AccountSettings</a></li><li><a href="module-AuthContext.html">AuthContext</a></li><li><a href="module-Create.html">Create</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-InvitePage.html">InvitePage</a></li><li><a href="module-LandingPage.html">LandingPage</a></li><li><a href="module-List.html">List</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-NotFound.html">NotFound</a></li><li><a href="module-Profil.html">Profil</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-SouvenirEntries.html">SouvenirEntries</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AppLayout">AppLayout</a></li><li><a href="global.html#BackToTop">BackToTop</a></li><li><a href="global.html#CardFeature">CardFeature</a></li><li><a href="global.html#Delete">Delete</a></li><li><a href="global.html#DeleteAccountModale">DeleteAccountModale</a></li><li><a href="global.html#EntryContainer">EntryContainer</a></li><li><a href="global.html#EntryFeed">EntryFeed</a></li><li><a href="global.html#EntryList">EntryList</a></li><li><a href="global.html#EntryModale">EntryModale</a></li><li><a href="global.html#EntryUpload">EntryUpload</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GuestLayout">GuestLayout</a></li><li><a href="global.html#Icon">Icon</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Nav">Nav</a></li><li><a href="global.html#NavLinks">NavLinks</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProfilButton">ProfilButton</a></li><li><a href="global.html#ProfileSelector">ProfileSelector</a></li><li><a href="global.html#PublicRoute">PublicRoute</a></li><li><a href="global.html#SharedLink">SharedLink</a></li><li><a href="global.html#SideBar">SideBar</a></li><li><a href="global.html#SocialIcons">SocialIcons</a></li><li><a href="global.html#SouvenirSetting">SouvenirSetting</a></li><li><a href="global.html#SouvenirSettingModale">SouvenirSettingModale</a></li><li><a href="global.html#Transition">Transition</a></li><li><a href="global.html#Update">Update</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Aug 16 2025 17:07:34 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

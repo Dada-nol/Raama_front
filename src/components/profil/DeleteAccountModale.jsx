@@ -2,6 +2,19 @@ import axios from "axios";
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 
+/**
+ * Composant pour afficher un bouton et une modale de suppression de compte.
+ *
+ * Fonctionnalités :
+ * - Affiche un bouton "Supprimer le compte ?" qui ouvre une modale de confirmation.
+ * - La modale permet de confirmer ou annuler la suppression.
+ * - Supprime le compte via une requête API et déconnecte l'utilisateur via `logout`.
+ *
+ * @component
+ *
+ * @example
+ * <DeleteAccountModale />
+ */
 const DeleteAccountModale = () => {
   const { logout } = useAuth();
   const [showModal, setShowModal] = useState(false);

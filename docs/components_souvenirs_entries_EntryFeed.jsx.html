@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/souvenirs/entries/EntryFeed.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/souvenirs/entries/EntryFeed.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import EntryList from "./EntryList";
+
+/**
+ * Composant qui affiche le flux des entries (photos/mémoires) d'un souvenir,
+ * regroupées par date (Hier, Aujourd'hui, Demain, puis les dates plus anciennes).
+ *
+ * Fonctionnalités :
+ * - Filtrage des entries par utilisateur sélectionné.
+ * - Regroupement automatique par date et tri du plus récent au plus ancien.
+ * - Affiche des sections distinctes pour Hier, Aujourd'hui, Demain et les anciens jours.
+ * - Intègre le composant `EntryList` pour afficher les entries dans chaque section.
+ * - Adapte le layout selon le nombre de membres et l'utilisateur sélectionné.
+ *
+ * @component
+ *
+ * @param {Object[]} entries - Liste complète des entries du souvenir.
+ * @param {Object[]} members - Liste des utilisateurs membres du souvenir.
+ * @param {number|string} id - Identifiant du souvenir.
+ * @param {Object[]} filteredEntries - Liste des entries filtrées par utilisateur sélectionné.
+ * @param {number|string|null} selectedUserId - ID de l'utilisateur sélectionné pour filtrer les entries.
+ * @param {Function} refreshEntries - Fonction permettant de recharger la liste des entries après modification.
+ *
+ * @example
+ * &lt;EntryFeed
+ *   entries={entries}
+ *   members={members}
+ *   id={souvenirId}
+ *   filteredEntries={filteredEntries}
+ *   selectedUserId={selectedUserId}
+ *   refreshEntries={fetchEntries}
+ * />
+ */
+const EntryFeed = ({
+  entries,
+  members,
+  id,
+  filteredEntries,
+  selectedUserId,
+  refreshEntries,
+}) => {
+  if (!entries || !Array.isArray(entries)) {
+    return &lt;div>Chargement des souvenirs...&lt;/div>;
+  }
+
+  // Regrouper les entries par date
+  const sourceEntries = filteredEntries || entries;
+
+  const groupedByDate = sourceEntries.reduce((acc, entry) => {
+    const date = entry.created_at.split("T")[0]; // format YYYY-MM-DD
+    if (!acc[date]) acc[date] = [];
+    acc[date].push(entry);
+    return acc;
+  }, {});
+
+  // Récupérer les dates triées du plus ancien au plus récent
+  const sortedDates = Object.keys(groupedByDate).sort((a, b) => {
+    return new Date(b) - new Date(a);
+  });
+
+  // Créer la date d’aujourd’hui, hier et demain
+  const today = new Date();
+  const todayStr = today.toISOString().split("T")[0];
+
+  const yesterday = new Date();
+  yesterday.setDate(today.getDate() - 1);
+  const yesterdayStr = yesterday.toISOString().split("T")[0];
+
+  const tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
+  const tomorrowStr = tomorrow.toISOString().split("T")[0];
+
+  return (
+    &lt;div
+      className={`${
+        members?.length &lt; 2 || selectedUserId
+          ? "flex-row-reverse flex-wrap-reverse justify-end items-end"
+          : "flex-col-reverse flex-wrap items-center"
+      } flex`}
+    >
+      {/* DEMAIN – Upload seulement */}
+      {(groupedByDate[tomorrowStr]?.length > 0 || !selectedUserId) &amp;&amp; (
+        &lt;section className={`${members?.length >= 3 ? "py-4" : "px-4"} `}>
+          &lt;h2 className="text-center text-sm text-gray-400">Demain&lt;/h2>
+          &lt;EntryList
+            members={members}
+            entries={groupedByDate[tomorrowStr] || []}
+            id={id}
+            readonly={true}
+            selectedUserId={selectedUserId}
+          />
+        &lt;/section>
+      )}
+
+      {/* AUJOURD’HUI – Upload + Photos */}
+      {(groupedByDate[todayStr]?.length > 0 || !selectedUserId) &amp;&amp; (
+        &lt;section className={`${members?.length >= 3 ? "py-4" : "px-4"} `}>
+          &lt;h2 className="text-center text-sm text-gray-400">Aujourd'hui&lt;/h2>
+          &lt;EntryList
+            members={members}
+            entries={groupedByDate[todayStr] || []}
+            id={id}
+            selectedUserId={selectedUserId}
+            refreshEntries={refreshEntries}
+          />
+        &lt;/section>
+      )}
+
+      {/* HIER – Photos seulement */}
+      {(groupedByDate[yesterdayStr]?.length > 0 || !selectedUserId) &amp;&amp; (
+        &lt;section className={`${members?.length >= 3 ? "py-4" : "px-4"} `}>
+          &lt;h2 className="text-center text-sm text-gray-400">Hier&lt;/h2>
+          &lt;EntryList
+            members={members}
+            entries={groupedByDate[yesterdayStr] || []}
+            id={id}
+            readonly={true}
+            selectedUserId={selectedUserId}
+          />
+        &lt;/section>
+      )}
+
+      {/* ANCIEN – Scroll vers le haut */}
+      {sortedDates
+        .filter(
+          (date) =>
+            date !== todayStr &amp;&amp; date !== yesterdayStr &amp;&amp; date !== tomorrowStr
+        )
+        .map((date) => (
+          &lt;section
+            key={date}
+            className={`${members?.length >= 3 ? "py-4" : "px-4"} `}
+          >
+            &lt;h2 className={"text-center text-sm text-gray-500"}>
+              {new Date(date).toLocaleDateString("fr-FR", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            &lt;/h2>
+            &lt;EntryList
+              members={members}
+              entries={groupedByDate[date]}
+              id={id}
+              readonly={true}
+              selectedUserId={selectedUserId}
+            />
+          &lt;/section>
+        ))}
+    &lt;/div>
+  );
+};
+
+export default EntryFeed;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AccountSettings.html">AccountSettings</a></li><li><a href="module-AuthContext.html">AuthContext</a></li><li><a href="module-Create.html">Create</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-InvitePage.html">InvitePage</a></li><li><a href="module-LandingPage.html">LandingPage</a></li><li><a href="module-List.html">List</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-NotFound.html">NotFound</a></li><li><a href="module-Profil.html">Profil</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-SouvenirEntries.html">SouvenirEntries</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AppLayout">AppLayout</a></li><li><a href="global.html#BackToTop">BackToTop</a></li><li><a href="global.html#CardFeature">CardFeature</a></li><li><a href="global.html#Delete">Delete</a></li><li><a href="global.html#DeleteAccountModale">DeleteAccountModale</a></li><li><a href="global.html#EntryContainer">EntryContainer</a></li><li><a href="global.html#EntryFeed">EntryFeed</a></li><li><a href="global.html#EntryList">EntryList</a></li><li><a href="global.html#EntryModale">EntryModale</a></li><li><a href="global.html#EntryUpload">EntryUpload</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GuestLayout">GuestLayout</a></li><li><a href="global.html#Icon">Icon</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Nav">Nav</a></li><li><a href="global.html#NavLinks">NavLinks</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProfilButton">ProfilButton</a></li><li><a href="global.html#ProfileSelector">ProfileSelector</a></li><li><a href="global.html#PublicRoute">PublicRoute</a></li><li><a href="global.html#SharedLink">SharedLink</a></li><li><a href="global.html#SideBar">SideBar</a></li><li><a href="global.html#SocialIcons">SocialIcons</a></li><li><a href="global.html#SouvenirSetting">SouvenirSetting</a></li><li><a href="global.html#SouvenirSettingModale">SouvenirSettingModale</a></li><li><a href="global.html#Transition">Transition</a></li><li><a href="global.html#Update">Update</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Aug 16 2025 17:07:34 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

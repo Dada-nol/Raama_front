@@ -1,6 +1,18 @@
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
+/**
+ * Composant pour supprimer un souvenir.
+ *
+ * Fonctionnalités :
+ * - Supprime le souvenir identifié par l'`id` dans l'URL via un appel API.
+ * - Redirige vers la page d'accueil après suppression.
+ *
+ * @component
+ *
+ * @example
+ * <Delete />
+ */
 function Delete() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -19,7 +31,7 @@ function Delete() {
       className="bg-danger rounded-md px-4 py-2 hover:scale-105"
       onClick={handleDelete}
     >
-      Delete
+      Supprimer
     </button>
   );
 }

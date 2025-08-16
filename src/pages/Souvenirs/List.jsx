@@ -2,6 +2,24 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import panda3 from "../../assets/img/panda3.jpg";
 
+/**
+ * Page listant les souvenirs de l'utilisateur.
+ *
+ * Fonctionnalités :
+ * - Récupère la liste des souvenirs via l'API `/souvenirs` avec authentification Bearer token.
+ * - Récupère les types de mémoire via l'API `/memory-type`.
+ * - Permet de trier les souvenirs par titre, date de création, points mémoire ou type de mémoire.
+ * - Permet de rechercher un souvenir ou un membre par nom.
+ * - Affiche les souvenirs sous forme de cartes avec image de couverture (ou image par défaut).
+ * - Gère les souvenirs indisponibles pour certains types de mémoire.
+ * - Gestion des erreurs de requête et affichage des messages d'erreur.
+ *
+ * Composants internes utilisés :
+ * - panda3 : image par défaut pour les souvenirs sans image.
+ *
+ * @module List
+ * @returns {JSX.Element} Liste filtrable et triable des souvenirs de l'utilisateur
+ */
 function List() {
   const [data, setData] = useState([]);
   const [memoryType, setMemoryType] = useState([]);
@@ -9,7 +27,7 @@ function List() {
   const [sortOption, setSortOption] = useState("title");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const options = ["title", "created_at", "memory_type"];
+  const options = ["title", "created_at", "memory_points", "memory_type"];
 
   const handleSort = (e) => {
     setSortOption(e);
@@ -65,12 +83,12 @@ function List() {
   return (
     <>
       <h2 className="flex justify-center p-4 text-lg sm:text-xl md:text-2xl font-medium text-center">
-        My <p className="text-gradient pl-1">souvenirs</p>
+        Mes <p className="text-gradient pl-1">souvenirs</p>
       </h2>
 
       <section className="flex flex-col md:flex-row border-2 border-primary rounded-lg mx-4 md:mx-8 gap-6 md:gap-12 lg:gap-48 p-4">
         <div className="flex flex-col justify-center items-start w-full md:w-auto">
-          <h3 className="mb-2">Sort by</h3>
+          <h3 className="mb-2">Trier par</h3>
           <ul className="flex flex-wrap gap-4">
             {options.map((option) => (
               <li key={option}>
@@ -86,7 +104,7 @@ function List() {
         </div>
 
         <div className="flex flex-col justify-center items-start w-full md:w-auto">
-          <h3 className="mb-2">Search souvenir or member</h3>
+          <h3 className="mb-2">Rechercher un souvenir ou un membre</h3>
           <input
             placeholder="ex : Jhon"
             value={searchTerm}
@@ -144,15 +162,32 @@ function List() {
             </div>
           ))
         ) : (
-          <ul className="flex flex-wrap gap-4 justify-center my-8">
+          <ul className="flex flex-wrap gap-4 my-8">
             {[...filteredData]
               .sort((a, b) => {
-                if (sortOption === "title") {
-                  return a[sortOption].localeCompare(b[sortOption]);
-                } else {
-                  return new Date(b[sortOption]) - new Date(a[sortOption]);
+                const valA = a[sortOption];
+                const valB = b[sortOption];
+
+                // Texte
+                if (typeof valA === "string" && typeof valB === "string") {
+                  return valA.localeCompare(valB);
                 }
+
+                // Nombre
+                if (typeof valA === "number" && typeof valB === "number") {
+                  return valB - valA;
+                }
+
+                // Date (ou string de date)
+                const dateA = new Date(valA);
+                const dateB = new Date(valB);
+                if (!isNaN(dateA) && !isNaN(dateB)) {
+                  return dateB - dateA;
+                }
+
+                return 0; // valeurs non comparables
               })
+
               .map((souvenir) => (
                 <li
                   key={souvenir.id}

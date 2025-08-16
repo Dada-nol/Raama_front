@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/auth/Register.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/auth/Register.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {
+  EnvelopeIcon,
+  LockClosedIcon,
+  UserIcon,
+} from "@heroicons/react/24/outline";
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import panda4 from "../../assets/img/panda4.jpg";
+import Input from "../../components/ui/Input";
+import Logo from "../../components/ui/Logo";
+import { useAuth } from "../../context/AuthContext";
+
+/**
+ * Page d'inscription pour les utilisateurs.
+ *
+ * Fonctionnalités :
+ * - Permet à un nouvel utilisateur de créer un compte avec nom, prénom, email et mot de passe.
+ * - Vérifie la confirmation du mot de passe.
+ * - Enregistre le token JWT dans le localStorage après inscription.
+ * - Remplit le contexte utilisateur avec les informations récupérées via l'API `/user`.
+ * - Redirige l'utilisateur vers la page d'accueil (`/home`) après inscription réussie.
+ * - Affiche les erreurs spécifiques aux champs (Laravel 422) et empêche l'envoi multiple.
+ * - Affiche une image illustrative sur les écrans desktop.
+ *
+ * Composants internes utilisés :
+ * - Input : champ de saisie réutilisable.
+ * - Logo : logo de l'application.
+ * - LockClosedIcon, UserIcon, EnvelopeIcon : icônes pour le formulaire.
+ *
+ * @module Register
+ * @returns {JSX.Element} Page d'inscription complète
+ */
+function Register() {
+  const { setUser } = useAuth();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [name, setName] = useState("");
+  const [firstname, setFirstName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [password_confirmation, setPassword_confirmation] = useState("");
+  const [errors, setErrors] = useState({});
+
+  const navigate = useNavigate();
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setErrors({});
+
+    try {
+      const res = await axios.post("http://localhost:8000/api/register", {
+        name,
+        firstname,
+        email,
+        password,
+        password_confirmation,
+      });
+
+      const token = res.data.token;
+
+      localStorage.setItem("token", token);
+
+      // 🔥 Appelle manuellement l'API pour remplir le context directement
+      const userRes = await axios.get("http://localhost:8000/api/user", {
+        headers: {
+          Authorization: `Bearer ${res.data.token}`,
+        },
+      });
+
+      setUser(userRes.data);
+      navigate("/home");
+    } catch (e) {
+      if (e.response &amp;&amp; e.response.status === 422) {
+        setErrors(e.response.data.errors);
+      } else {
+        console.error("Erreur inattendue", e);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    &lt;main className="min-h-screen w-full grid grid-cols-1 md:grid-cols-2 bg-secondary">
+      {/* Formulaire */}
+      &lt;form
+        className="w-full flex flex-col items-center gap-4 pb-20 px-4 md:px-8 justify-center"
+        onSubmit={handleRegister}
+      >
+        &lt;Logo width={200} />
+        &lt;h2 className="py-6 text-xl font-bold">
+          Create an account to continue
+        &lt;/h2>
+
+        {/* Name */}
+        &lt;div className="relative w-full max-w-[400px]">
+          &lt;UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+          &lt;Input
+            type="text"
+            value={name}
+            placeholder="Name"
+            onChange={(e) => setName(e.target.value)}
+          />
+        &lt;/div>
+        {errors.name &amp;&amp; &lt;p className="text-danger">{errors.name[0]}&lt;/p>}
+
+        {/* Firstname */}
+        &lt;div className="relative w-full max-w-[400px]">
+          &lt;UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+          &lt;Input
+            type="text"
+            value={firstname}
+            placeholder="Firstname"
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        &lt;/div>
+        {errors.firstname &amp;&amp; (
+          &lt;p className="text-danger">{errors.firstname[0]}&lt;/p>
+        )}
+
+        &lt;hr className="border border-gray-300 w-full max-w-[300px] my-4" />
+
+        {/* Email */}
+        &lt;div className="relative w-full max-w-[400px]">
+          &lt;EnvelopeIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+          &lt;Input
+            type="text"
+            value={email}
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        &lt;/div>
+        {errors.email &amp;&amp; &lt;p className="text-danger">{errors.email[0]}&lt;/p>}
+
+        {/* Password */}
+        &lt;div className="relative w-full max-w-[400px]">
+          &lt;LockClosedIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+          &lt;Input
+            type="password"
+            value={password}
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        &lt;/div>
+
+        {/* Confirm password */}
+        &lt;div className="relative w-full max-w-[400px]">
+          &lt;LockClosedIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+          &lt;Input
+            type="password"
+            value={password_confirmation}
+            placeholder="Confirm password"
+            onChange={(e) => setPassword_confirmation(e.target.value)}
+          />
+        &lt;/div>
+        {errors.password &amp;&amp; &lt;p className="text-danger">{errors.password[0]}&lt;/p>}
+
+        {/* Privacy */}
+        &lt;div className="flex flex-col justify-center items-center my-4 text-center">
+          &lt;p>By creating an account,&lt;/p>
+          &lt;p>you agree to our Privacy Policy&lt;/p>
+        &lt;/div>
+
+        {/* Submit */}
+        &lt;button
+          className={`gradient-border transition-transform duration-300 hover:scale-105 px-4 py-2 ${
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+          type="submit"
+          disabled={isLoading}
+        >
+          {isLoading ? "Chargement..." : "Register"}
+        &lt;/button>
+
+        {/* Link to login */}
+        &lt;p className="text-center">
+          &lt;a
+            className="inline-block text-gradient transition-transform duration-300 hover:scale-105 pr-2"
+            href="/login"
+          >
+            Sign in
+          &lt;/a>
+          if you already have an account.
+        &lt;/p>
+      &lt;/form>
+
+      {/* Image uniquement sur desktop */}
+      &lt;section className="hidden md:block overflow-hidden">
+        &lt;img src={panda4} alt="Panda" className="h-full w-full object-cover" />
+      &lt;/section>
+    &lt;/main>
+  );
+}
+
+export default Register;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AccountSettings.html">AccountSettings</a></li><li><a href="module-AuthContext.html">AuthContext</a></li><li><a href="module-Create.html">Create</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-InvitePage.html">InvitePage</a></li><li><a href="module-LandingPage.html">LandingPage</a></li><li><a href="module-List.html">List</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-NotFound.html">NotFound</a></li><li><a href="module-Profil.html">Profil</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-SouvenirEntries.html">SouvenirEntries</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AppLayout">AppLayout</a></li><li><a href="global.html#BackToTop">BackToTop</a></li><li><a href="global.html#CardFeature">CardFeature</a></li><li><a href="global.html#Delete">Delete</a></li><li><a href="global.html#DeleteAccountModale">DeleteAccountModale</a></li><li><a href="global.html#EntryContainer">EntryContainer</a></li><li><a href="global.html#EntryFeed">EntryFeed</a></li><li><a href="global.html#EntryList">EntryList</a></li><li><a href="global.html#EntryModale">EntryModale</a></li><li><a href="global.html#EntryUpload">EntryUpload</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GuestLayout">GuestLayout</a></li><li><a href="global.html#Icon">Icon</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Nav">Nav</a></li><li><a href="global.html#NavLinks">NavLinks</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProfilButton">ProfilButton</a></li><li><a href="global.html#ProfileSelector">ProfileSelector</a></li><li><a href="global.html#PublicRoute">PublicRoute</a></li><li><a href="global.html#SharedLink">SharedLink</a></li><li><a href="global.html#SideBar">SideBar</a></li><li><a href="global.html#SocialIcons">SocialIcons</a></li><li><a href="global.html#SouvenirSetting">SouvenirSetting</a></li><li><a href="global.html#SouvenirSettingModale">SouvenirSettingModale</a></li><li><a href="global.html#Transition">Transition</a></li><li><a href="global.html#Update">Update</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Aug 16 2025 17:07:34 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

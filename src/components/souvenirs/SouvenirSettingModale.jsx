@@ -2,6 +2,20 @@ import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import SouvenirSetting from "./SouvenirSetting";
 
+/**
+ * Composant pour afficher une modale de paramètres d'un souvenir.
+ *
+ * Fonctionnalités :
+ * - Affiche un bouton avec une icône "ellipsis" pour ouvrir la modale.
+ * - La modale recouvre l'écran avec un fond semi-transparent et flouté.
+ * - Clique sur le fond ferme la modale, clique à l'intérieur la conserve ouverte.
+ * - Contient le composant <SouvenirSetting /> pour gérer les réglages du souvenir.
+ *
+ * @component
+ *
+ * @example
+ * <SouvenirSettingModale />
+ */
 function SouvenirSettingModale() {
   const [showModal, setShowModal] = useState(false);
 

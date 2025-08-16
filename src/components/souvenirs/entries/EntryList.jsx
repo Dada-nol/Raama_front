@@ -1,6 +1,35 @@
-import EntryUpload from "./EntryUpload";
 import EntryModale from "./EntryModale";
+import EntryUpload from "./EntryUpload";
 
+/**
+ * Composant qui affiche la liste des entries (photos/mémoires) pour chaque utilisateur.
+ *
+ * Fonctionnalités :
+ * - Filtrage des entries par utilisateur.
+ * - Affichage conditionnel :
+ *   - Si aucune entry, affiche un bouton d’upload (sauf en lecture seule ou si un utilisateur est sélectionné).
+ *   - Sinon, affiche les entries via le composant `EntryModale`.
+ * - Intègre le composant `EntryUpload` pour permettre l’ajout de nouvelles entries.
+ *
+ * @component
+ *
+ * @param {Object[]} members - Liste des utilisateurs membres du souvenir.
+ * @param {Object[]} entries - Liste des entries à afficher.
+ * @param {number|string} id - Identifiant du souvenir.
+ * @param {boolean} [readonly=false] - Indique si les entries sont en lecture seule.
+ * @param {number|string|null} selectedUserId - ID de l'utilisateur sélectionné pour filtrer les entries.
+ * @param {Function} refreshEntries - Fonction permettant de recharger la liste des entries après modification.
+ *
+ * @example
+ * <EntryList
+ *   members={members}
+ *   entries={entries}
+ *   id={souvenirId}
+ *   readonly={false}
+ *   selectedUserId={selectedUserId}
+ *   refreshEntries={fetchEntries}
+ * />
+ */
 function EntryList({
   members,
   entries,

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/auth/Login.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/auth/Login.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { LockClosedIcon, UserIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import panda4 from "../../assets/img/panda4.jpg";
+import Input from "../../components/ui/Input";
+import Logo from "../../components/ui/Logo";
+import { useAuth } from "../../context/AuthContext";
+
+/**
+ * Page de connexion pour les utilisateurs.
+ *
+ * Fonctionnalités :
+ * - Permet à un utilisateur de se connecter avec son email et mot de passe.
+ * - Enregistre le token JWT dans le localStorage.
+ * - Remplit le contexte utilisateur avec les informations récupérées via l'API `/user`.
+ * - Redirige l'utilisateur vers la page d'accueil (`/home`) après connexion réussie.
+ * - Affiche les erreurs spécifiques aux champs (Laravel 422) ou des erreurs globales (401, autres).
+ * - Affiche une image illustrative sur les écrans desktop.
+ *
+ * Composants internes utilisés :
+ * - Input : champ de saisie réutilisable.
+ * - Logo : logo de l'application.
+ * - LockClosedIcon, UserIcon : icônes pour le formulaire.
+ *
+ * @module Login
+ * @returns {JSX.Element} Page de connexion complète
+ */
+function Login() {
+  const { setUser } = useAuth();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+  const [globalErrors, setGlobalErrors] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setErrors({});
+
+    try {
+      const res = await axios.post("http://localhost:8000/api/login", {
+        email,
+        password,
+      });
+
+      localStorage.setItem("token", res.data.token);
+
+      // Appel manuellement l'API pour remplir le context directement
+      const userRes = await axios.get("http://localhost:8000/api/user", {
+        headers: {
+          Authorization: `Bearer ${res.data.token}`,
+        },
+      });
+
+      setUser(userRes.data);
+
+      navigate("/home");
+    } catch (e) {
+      if (e.response &amp;&amp; e.response.status === 422) {
+        setErrors(e.response.data.errors); // &lt;- Laravel met les erreurs ici
+      } else if (e.response &amp;&amp; e.response.status === 401) {
+        setGlobalErrors("Email ou mot de passe incorrect.");
+      } else {
+        console.error("Erreur inattendue", e);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    &lt;main className="min-h-screen w-full grid grid-cols-1 md:grid-cols-2 bg-secondary">
+      {/* Image affichée uniquement sur desktop */}
+      &lt;section className="hidden md:block h-screen overflow-hidden">
+        &lt;img src={panda4} alt="Panda" className="h-full w-full object-cover" />
+      &lt;/section>
+
+      {/* Formulaire */}
+      &lt;form
+        className="w-full flex flex-col items-center gap-4 py-8 px-4 md:px-8 justify-start"
+        onSubmit={handleLogin}
+      >
+        &lt;Logo width={200} />
+        &lt;h2 className="py-6 text-xl font-bold">Login&lt;/h2>
+
+        {/* Email */}
+        &lt;div className="relative w-full max-w-[400px]">
+          &lt;UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+          &lt;Input
+            type="text"
+            value={email}
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        &lt;/div>
+        {errors.email &amp;&amp; &lt;p className="text-danger">{errors.email[0]}&lt;/p>}
+
+        {/* Password */}
+        &lt;div className="relative w-full max-w-[400px]">
+          &lt;LockClosedIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+          &lt;Input
+            type="password"
+            value={password}
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        &lt;/div>
+        {errors.password &amp;&amp; &lt;p className="text-danger">{errors.password[0]}&lt;/p>}
+
+        {/* Global errors */}
+        {globalErrors &amp;&amp; &lt;p className="text-danger">{globalErrors}&lt;/p>}
+
+        {/* Forget password */}
+        {/* &lt;div className="w-full max-w-[400px] text-right">
+          &lt;a
+            className="inline-block text-gradient transition-transform duration-300 hover:scale-105"
+            href="/reset-password"
+          >
+            Forget password ?
+          &lt;/a>
+        &lt;/div> */}
+
+        {/* Submit */}
+        &lt;button
+          className={`gradient-border transition-transform duration-300 hover:scale-105 px-4 py-2 ${
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+          type="submit"
+          disabled={isLoading}
+        >
+          {isLoading ? "Chargement..." : "Se connecter"}
+        &lt;/button>
+
+        {/* Sign up link */}
+        &lt;p className="text-center">
+          &lt;a
+            className="inline-block text-gradient transition-transform duration-300 hover:scale-105 pr-2"
+            href="/register"
+          >
+            Sign up
+          &lt;/a>
+          if you don't have an account yet.
+        &lt;/p>
+      &lt;/form>
+    &lt;/main>
+  );
+}
+
+export default Login;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AccountSettings.html">AccountSettings</a></li><li><a href="module-AuthContext.html">AuthContext</a></li><li><a href="module-Create.html">Create</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-InvitePage.html">InvitePage</a></li><li><a href="module-LandingPage.html">LandingPage</a></li><li><a href="module-List.html">List</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-NotFound.html">NotFound</a></li><li><a href="module-Profil.html">Profil</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-SouvenirEntries.html">SouvenirEntries</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AppLayout">AppLayout</a></li><li><a href="global.html#BackToTop">BackToTop</a></li><li><a href="global.html#CardFeature">CardFeature</a></li><li><a href="global.html#Delete">Delete</a></li><li><a href="global.html#DeleteAccountModale">DeleteAccountModale</a></li><li><a href="global.html#EntryContainer">EntryContainer</a></li><li><a href="global.html#EntryFeed">EntryFeed</a></li><li><a href="global.html#EntryList">EntryList</a></li><li><a href="global.html#EntryModale">EntryModale</a></li><li><a href="global.html#EntryUpload">EntryUpload</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GuestLayout">GuestLayout</a></li><li><a href="global.html#Icon">Icon</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Nav">Nav</a></li><li><a href="global.html#NavLinks">NavLinks</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProfilButton">ProfilButton</a></li><li><a href="global.html#ProfileSelector">ProfileSelector</a></li><li><a href="global.html#PublicRoute">PublicRoute</a></li><li><a href="global.html#SharedLink">SharedLink</a></li><li><a href="global.html#SideBar">SideBar</a></li><li><a href="global.html#SocialIcons">SocialIcons</a></li><li><a href="global.html#SouvenirSetting">SouvenirSetting</a></li><li><a href="global.html#SouvenirSettingModale">SouvenirSettingModale</a></li><li><a href="global.html#Transition">Transition</a></li><li><a href="global.html#Update">Update</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Aug 16 2025 17:07:34 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

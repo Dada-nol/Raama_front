@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/profil/DeleteAccountModale.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/profil/DeleteAccountModale.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import axios from "axios";
+import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
+
+/**
+ * Composant pour afficher un bouton et une modale de suppression de compte.
+ *
+ * Fonctionnalités :
+ * - Affiche un bouton "Supprimer le compte ?" qui ouvre une modale de confirmation.
+ * - La modale permet de confirmer ou annuler la suppression.
+ * - Supprime le compte via une requête API et déconnecte l'utilisateur via `logout`.
+ *
+ * @component
+ *
+ * @example
+ * &lt;DeleteAccountModale />
+ */
+const DeleteAccountModale = () => {
+  const { logout } = useAuth();
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOverlayClick = () => {
+    setShowModal(false);
+  };
+
+  const handleModalClick = (e) => {
+    e.stopPropagation();
+  };
+
+  // Method de suppression de compte
+  const deleteAccount = async () => {
+    await axios.delete("http://localhost:8000/api/user", {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
+
+    await logout();
+  };
+
+  return (
+    &lt;>
+      {/* Image cliquable */}
+      &lt;button
+        className="bg-danger rounded-md px-4 py-2 hover:scale-105"
+        onClick={() => setShowModal(true)}
+      >
+        Supprimer le compte ?
+      &lt;/button>
+
+      {/* Modale */}
+      {showModal &amp;&amp; (
+        &lt;div className="modal-overlay" onClick={handleOverlayClick}>
+          &lt;div
+            className="relative bg-[#1E1E1E] w-full sm:w-[400px] p-6 overflow-auto shadow-xl"
+            onClick={handleModalClick}
+          >
+            &lt;div className=" mb-4">
+              &lt;p className="text-center">Êtes vous sûr de votre choix ?&lt;/p>
+
+              &lt;button
+                className="absolute text-white font-bold text-lg top-3 right-3"
+                onClick={handleOverlayClick}
+              >
+                ❌
+              &lt;/button>
+            &lt;/div>
+
+            {/* Contenu de la modale */}
+            &lt;div className="flex flex-row justify-evenly">
+              &lt;button
+                className="bg-danger py-1 px-2 rounded-md"
+                onClick={deleteAccount}
+              >
+                Oui
+              &lt;/button>
+              &lt;button
+                className="bg-primary py-1 px-2 rounded-md"
+                onClick={handleOverlayClick}
+              >
+                Non
+              &lt;/button>
+            &lt;/div>
+          &lt;/div>
+        &lt;/div>
+      )}
+    &lt;/>
+  );
+};
+
+export default DeleteAccountModale;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AccountSettings.html">AccountSettings</a></li><li><a href="module-AuthContext.html">AuthContext</a></li><li><a href="module-Create.html">Create</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-InvitePage.html">InvitePage</a></li><li><a href="module-LandingPage.html">LandingPage</a></li><li><a href="module-List.html">List</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-NotFound.html">NotFound</a></li><li><a href="module-Profil.html">Profil</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-SouvenirEntries.html">SouvenirEntries</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AppLayout">AppLayout</a></li><li><a href="global.html#BackToTop">BackToTop</a></li><li><a href="global.html#CardFeature">CardFeature</a></li><li><a href="global.html#Delete">Delete</a></li><li><a href="global.html#DeleteAccountModale">DeleteAccountModale</a></li><li><a href="global.html#EntryContainer">EntryContainer</a></li><li><a href="global.html#EntryFeed">EntryFeed</a></li><li><a href="global.html#EntryList">EntryList</a></li><li><a href="global.html#EntryModale">EntryModale</a></li><li><a href="global.html#EntryUpload">EntryUpload</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GuestLayout">GuestLayout</a></li><li><a href="global.html#Icon">Icon</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Nav">Nav</a></li><li><a href="global.html#NavLinks">NavLinks</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProfilButton">ProfilButton</a></li><li><a href="global.html#ProfileSelector">ProfileSelector</a></li><li><a href="global.html#PublicRoute">PublicRoute</a></li><li><a href="global.html#SharedLink">SharedLink</a></li><li><a href="global.html#SideBar">SideBar</a></li><li><a href="global.html#SocialIcons">SocialIcons</a></li><li><a href="global.html#SouvenirSetting">SouvenirSetting</a></li><li><a href="global.html#SouvenirSettingModale">SouvenirSettingModale</a></li><li><a href="global.html#Transition">Transition</a></li><li><a href="global.html#Update">Update</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Aug 16 2025 17:07:34 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
