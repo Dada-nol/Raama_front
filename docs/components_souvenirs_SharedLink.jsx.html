@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/souvenirs/SharedLink.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/souvenirs/SharedLink.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import axios from "axios";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+
+/**
+ * Composant pour créer et afficher un lien de partage pour un souvenir.
+ *
+ * Fonctionnalités :
+ * - Génère un lien d'invitation via un appel API.
+ * - Affiche le lien dans un champ en lecture seule.
+ * - Permet de copier le lien dans le presse-papier avec retour visuel "Copié !".
+ * - Affiche les erreurs retournées par l'API.
+ *
+ * Utilise le paramètre d'URL `id` pour identifier le souvenir.
+ *
+ * @component
+ *
+ * @example
+ * &lt;SharedLink />
+ */
+function SharedLink() {
+  const [link, setLink] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [copied, setCopied] = useState(false);
+
+  const { id } = useParams();
+
+  const handleCreateLink = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setErrors({});
+
+    try {
+      const res = await axios.post(
+        `http://localhost:8000/api/souvenirs/${id}/invite`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setLink(res.data.invite_link);
+    } catch (e) {
+      if (e.response &amp;&amp; e.response.status === 403) {
+        setErrors(e.response.data.errors);
+      } else {
+        console.error("Erreur inattendue", e);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  return (
+    &lt;>
+      &lt;div className="flex flex-col gap-3 items-center w-full">
+        &lt;button
+          className={`bg-primary text-white rounded-lg px-6 py-2 font-medium hover:scale-105 transition ${
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+          disabled={isLoading}
+          onClick={handleCreateLink}
+        >
+          {isLoading ? "Chargement..." : "Créer un lien"}
+        &lt;/button>
+
+        {link &amp;&amp; (
+          &lt;div className="flex flex-col items-stretch gap-3 mt-4 w-full">
+            {/* Champ du lien */}
+            &lt;input
+              type="text"
+              value={link}
+              readOnly
+              className="flex-1 px-4 py-2 text-sm rounded-lg border border-primary bg-secondary text-text shadow-md focus:outline-none focus:ring-2 focus:ring-primary transition"
+            />
+
+            {/* Bouton Copier */}
+            &lt;button
+              type="button"
+              onClick={() => {
+                navigator.clipboard.writeText(link);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              }}
+              className="flex items-center justify-center px-4 py-2 rounded-lg bg-my-gradient text-white font-semibold shadow-lg hover:brightness-110 hover:scale-105 transition"
+            >
+              {copied ? "Copié !" : "Copier"}
+            &lt;/button>
+          &lt;/div>
+        )}
+
+        {errors.message &amp;&amp; (
+          &lt;p className="text-danger text-sm">{errors.message[0]}&lt;/p>
+        )}
+      &lt;/div>
+    &lt;/>
+  );
+}
+
+export default SharedLink;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AccountSettings.html">AccountSettings</a></li><li><a href="module-AuthContext.html">AuthContext</a></li><li><a href="module-Create.html">Create</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-InvitePage.html">InvitePage</a></li><li><a href="module-LandingPage.html">LandingPage</a></li><li><a href="module-List.html">List</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-NotFound.html">NotFound</a></li><li><a href="module-Profil.html">Profil</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-SouvenirEntries.html">SouvenirEntries</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AppLayout">AppLayout</a></li><li><a href="global.html#BackToTop">BackToTop</a></li><li><a href="global.html#CardFeature">CardFeature</a></li><li><a href="global.html#Delete">Delete</a></li><li><a href="global.html#DeleteAccountModale">DeleteAccountModale</a></li><li><a href="global.html#EntryContainer">EntryContainer</a></li><li><a href="global.html#EntryFeed">EntryFeed</a></li><li><a href="global.html#EntryList">EntryList</a></li><li><a href="global.html#EntryModale">EntryModale</a></li><li><a href="global.html#EntryUpload">EntryUpload</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GuestLayout">GuestLayout</a></li><li><a href="global.html#Icon">Icon</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Nav">Nav</a></li><li><a href="global.html#NavLinks">NavLinks</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProfilButton">ProfilButton</a></li><li><a href="global.html#ProfileSelector">ProfileSelector</a></li><li><a href="global.html#PublicRoute">PublicRoute</a></li><li><a href="global.html#SharedLink">SharedLink</a></li><li><a href="global.html#SideBar">SideBar</a></li><li><a href="global.html#SocialIcons">SocialIcons</a></li><li><a href="global.html#SouvenirSetting">SouvenirSetting</a></li><li><a href="global.html#SouvenirSettingModale">SouvenirSettingModale</a></li><li><a href="global.html#Transition">Transition</a></li><li><a href="global.html#Update">Update</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Aug 16 2025 17:07:34 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

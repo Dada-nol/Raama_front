@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/profil/AccountSettings.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/profil/AccountSettings.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import DeleteAccountModale from "../../components/profil/DeleteAccountModale";
+import Input from "../../components/ui/Input";
+import { useAuth } from "../../context/AuthContext";
+
+/**
+ * Page de paramètres du compte utilisateur.
+ *
+ * Fonctionnalités :
+ * - Affiche et permet de modifier les informations de l'utilisateur : nom, prénom, email.
+ * - Permet de changer le mot de passe avec validation de l'ancien mot de passe.
+ * - Gère l'affichage des erreurs de validation renvoyées par l'API (422) ou des erreurs d'authentification (401).
+ * - Utilise le contexte `AuthContext` pour récupérer les informations de l'utilisateur connecté.
+ * - Redirige l'utilisateur vers la page profil après mise à jour réussie.
+ * - Inclut un composant `DeleteAccountModale` pour la suppression du compte.
+ *
+ * Composants internes utilisés :
+ * - Input : champ de saisie réutilisable.
+ * - DeleteAccountModale : modale pour supprimer le compte utilisateur.
+ * - ExclamationTriangleIcon : icône d'avertissement pour suppression de compte.
+ *
+ * @module AccountSettings
+ * @returns {JSX.Element} Page de gestion des paramètres du compte
+ */
+function AccountSettings() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [name, setName] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [password_confirmation, setPassword_confirmation] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [errors, setErrors] = useState({});
+  const [password_error, setPasswordError] = useState({});
+
+  useEffect(() => {
+    if (user) {
+      setName(user.name);
+      setFirstname(user.firstname);
+      setEmail(user.email);
+    }
+  }, [user]);
+
+  /**
+   * Met à jour les informations de l'utilisateur.
+   * - Si un mot de passe est saisi, inclut la confirmation et l'ancien mot de passe.
+   * - Gère les erreurs de validation et d'authentification.
+   *
+   * @param {React.FormEvent} e - Événement de soumission du formulaire
+   */
+  const UpdateUser = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setErrors({});
+
+    try {
+      await axios.put(
+        `http://localhost:8000/api/user/${user.id}`,
+        {
+          name,
+          firstname,
+          email,
+          ...(password
+            ? { password, password_confirmation, old_password: oldPassword }
+            : {}),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      navigate("/profil");
+    } catch (e) {
+      if (e.response &amp;&amp; e.response.status === 422) {
+        setErrors(e.response.data.errors);
+      } else if (e.response &amp;&amp; e.response.status === 401) {
+        setPasswordError(e.response.data);
+      } else {
+        console.error("Erreur inattendue", e);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    &lt;>
+      &lt;div className="w-full flex justify-center mb-8">
+        &lt;h1 className="text-gradient text-2xl w-fit">Paramètres de compte&lt;/h1>
+      &lt;/div>
+
+      &lt;form onSubmit={UpdateUser} className="space-y-8">
+        {/* Infos utilisateur */}
+        &lt;section className="flex flex-col md:flex-row flex-wrap justify-center gap-6 border border-primary mx-4 md:mx-20 p-4 rounded-lg">
+          &lt;div className="flex-1 min-w-[220px]">
+            &lt;p className="font-semibold text-sm mb-1">Nom&lt;/p>
+            &lt;Input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            {errors.name &amp;&amp; &lt;p className="text-danger">{errors.name[0]}&lt;/p>}
+          &lt;/div>
+
+          &lt;div className="flex-1 min-w-[220px]">
+            &lt;p className="font-semibold text-sm mb-1">Prénom&lt;/p>
+            &lt;Input
+              type="text"
+              value={firstname}
+              onChange={(e) => setFirstname(e.target.value)}
+            />
+            {errors.firstname &amp;&amp; (
+              &lt;p className="text-danger">{errors.firstname[0]}&lt;/p>
+            )}
+          &lt;/div>
+
+          &lt;div className="flex-1 min-w-[220px]">
+            &lt;p className="font-semibold text-sm mb-1">Email&lt;/p>
+            &lt;Input
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            {errors.email &amp;&amp; &lt;p className="text-danger">{errors.email[0]}&lt;/p>}
+          &lt;/div>
+        &lt;/section>
+
+        {/* Changement mot de passe */}
+        &lt;h2 className="text-lg font-bold mx-4 md:mx-20">
+          Modifier le mot de passe
+        &lt;/h2>
+        &lt;section className="flex flex-col md:flex-row flex-wrap justify-center gap-6 border border-primary mx-4 md:mx-20 p-4 rounded-lg">
+          &lt;div className="flex-1 min-w-[220px]">
+            &lt;p className="font-semibold text-sm mb-1">Ancien mot de passe&lt;/p>
+            &lt;Input
+              type="password"
+              value={oldPassword}
+              onChange={(e) => setOldPassword(e.target.value)}
+            />
+            {password_error.message &amp;&amp; (
+              &lt;p className="text-danger">{password_error.message}&lt;/p>
+            )}
+          &lt;/div>
+
+          &lt;div className="flex-1 min-w-[220px]">
+            &lt;p className="font-semibold text-sm mb-1">Nouveau mot de passe&lt;/p>
+            &lt;Input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {errors.password &amp;&amp; (
+              &lt;p className="text-danger">{errors.password[0]}&lt;/p>
+            )}
+          &lt;/div>
+
+          &lt;div className="flex-1 min-w-[220px]">
+            &lt;p className="font-semibold text-sm mb-1">
+              Répéter le mot de passe
+            &lt;/p>
+            &lt;Input
+              type="password"
+              value={password_confirmation}
+              onChange={(e) => setPassword_confirmation(e.target.value)}
+            />
+            {errors.password &amp;&amp; (
+              &lt;p className="text-danger">{errors.password[0]}&lt;/p>
+            )}
+          &lt;/div>
+        &lt;/section>
+
+        {/* Bouton de soumission */}
+        &lt;div className="flex justify-center">
+          &lt;button
+            className={`bg-primary rounded-md px-6 py-2 hover:scale-105 transition ${
+              isLoading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            type="submit"
+            disabled={isLoading}
+          >
+            {isLoading ? "Chargement..." : "Modifier les informations"}
+          &lt;/button>
+        &lt;/div>
+      &lt;/form>
+
+      {/* Suppression de compte */}
+      &lt;section className="flex flex-col sm:flex-row items-center justify-between border border-danger p-4 mx-4 md:mx-20 my-4 rounded-lg gap-4">
+        &lt;div className="flex items-center text-center sm:text-left">
+          &lt;ExclamationTriangleIcon className="h-10 w-10 text-red-600 mr-2" />
+          &lt;p>Cette action est irreversible !&lt;/p>
+        &lt;/div>
+        &lt;DeleteAccountModale />
+      &lt;/section>
+    &lt;/>
+  );
+}
+
+export default AccountSettings;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AccountSettings.html">AccountSettings</a></li><li><a href="module-AuthContext.html">AuthContext</a></li><li><a href="module-Create.html">Create</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-InvitePage.html">InvitePage</a></li><li><a href="module-LandingPage.html">LandingPage</a></li><li><a href="module-List.html">List</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-NotFound.html">NotFound</a></li><li><a href="module-Profil.html">Profil</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-SouvenirEntries.html">SouvenirEntries</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AppLayout">AppLayout</a></li><li><a href="global.html#BackToTop">BackToTop</a></li><li><a href="global.html#CardFeature">CardFeature</a></li><li><a href="global.html#Delete">Delete</a></li><li><a href="global.html#DeleteAccountModale">DeleteAccountModale</a></li><li><a href="global.html#EntryContainer">EntryContainer</a></li><li><a href="global.html#EntryFeed">EntryFeed</a></li><li><a href="global.html#EntryList">EntryList</a></li><li><a href="global.html#EntryModale">EntryModale</a></li><li><a href="global.html#EntryUpload">EntryUpload</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GuestLayout">GuestLayout</a></li><li><a href="global.html#Icon">Icon</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Nav">Nav</a></li><li><a href="global.html#NavLinks">NavLinks</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProfilButton">ProfilButton</a></li><li><a href="global.html#ProfileSelector">ProfileSelector</a></li><li><a href="global.html#PublicRoute">PublicRoute</a></li><li><a href="global.html#SharedLink">SharedLink</a></li><li><a href="global.html#SideBar">SideBar</a></li><li><a href="global.html#SocialIcons">SocialIcons</a></li><li><a href="global.html#SouvenirSetting">SouvenirSetting</a></li><li><a href="global.html#SouvenirSettingModale">SouvenirSettingModale</a></li><li><a href="global.html#Transition">Transition</a></li><li><a href="global.html#Update">Update</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Aug 16 2025 17:07:34 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

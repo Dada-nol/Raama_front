@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/souvenirs/List.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/souvenirs/List.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import axios from "axios";
+import { useEffect, useState } from "react";
+import panda3 from "../../assets/img/panda3.jpg";
+
+/**
+ * Page listant les souvenirs de l'utilisateur.
+ *
+ * Fonctionnalités :
+ * - Récupère la liste des souvenirs via l'API `/souvenirs` avec authentification Bearer token.
+ * - Récupère les types de mémoire via l'API `/memory-type`.
+ * - Permet de trier les souvenirs par titre, date de création, points mémoire ou type de mémoire.
+ * - Permet de rechercher un souvenir ou un membre par nom.
+ * - Affiche les souvenirs sous forme de cartes avec image de couverture (ou image par défaut).
+ * - Gère les souvenirs indisponibles pour certains types de mémoire.
+ * - Gestion des erreurs de requête et affichage des messages d'erreur.
+ *
+ * Composants internes utilisés :
+ * - panda3 : image par défaut pour les souvenirs sans image.
+ *
+ * @module List
+ * @returns {JSX.Element} Liste filtrable et triable des souvenirs de l'utilisateur
+ */
+function List() {
+  const [data, setData] = useState([]);
+  const [memoryType, setMemoryType] = useState([]);
+  const [errors, setErrors] = useState({});
+  const [sortOption, setSortOption] = useState("title");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const options = ["title", "created_at", "memory_points", "memory_type"];
+
+  const handleSort = (e) => {
+    setSortOption(e);
+  };
+
+  const handleFilter = (e) => {
+    const { value } = e.target;
+    setSearchTerm(value);
+  };
+
+  const filteredData = data.filter(
+    (item) =>
+      item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.users?.some((user) =>
+        user.name?.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+  );
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const res = await axios.get("http://localhost:8000/api/memory-type");
+        setMemoryType(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetch();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setErrors({});
+
+      try {
+        const res = await axios.get("http://localhost:8000/api/souvenirs", {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        });
+
+        setData(res.data);
+        console.log(res.data);
+      } catch (e) {
+        if (e.response &amp;&amp; e.response.status === 401) {
+          setErrors(e.response.data); // &lt;- Laravel met les erreurs ici
+        } else {
+          console.error("Erreur inattendue", e);
+        }
+      }
+    };
+    fetchData();
+  }, []);
+
+  return (
+    &lt;>
+      &lt;h2 className="flex justify-center p-4 text-lg sm:text-xl md:text-2xl font-medium text-center">
+        Mes &lt;p className="text-gradient pl-1">souvenirs&lt;/p>
+      &lt;/h2>
+
+      &lt;section className="flex flex-col md:flex-row border-2 border-primary rounded-lg mx-4 md:mx-8 gap-6 md:gap-12 lg:gap-48 p-4">
+        &lt;div className="flex flex-col justify-center items-start w-full md:w-auto">
+          &lt;h3 className="mb-2">Trier par&lt;/h3>
+          &lt;ul className="flex flex-wrap gap-4">
+            {options.map((option) => (
+              &lt;li key={option}>
+                &lt;button
+                  className="bg-my-gradient w-fit h-8 rounded-lg px-4 text-sm md:text-base hover:brightness-110 transition"
+                  onClick={() => handleSort(option)}
+                >
+                  {option}
+                &lt;/button>
+              &lt;/li>
+            ))}
+          &lt;/ul>
+        &lt;/div>
+
+        &lt;div className="flex flex-col justify-center items-start w-full md:w-auto">
+          &lt;h3 className="mb-2">Rechercher un souvenir ou un membre&lt;/h3>
+          &lt;input
+            placeholder="ex : Jhon"
+            value={searchTerm}
+            type="text"
+            className="text-[#000] rounded-md w-full sm:w-60 h-8 border-2 border-transparent focus:border-[#64b000] focus:outline-none transition-colors duration-200 px-2"
+            onChange={handleFilter}
+          />
+        &lt;/div>
+      &lt;/section>
+
+      &lt;section className="flex flex-col items-start gap-4 mx-4 md:mx-8">
+        {sortOption === "memory_type" ? (
+          memoryType.map((type) => (
+            &lt;div key={type.id} className="w-full">
+              &lt;h3 className="text-lg font-medium text-left mt-4 mb-2">
+                {type.title}
+              &lt;/h3>
+
+              &lt;ul className="flex flex-wrap gap-4 md:gap-6">
+                {errors.message &amp;&amp; &lt;p className="error">{errors.message}&lt;/p>}
+
+                {filteredData
+                  .filter((souvenir) => souvenir.memory_type_id === type.id)
+                  .map((souvenir) => (
+                    &lt;li
+                      key={souvenir.id}
+                      className="card w-full sm:w-72 md:w-80 p-4 relative overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient"
+                    >
+                      &lt;a href={`souvenir/${souvenir.id}`}>
+                        {souvenir.cover_image ? (
+                          &lt;img
+                            src={`http://localhost:8000/storage/${souvenir.cover_image}`}
+                            alt="souvenir"
+                            className="w-full h-40 sm:h-48 object-cover rounded-lg"
+                          />
+                        ) : (
+                          &lt;img
+                            src={panda3}
+                            alt="panda dans un arbre"
+                            className="w-full h-40 sm:h-48 object-cover rounded-lg"
+                          />
+                        )}
+                        &lt;p className="w-fit">{souvenir.title}&lt;/p>
+                        &lt;p className="w-fit">{souvenir.memory_points}&lt;/p>
+                      &lt;/a>
+                    &lt;/li>
+                  ))}
+
+                {!type.isAvailable &amp;&amp; (
+                  &lt;li className="w-full sm:w-72 md:w-80 p-4 border-2 border-danger bg-secondary opacity-60 flex items-center justify-center text-center">
+                    &lt;p className="text-danger">Bientôt disponible&lt;/p>
+                  &lt;/li>
+                )}
+              &lt;/ul>
+            &lt;/div>
+          ))
+        ) : (
+          &lt;ul className="flex flex-wrap gap-4 my-8">
+            {[...filteredData]
+              .sort((a, b) => {
+                const valA = a[sortOption];
+                const valB = b[sortOption];
+
+                // Texte
+                if (typeof valA === "string" &amp;&amp; typeof valB === "string") {
+                  return valA.localeCompare(valB);
+                }
+
+                // Nombre
+                if (typeof valA === "number" &amp;&amp; typeof valB === "number") {
+                  return valB - valA;
+                }
+
+                // Date (ou string de date)
+                const dateA = new Date(valA);
+                const dateB = new Date(valB);
+                if (!isNaN(dateA) &amp;&amp; !isNaN(dateB)) {
+                  return dateB - dateA;
+                }
+
+                return 0; // valeurs non comparables
+              })
+
+              .map((souvenir) => (
+                &lt;li
+                  key={souvenir.id}
+                  className="card w-full sm:w-72 md:w-80 p-4 relative overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient"
+                >
+                  &lt;a href={`souvenir/${souvenir.id}`}>
+                    {souvenir.cover_image ? (
+                      &lt;img
+                        src={`http://localhost:8000/storage/${souvenir.cover_image}`}
+                        alt="souvenir"
+                        className="w-full h-40 sm:h-48 object-cover rounded-lg"
+                      />
+                    ) : (
+                      &lt;img
+                        src={panda3}
+                        alt="panda dans un arbre"
+                        className="w-full h-40 sm:h-48 object-cover rounded-lg"
+                      />
+                    )}
+                    &lt;p className="w-fit">{souvenir.title}&lt;/p>
+                    &lt;p className="w-fit">{souvenir.memory_points}&lt;/p>
+                  &lt;/a>
+                &lt;/li>
+              ))}
+          &lt;/ul>
+        )}
+      &lt;/section>
+    &lt;/>
+  );
+}
+
+export default List;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AccountSettings.html">AccountSettings</a></li><li><a href="module-AuthContext.html">AuthContext</a></li><li><a href="module-Create.html">Create</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-InvitePage.html">InvitePage</a></li><li><a href="module-LandingPage.html">LandingPage</a></li><li><a href="module-List.html">List</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-NotFound.html">NotFound</a></li><li><a href="module-Profil.html">Profil</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-SouvenirEntries.html">SouvenirEntries</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AppLayout">AppLayout</a></li><li><a href="global.html#BackToTop">BackToTop</a></li><li><a href="global.html#CardFeature">CardFeature</a></li><li><a href="global.html#Delete">Delete</a></li><li><a href="global.html#DeleteAccountModale">DeleteAccountModale</a></li><li><a href="global.html#EntryContainer">EntryContainer</a></li><li><a href="global.html#EntryFeed">EntryFeed</a></li><li><a href="global.html#EntryList">EntryList</a></li><li><a href="global.html#EntryModale">EntryModale</a></li><li><a href="global.html#EntryUpload">EntryUpload</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GuestLayout">GuestLayout</a></li><li><a href="global.html#Icon">Icon</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Nav">Nav</a></li><li><a href="global.html#NavLinks">NavLinks</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProfilButton">ProfilButton</a></li><li><a href="global.html#ProfileSelector">ProfileSelector</a></li><li><a href="global.html#PublicRoute">PublicRoute</a></li><li><a href="global.html#SharedLink">SharedLink</a></li><li><a href="global.html#SideBar">SideBar</a></li><li><a href="global.html#SocialIcons">SocialIcons</a></li><li><a href="global.html#SouvenirSetting">SouvenirSetting</a></li><li><a href="global.html#SouvenirSettingModale">SouvenirSettingModale</a></li><li><a href="global.html#Transition">Transition</a></li><li><a href="global.html#Update">Update</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Aug 16 2025 17:07:34 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/souvenirs/Create.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/souvenirs/Create.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { LockClosedIcon } from "@heroicons/react/24/solid";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import Input from "../../components/ui/Input";
+
+/**
+ * Page de création d'un nouveau Souvenir.
+ *
+ * Fonctionnalités :
+ * - Permet à l'utilisateur de créer un souvenir en sélectionnant un type de mémoire disponible.
+ * - Permet de saisir un titre et d'uploader une image de couverture (max 10 Mo).
+ * - Récupère les types de mémoire depuis l'API au montage du composant.
+ * - Envoie les données via un `POST` à l'API `/souvenir` avec FormData pour l'upload.
+ * - Gestion des erreurs de validation et affichage des messages.
+ * - Redirection vers `/souvenir` après création réussie.
+ *
+ * Composants internes utilisés :
+ * - Input : champ de saisie réutilisable.
+ * - LockClosedIcon : icône pour indiquer un type de mémoire indisponible.
+ *
+ * @module Create
+ * @returns {JSX.Element} Formulaire de création d'un nouveau souvenir
+ */
+function Create() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [title, setTitle] = useState("");
+  const [memoryType, setMemoryType] = useState([]);
+  const [selectedMemoryType, setSelectedMemoryType] = useState("");
+  const [coverImage, setCoverImage] = useState("");
+  const [errors, setErrors] = useState({});
+
+  const [searchParams] = useSearchParams();
+  const memoryTypeId = searchParams.get("memory_type_id");
+
+  const navigate = useNavigate();
+
+  // Charger les memory types une seule fois au montage
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const res = await axios.get("http://localhost:8000/api/memory-type");
+        setMemoryType(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetch();
+  }, []);
+
+  // Mettre à jour le selectedMemoryType si memoryTypeId change
+  useEffect(() => {
+    if (memoryTypeId) {
+      setSelectedMemoryType(Number(memoryTypeId));
+    }
+  }, [memoryTypeId]);
+
+  const handleCreate = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setErrors({});
+
+    if (coverImage &amp;&amp; coverImage.size > 10 * 1024 * 1024) {
+      setErrors({ cover_image: ["Le fichier est trop lourd (max 10Mo)."] });
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("memory_type", selectedMemoryType);
+    if (coverImage) {
+      formData.append("cover_image", coverImage);
+    }
+
+    try {
+      await axios.post("http://localhost:8000/api/souvenir", formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "multipart/form-data", // nécessaire pour l'upload
+        },
+      });
+
+      navigate("/souvenir");
+    } catch (e) {
+      if (e.response &amp;&amp; e.response.status === 422) {
+        setErrors(e.response.data.errors);
+      } else {
+        console.error("Erreur inattendue", e);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    &lt;form onSubmit={handleCreate}>
+      &lt;h2 className="flex flex-wrap justify-center items-center text-2xl font-medium">
+        Création de votre &lt;span className="text-gradient pl-1">Souvenir&lt;/span>
+      &lt;/h2>
+
+      &lt;div className="m-8">
+        &lt;h3 className="text-lg font-medium">
+          Choisissez votre type de Memoire
+        &lt;/h3>
+        &lt;div className="flex flex-wrap justify-center p-4 gap-4">
+          {memoryType.map((memory) =>
+            memory.isAvailable ? (
+              &lt;button
+                type="button"
+                key={memory.id}
+                onClick={() => setSelectedMemoryType(memory.id)}
+                className="card h-28 relative w-80 p-4 shadow-md hover:shadow-lg group overflow-hidden  bg-secondary gradient-border transition-transform duration-300 hover:scale-105 hover:text-gradient"
+              >
+                &lt;div
+                  className={` 
+    ${selectedMemoryType === memory.id ? "ring-4 ring-primary" : ""}
+    flex items-center justify-center w-full h-full block text-lg font-medium text-text hover:text-gradient transition-colors`}
+                >
+                  {memory.title}
+                &lt;/div>
+              &lt;/button>
+            ) : (
+              &lt;div className="cursor-not-allowed w-80 h-28 p-4 relative overflow-hidden bg-secondary border-2 border-danger opacity-60">
+                &lt;div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center gap-1">
+                  &lt;LockClosedIcon className="w-6 h-6 text-white" />
+                  &lt;p className="text-white font-bold">{memory.title}&lt;/p>
+                  &lt;p className="text-sm text-gray-200">
+                    Indisponible pour le moment
+                  &lt;/p>
+                &lt;/div>
+              &lt;/div>
+            )
+          )}
+        &lt;/div>
+        {errors.memory_type &amp;&amp; (
+          &lt;p className="text-danger">{errors.memory_type[0]}&lt;/p>
+        )}
+      &lt;/div>
+
+      &lt;div className="border-2 border-primary rounded-lg m-8 flex flex-col lg:flex-row justify-center items-center gap-10 p-4">
+        &lt;div className="w-full max-w-md lg:max-w-sm">
+          &lt;h3 className="text-lg font-medium">Titre&lt;/h3>
+          &lt;Input
+            type={"text"}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          >&lt;/Input>
+
+          {errors.title &amp;&amp; &lt;p className="text-danger">{errors.title[0]}&lt;/p>}
+        &lt;/div>
+
+        &lt;div className="">
+          &lt;h3 className="text-lg font-medium">Image de couverture&lt;/h3>
+          &lt;label className="inline-block bg-my-gradient text-white px-4 py-2 rounded cursor-pointer hover:brightness-110 hover:scale-105">
+            Choisir une image
+            &lt;input
+              type="file"
+              name="cover_image"
+              accept=".png,.jpg,.jpeg"
+              onChange={(e) => setCoverImage(e.target.files[0])}
+              className="hidden"
+            />
+          &lt;/label>
+          {coverImage &amp;&amp; (
+            &lt;p className="mt-2 text-sm text-text">{coverImage.name}&lt;/p>
+          )}
+          {errors.cover_image &amp;&amp; (
+            &lt;p className="text-danger">{errors.cover_image[0]}&lt;/p>
+          )}
+        &lt;/div>
+      &lt;/div>
+
+      &lt;button
+        className={`bg-my-gradient w-32 h-10 rounded-lg text-text hover:brightness-110 hover:scale-105 transition ${
+          isLoading ? "opacity-50 cursor-not-allowed" : ""
+        }`}
+        type="submit"
+        disabled={isLoading}
+      >
+        {isLoading ? "Chargement..." : "Créer"}
+      &lt;/button>
+    &lt;/form>
+  );
+}
+
+export default Create;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AccountSettings.html">AccountSettings</a></li><li><a href="module-AuthContext.html">AuthContext</a></li><li><a href="module-Create.html">Create</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-InvitePage.html">InvitePage</a></li><li><a href="module-LandingPage.html">LandingPage</a></li><li><a href="module-List.html">List</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-NotFound.html">NotFound</a></li><li><a href="module-Profil.html">Profil</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-SouvenirEntries.html">SouvenirEntries</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AppLayout">AppLayout</a></li><li><a href="global.html#BackToTop">BackToTop</a></li><li><a href="global.html#CardFeature">CardFeature</a></li><li><a href="global.html#Delete">Delete</a></li><li><a href="global.html#DeleteAccountModale">DeleteAccountModale</a></li><li><a href="global.html#EntryContainer">EntryContainer</a></li><li><a href="global.html#EntryFeed">EntryFeed</a></li><li><a href="global.html#EntryList">EntryList</a></li><li><a href="global.html#EntryModale">EntryModale</a></li><li><a href="global.html#EntryUpload">EntryUpload</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GuestLayout">GuestLayout</a></li><li><a href="global.html#Icon">Icon</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Nav">Nav</a></li><li><a href="global.html#NavLinks">NavLinks</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProfilButton">ProfilButton</a></li><li><a href="global.html#ProfileSelector">ProfileSelector</a></li><li><a href="global.html#PublicRoute">PublicRoute</a></li><li><a href="global.html#SharedLink">SharedLink</a></li><li><a href="global.html#SideBar">SideBar</a></li><li><a href="global.html#SocialIcons">SocialIcons</a></li><li><a href="global.html#SouvenirSetting">SouvenirSetting</a></li><li><a href="global.html#SouvenirSettingModale">SouvenirSettingModale</a></li><li><a href="global.html#Transition">Transition</a></li><li><a href="global.html#Update">Update</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Aug 16 2025 17:07:34 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

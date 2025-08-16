@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/LandingPage.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/LandingPage.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import paysage from "../assets/img/paysage.jpg";
+import photo1 from "../assets/img/photo1.jpg";
+import photo2 from "../assets/img/photo2.jpg";
+import BackToTop from "../components/ui/BackToTop";
+import Feature from "../components/ui/CardFeature";
+
+/**
+ * Page d'accueil de l'application.
+ *
+ * Cette page est composée de plusieurs composants :
+ * - Feature : pour afficher les fonctionnalités principales.
+ * - BackToTop : bouton pour remonter en haut de page.
+ *
+ * Elle contient également des sections :
+ * - Photos superposées avec halo visuel.
+ * - Section CTA pour inviter l'utilisateur à s'inscrire.
+ * - Section présentant la possibilité de créer un groupe et partager des souvenirs.
+ *
+ * @module LandingPage
+ * @returns {JSX.Element} La page d'accueil complète
+ */
+function LandingPage() {
+  return (
+    &lt;main className="relative">
+      {/* Features */}
+      &lt;section className="flex flex-col justify-center items-center gap-8 mt-4">
+        &lt;h2 className="title font-bold text-[25px] text-gradient">
+          Fonctionnalités
+        &lt;/h2>
+        &lt;div className="flex flex-col md:flex-row gap-6 justify-evenly bg-secondary w-full p-6">
+          &lt;Feature
+            icon="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Z"
+            description="Privacy first"
+          >&lt;/Feature>
+          &lt;Feature
+            icon="M244.8,150.4a8,8,0,0,1-11.2-1.6A51.6,51.6,0,0,0,192,128a8,8,0,0,1-7.37-4.89,8,8,0,0,1,0-6.22A8,8,0,0,1,192,112a24,24,0,1,0-23.24-30,8,8,0,1,1-15.5-4A40,40,0,1,1,219,117.51a67.94,67.94,0,0,1,27.43,21.68A8,8,0,0,1,244.8,150.4ZM190.92,212a8,8,0,1,1-13.84,8,57,57,0,0,0-98.16,0,8,8,0,1,1-13.84-8,72.06,72.06,0,0,1,33.74-29.92,48,48,0,1,1,58.36,0A72.06,72.06,0,0,1,190.92,212ZM128,176a32,32,0,1,0-32-32A32,32,0,0,0,128,176ZM72,120a8,8,0,0,0-8-8A24,24,0,1,1,87.24,82a8,8,0,1,0,15.5-4A40,40,0,1,0,37,117.51,67.94,67.94,0,0,0,9.6,139.19a8,8,0,1,0,12.8,9.61A51.6,51.6,0,0,1,64,128,8,8,0,0,0,72,120Z"
+            description="Group sharing"
+          >&lt;/Feature>
+          &lt;Feature
+            icon="M208,56H180.28L166.65,35.56A8,8,0,0,0,160,32H96a8,8,0,0,0-6.65,3.56L75.71,56H48A24,24,0,0,0,24,80V192a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V80A24,24,0,0,0,208,56Zm8,136a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V80a8,8,0,0,1,8-8H80a8,8,0,0,0,6.66-3.56L100.28,48h55.43l13.63,20.44A8,8,0,0,0,176,72h32a8,8,0,0,1,8,8ZM128,88a44,44,0,1,0,44,44A44.05,44.05,0,0,0,128,88Zm0,72a28,28,0,1,1,28-28A28,28,0,0,1,128,160Z"
+            description="High-Quality Photo"
+          >&lt;/Feature>
+        &lt;/div>
+      &lt;/section>
+
+      {/* Photos superposées */}
+      &lt;section className="relative flex items-center justify-center px-4 py-16 overflow-hidden">
+        {/* Halo vert */}
+        &lt;div className="absolute w-[600px] h-[600px] bg-[#64B000] rounded-full blur-[120px] opacity-30  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+
+        &lt;div className="flex flex-col md:flex-row items-center ">
+          &lt;div className="relative w-full h-[300px] md:h-[400px]">
+            &lt;img
+              src={paysage}
+              alt="photo1"
+              className="w-[200px] h-[300px] md:w-[300px] md:h-[400px] absolute top-0 left-0 h-full object-cover -rotate-[12deg] md:rotate-[12deg] border-2 border-white shadow-xl"
+            />
+            &lt;img
+              src={photo1}
+              alt="photo2"
+              className="w-[200px] h-[300px] md:w-[300px] md:h-[400px] absolute right-0 md:top-8 md:left-8 h-full object-cover rotate-[12deg] border-2 border-white shadow-lg z-10"
+            />
+          &lt;/div>
+
+          &lt;div className="bg-white/5 backdrop-blur-md rounded-xl p-8 border border-white/10 shadow-[0_0_10px_2px_rgba(255,255,255,0.1)] text-white">
+            &lt;p className="text-2xl font-semibold leading-relaxed text-center">
+              Tes meilleurs moments, à portée de main, pour toute la vie.
+            &lt;/p>
+          &lt;/div>
+        &lt;/div>
+      &lt;/section>
+
+      {/* CTA */}
+      &lt;section className="w-full bg-secondary">
+        &lt;div className="flex flex-col md:flex-row md:justify-evenly items-center p-10 gap-6">
+          &lt;p className="text-xl font-semibold leading-relaxed text-center pb-2">
+            Pour commencer à créer des souvenirs c'est ici :
+          &lt;/p>
+          &lt;a
+            className="text-md hover:scale-105 inline-block transition-transform duration-300 hover:scale-140 gradient-border p-4"
+            href="/register"
+          >
+            Get started
+          &lt;/a>
+        &lt;/div>
+      &lt;/section>
+
+      {/* Photo */}
+      &lt;section className="w-full">
+        &lt;div className="grid grid-cols-1 md:grid-cols-2 m-20 content-center justify-items-center border border-white rounded-lg p-8 border-white/10 shadow-[0_0_10px_2px_rgba(255,255,255,0.1)]">
+          &lt;div className="flex items-center">
+            &lt;p className="text-xl md:text-2xl pb-2 font-semibold leading-relaxed text-center">
+              Crée un groupe, invite tes amis,
+              &lt;br>&lt;/br>
+              et construisez ensemble un album unique.
+            &lt;/p>
+          &lt;/div>
+          &lt;div>
+            &lt;img
+              src={photo2}
+              alt=""
+              className="w-[500px] h-auto object-cover shadow-xl"
+            />
+          &lt;/div>
+        &lt;/div>
+      &lt;/section>
+
+      &lt;BackToTop>&lt;/BackToTop>
+    &lt;/main>
+  );
+}
+
+export default LandingPage;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AccountSettings.html">AccountSettings</a></li><li><a href="module-AuthContext.html">AuthContext</a></li><li><a href="module-Create.html">Create</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-InvitePage.html">InvitePage</a></li><li><a href="module-LandingPage.html">LandingPage</a></li><li><a href="module-List.html">List</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-NotFound.html">NotFound</a></li><li><a href="module-Profil.html">Profil</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-SouvenirEntries.html">SouvenirEntries</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AppLayout">AppLayout</a></li><li><a href="global.html#BackToTop">BackToTop</a></li><li><a href="global.html#CardFeature">CardFeature</a></li><li><a href="global.html#Delete">Delete</a></li><li><a href="global.html#DeleteAccountModale">DeleteAccountModale</a></li><li><a href="global.html#EntryContainer">EntryContainer</a></li><li><a href="global.html#EntryFeed">EntryFeed</a></li><li><a href="global.html#EntryList">EntryList</a></li><li><a href="global.html#EntryModale">EntryModale</a></li><li><a href="global.html#EntryUpload">EntryUpload</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GuestLayout">GuestLayout</a></li><li><a href="global.html#Icon">Icon</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Nav">Nav</a></li><li><a href="global.html#NavLinks">NavLinks</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProfilButton">ProfilButton</a></li><li><a href="global.html#ProfileSelector">ProfileSelector</a></li><li><a href="global.html#PublicRoute">PublicRoute</a></li><li><a href="global.html#SharedLink">SharedLink</a></li><li><a href="global.html#SideBar">SideBar</a></li><li><a href="global.html#SocialIcons">SocialIcons</a></li><li><a href="global.html#SouvenirSetting">SouvenirSetting</a></li><li><a href="global.html#SouvenirSettingModale">SouvenirSettingModale</a></li><li><a href="global.html#Transition">Transition</a></li><li><a href="global.html#Update">Update</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Aug 16 2025 17:07:34 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

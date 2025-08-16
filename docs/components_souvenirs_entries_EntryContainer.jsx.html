@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/souvenirs/entries/EntryContainer.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/souvenirs/entries/EntryContainer.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useState } from "react";
+import SouvenirSettingModale from "../SouvenirSettingModale";
+import EntryFeed from "./EntryFeed";
+import ProfileSelector from "./ProfileSelector";
+
+/**
+ * Composant qui affiche la liste des "entries" (photos/mémoires) d'un souvenir,
+ * avec la possibilité de filtrer par utilisateur et de gérer les paramètres du souvenir.
+ *
+ * Fonctionnalités :
+ * - Affiche une barre de navigation des membres si plusieurs utilisateurs sont présents.
+ * - Permet de filtrer les entries par utilisateur sélectionné.
+ * - Intègre le composant `SouvenirSettingModale` pour modifier ou supprimer le souvenir.
+ * - Affiche les entries via le composant `EntryFeed`.
+ *
+ * @component
+ *
+ * @param {Object[]} entries - Liste des entrées liées au souvenir.
+ * @param {Object[]} members - Liste des utilisateurs membres du souvenir.
+ * @param {number|string} id - Identifiant du souvenir.
+ * @param {Function} refreshEntries - Fonction pour recharger la liste des entries après modification.
+ *
+ * @example
+ * &lt;EntryContainer
+ *   entries={entries}
+ *   members={members}
+ *   id={souvenirId}
+ *   refreshEntries={fetchEntries}
+ * />
+ */
+function EntryContainer({ entries, members, id, refreshEntries }) {
+  const [selectedUserId, setSelectedUserId] = useState(null);
+
+  const handleSelect = (id) => {
+    setSelectedUserId(id === selectedUserId ? null : id);
+  };
+
+  const filteredEntries = selectedUserId
+    ? entries.filter((entry) => entry.user_id === selectedUserId)
+    : entries;
+
+  return (
+    &lt;div className="flex flex-col overflow-auto md:w-[60vw] w-full max-w-4xl m-auto rounded-md my-6 border border-primary bg-secondary">
+      {members?.length > 2 ? (
+        &lt;div className="sticky top-0 left-0 right-0 w-full border-b border-primary flex flex-wrap gap-2 mb-4 z-10 bg-secondary px-2 py-1">
+          &lt;div
+            className="flex items-center cursor-pointer select-none transition-transform duration-200 ease-in-out hover:scale-105"
+            onClick={() => handleSelect(null)}
+          >
+            &lt;button className="souvenir-nav-items p-[5px] ml-4">
+              &lt;svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6 text-primary"
+              >
+                &lt;path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z"
+                />
+              &lt;/svg>
+            &lt;/button>
+            &lt;p
+              className={`border-primary px-4 border-r last:border-r-0 ${
+                null === selectedUserId ? "text-gradient" : ""
+              }`}
+            >
+              Voir tout
+            &lt;/p>
+          &lt;/div>
+
+          {members?.map((member, i) => (
+            &lt;div
+              key={member.id}
+              className="flex items-center cursor-pointer select-none transition-transform duration-200 ease-in-out hover:scale-105"
+              onClick={() => handleSelect(member.id)}
+            >
+              &lt;ProfileSelector />
+              &lt;p
+                className={`border-primary px-4 border-r last:border-r-0 ${
+                  member.id === selectedUserId ? "text-gradient" : ""
+                }`}
+              >
+                {member.firstname}
+              &lt;/p>
+            &lt;/div>
+          ))}
+          &lt;SouvenirSettingModale />
+        &lt;/div>
+      ) : (
+        &lt;div className="relative mb-4">
+          &lt;SouvenirSettingModale />
+        &lt;/div>
+      )}
+
+      &lt;div className="h-[90vh]">
+        &lt;EntryFeed
+          entries={entries}
+          members={members}
+          selectedUserId={selectedUserId}
+          id={id}
+          filteredEntries={filteredEntries}
+          refreshEntries={refreshEntries}
+        />
+      &lt;/div>
+    &lt;/div>
+  );
+}
+
+export default EntryContainer;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AccountSettings.html">AccountSettings</a></li><li><a href="module-AuthContext.html">AuthContext</a></li><li><a href="module-Create.html">Create</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-InvitePage.html">InvitePage</a></li><li><a href="module-LandingPage.html">LandingPage</a></li><li><a href="module-List.html">List</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-NotFound.html">NotFound</a></li><li><a href="module-Profil.html">Profil</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-SouvenirEntries.html">SouvenirEntries</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AppLayout">AppLayout</a></li><li><a href="global.html#BackToTop">BackToTop</a></li><li><a href="global.html#CardFeature">CardFeature</a></li><li><a href="global.html#Delete">Delete</a></li><li><a href="global.html#DeleteAccountModale">DeleteAccountModale</a></li><li><a href="global.html#EntryContainer">EntryContainer</a></li><li><a href="global.html#EntryFeed">EntryFeed</a></li><li><a href="global.html#EntryList">EntryList</a></li><li><a href="global.html#EntryModale">EntryModale</a></li><li><a href="global.html#EntryUpload">EntryUpload</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GuestLayout">GuestLayout</a></li><li><a href="global.html#Icon">Icon</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Nav">Nav</a></li><li><a href="global.html#NavLinks">NavLinks</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProfilButton">ProfilButton</a></li><li><a href="global.html#ProfileSelector">ProfileSelector</a></li><li><a href="global.html#PublicRoute">PublicRoute</a></li><li><a href="global.html#SharedLink">SharedLink</a></li><li><a href="global.html#SideBar">SideBar</a></li><li><a href="global.html#SocialIcons">SocialIcons</a></li><li><a href="global.html#SouvenirSetting">SouvenirSetting</a></li><li><a href="global.html#SouvenirSettingModale">SouvenirSettingModale</a></li><li><a href="global.html#Transition">Transition</a></li><li><a href="global.html#Update">Update</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Aug 16 2025 17:07:34 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

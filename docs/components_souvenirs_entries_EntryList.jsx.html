@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/souvenirs/entries/EntryList.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/souvenirs/entries/EntryList.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import EntryModale from "./EntryModale";
+import EntryUpload from "./EntryUpload";
+
+/**
+ * Composant qui affiche la liste des entries (photos/mémoires) pour chaque utilisateur.
+ *
+ * Fonctionnalités :
+ * - Filtrage des entries par utilisateur.
+ * - Affichage conditionnel :
+ *   - Si aucune entry, affiche un bouton d’upload (sauf en lecture seule ou si un utilisateur est sélectionné).
+ *   - Sinon, affiche les entries via le composant `EntryModale`.
+ * - Intègre le composant `EntryUpload` pour permettre l’ajout de nouvelles entries.
+ *
+ * @component
+ *
+ * @param {Object[]} members - Liste des utilisateurs membres du souvenir.
+ * @param {Object[]} entries - Liste des entries à afficher.
+ * @param {number|string} id - Identifiant du souvenir.
+ * @param {boolean} [readonly=false] - Indique si les entries sont en lecture seule.
+ * @param {number|string|null} selectedUserId - ID de l'utilisateur sélectionné pour filtrer les entries.
+ * @param {Function} refreshEntries - Fonction permettant de recharger la liste des entries après modification.
+ *
+ * @example
+ * &lt;EntryList
+ *   members={members}
+ *   entries={entries}
+ *   id={souvenirId}
+ *   readonly={false}
+ *   selectedUserId={selectedUserId}
+ *   refreshEntries={fetchEntries}
+ * />
+ */
+function EntryList({
+  members,
+  entries,
+  id,
+  readonly = false,
+  selectedUserId,
+  refreshEntries,
+}) {
+  return (
+    &lt;div
+      className={`${
+        selectedUserId ? "text-center" : "flex justify-center items-center"
+      } `}
+    >
+      {members?.map((user) => {
+        const userEntries = entries.filter(
+          (entry) => entry.user_id === user.id
+        );
+
+        return (
+          &lt;div className="px-4" key={user.id}>
+            {userEntries.length === 0 ? (
+              selectedUserId ? null : readonly ? (
+                &lt;div className="image-upload-button">No entry&lt;/div>
+              ) : (
+                &lt;EntryUpload
+                  entryUser={user}
+                  id={id}
+                  refreshEntries={refreshEntries}
+                />
+              )
+            ) : (
+              userEntries.map((entry) => (
+                &lt;div key={entry.id}>
+                  &lt;EntryModale id={id} entry={entry}>&lt;/EntryModale>
+                &lt;/div>
+              ))
+            )}
+          &lt;/div>
+        );
+      })}
+    &lt;/div>
+  );
+}
+
+export default EntryList;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AccountSettings.html">AccountSettings</a></li><li><a href="module-AuthContext.html">AuthContext</a></li><li><a href="module-Create.html">Create</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-InvitePage.html">InvitePage</a></li><li><a href="module-LandingPage.html">LandingPage</a></li><li><a href="module-List.html">List</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-NotFound.html">NotFound</a></li><li><a href="module-Profil.html">Profil</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-SouvenirEntries.html">SouvenirEntries</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AppLayout">AppLayout</a></li><li><a href="global.html#BackToTop">BackToTop</a></li><li><a href="global.html#CardFeature">CardFeature</a></li><li><a href="global.html#Delete">Delete</a></li><li><a href="global.html#DeleteAccountModale">DeleteAccountModale</a></li><li><a href="global.html#EntryContainer">EntryContainer</a></li><li><a href="global.html#EntryFeed">EntryFeed</a></li><li><a href="global.html#EntryList">EntryList</a></li><li><a href="global.html#EntryModale">EntryModale</a></li><li><a href="global.html#EntryUpload">EntryUpload</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GuestLayout">GuestLayout</a></li><li><a href="global.html#Icon">Icon</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Nav">Nav</a></li><li><a href="global.html#NavLinks">NavLinks</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProfilButton">ProfilButton</a></li><li><a href="global.html#ProfileSelector">ProfileSelector</a></li><li><a href="global.html#PublicRoute">PublicRoute</a></li><li><a href="global.html#SharedLink">SharedLink</a></li><li><a href="global.html#SideBar">SideBar</a></li><li><a href="global.html#SocialIcons">SocialIcons</a></li><li><a href="global.html#SouvenirSetting">SouvenirSetting</a></li><li><a href="global.html#SouvenirSettingModale">SouvenirSettingModale</a></li><li><a href="global.html#Transition">Transition</a></li><li><a href="global.html#Update">Update</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Aug 16 2025 17:07:34 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/souvenirs/SouvenirSetting.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/souvenirs/SouvenirSetting.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import Delete from "./Delete";
+import SharedLink from "./SharedLink";
+import Update from "./Update";
+
+/**
+ * Composant pour gérer les paramètres d'un souvenir.
+ *
+ * Fonctionnalités :
+ * - Création d'un lien de partage via le composant &lt;SharedLink />.
+ * - Modification des informations du souvenir via le composant &lt;Update />.
+ * - Zone "Danger" pour la suppression du souvenir via le composant &lt;Delete />.
+ * - Affichage responsive avec une grille sur 1 ou 2 colonnes selon la taille d'écran.
+ *
+ * @component
+ *
+ * @example
+ * &lt;SouvenirSetting />
+ */
+function SouvenirSetting() {
+  return (
+    &lt;>
+      &lt;div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Create shared link */}
+        &lt;section className="bg-secondary rounded-xl shadow-md p-6 border border-primary">
+          &lt;h2 className="text-xl font-semibold mb-4 text-text">
+            Créer un lien de partage
+          &lt;/h2>
+          &lt;div className="flex flex-col items-center gap-4">
+            &lt;SharedLink />
+          &lt;/div>
+        &lt;/section>
+
+        {/* Update souvenir */}
+        &lt;section className="bg-secondary rounded-xl shadow-md p-6 border border-primary">
+          &lt;h2 className="text-xl font-semibold mb-4 text-text">
+            Modifier les infos du souvenir
+          &lt;/h2>
+          &lt;div className="flex flex-col items-center gap-4">
+            &lt;Update />
+          &lt;/div>
+        &lt;/section>
+      &lt;/div>
+
+      {/* Danger zone */}
+      &lt;section className="mt-6 bg-secondary rounded-xl shadow-md border border-red-500 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        &lt;div className="flex items-center text-red-500">
+          &lt;ExclamationTriangleIcon className="h-10 w-10 mr-2" />
+          &lt;p className="font-medium">Cette action est irreversible !&lt;/p>
+        &lt;/div>
+        &lt;Delete />
+      &lt;/section>
+    &lt;/>
+  );
+}
+
+export default SouvenirSetting;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AccountSettings.html">AccountSettings</a></li><li><a href="module-AuthContext.html">AuthContext</a></li><li><a href="module-Create.html">Create</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-InvitePage.html">InvitePage</a></li><li><a href="module-LandingPage.html">LandingPage</a></li><li><a href="module-List.html">List</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-NotFound.html">NotFound</a></li><li><a href="module-Profil.html">Profil</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-SouvenirEntries.html">SouvenirEntries</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AppLayout">AppLayout</a></li><li><a href="global.html#BackToTop">BackToTop</a></li><li><a href="global.html#CardFeature">CardFeature</a></li><li><a href="global.html#Delete">Delete</a></li><li><a href="global.html#DeleteAccountModale">DeleteAccountModale</a></li><li><a href="global.html#EntryContainer">EntryContainer</a></li><li><a href="global.html#EntryFeed">EntryFeed</a></li><li><a href="global.html#EntryList">EntryList</a></li><li><a href="global.html#EntryModale">EntryModale</a></li><li><a href="global.html#EntryUpload">EntryUpload</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GuestLayout">GuestLayout</a></li><li><a href="global.html#Icon">Icon</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Nav">Nav</a></li><li><a href="global.html#NavLinks">NavLinks</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProfilButton">ProfilButton</a></li><li><a href="global.html#ProfileSelector">ProfileSelector</a></li><li><a href="global.html#PublicRoute">PublicRoute</a></li><li><a href="global.html#SharedLink">SharedLink</a></li><li><a href="global.html#SideBar">SideBar</a></li><li><a href="global.html#SocialIcons">SocialIcons</a></li><li><a href="global.html#SouvenirSetting">SouvenirSetting</a></li><li><a href="global.html#SouvenirSettingModale">SouvenirSettingModale</a></li><li><a href="global.html#Transition">Transition</a></li><li><a href="global.html#Update">Update</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Aug 16 2025 17:07:34 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
