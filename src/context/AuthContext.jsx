@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../api/api";
 
 /**
  * Context gérant l'authentification de l'utilisateur.
@@ -32,7 +33,7 @@ export const AuthProvider = ({ children }) => {
   // 1. On récupère l'utilisateur à l'initialisation
   const fetchUser = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/user", {
+      const res = await api.get("/user", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
