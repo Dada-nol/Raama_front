@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import api from "../../api/api";
 import Input from "../ui/Input";
 
 /**
@@ -25,19 +25,17 @@ function Update() {
   const [coverImageUrl, setCoverImageUrl] = useState("");
 
   const { id } = useParams(); // Pour récupérer l'id dans l'url c'est important de faire ça
+  const apiURL = process.env.REACT_APP_LARAVEL_URL;
 
   // Récupérer les données déjà existantes, pour les afficher dans le form
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:8000/api/souvenir/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
+        const res = await api.get(`/souvenir/${id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
         setTitle(res.data.title);
         setCoverImageUrl(res.data.cover_image);
       } catch (e) {
@@ -66,7 +64,7 @@ function Update() {
     formData.append("_method", "PUT");
 
     try {
-      await axios.post(`http://localhost:8000/api/souvenir/${id}`, formData, {
+      await api.post(`/souvenir/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "multipart/form-data",
@@ -74,8 +72,10 @@ function Update() {
       });
       window.location.href = `/souvenir/${id}`;
     } catch (e) {
-      if (e.response) {
+      if (e.response && e.response.status === 422) {
         setErrors(e.response.data.errors);
+      } else if (e.response && e.response.status === 403) {
+        setErrors(e.response.data);
       } else {
         console.error("Erreur inattendue", e);
       }
@@ -110,11 +110,15 @@ function Update() {
         ) : (
           coverImageUrl && (
             <img
-              src={`http://localhost:8000/storage/${coverImageUrl}`}
+              src={`${apiURL}/storage/${coverImageUrl}`}
               alt="cover actuelle"
-              className="mx-auto my-2 h-40 rounded-lg shadow"
+              className="mx-auto my-2 h-40 rounded-lg"
             />
           )
+        )}
+
+        {errors.coverImage && (
+          <p className="text-danger text-sm mt-1">{errors.coverImage[0]}</p>
         )}
 
         <button
@@ -126,6 +130,10 @@ function Update() {
         >
           {isLoading ? "Chargement..." : "Modifier"}
         </button>
+
+        {errors.message && (
+          <p className="text-danger text-sm mt-1">{errors.message}</p>
+        )}
       </form>
     </>
   );

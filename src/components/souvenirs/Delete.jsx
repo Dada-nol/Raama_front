@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import api from "../../api/api";
 
 /**
  * Composant pour supprimer un souvenir.
@@ -18,7 +18,7 @@ function Delete() {
   const navigate = useNavigate();
 
   const handleDelete = async () => {
-    await axios.delete(`http://localhost:8000/api/souvenir/${id}`, {
+    await api.delete(`/souvenir/${id}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
 
@@ -28,7 +28,7 @@ function Delete() {
 
   return (
     <button
-      className="bg-danger rounded-md px-4 py-2 hover:scale-105"
+      className="bg-danger rounded-md px-4 py-2 hover:scale-105 text-white"
       onClick={handleDelete}
     >
       Supprimer

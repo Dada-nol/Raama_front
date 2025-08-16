@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import Input from "../../ui/Input";
+import api from "../../../api/api";
 
 /**
  * Composant permettant de créer une nouvelle entry (photo) pour un utilisateur donné.
@@ -9,7 +9,7 @@ import Input from "../../ui/Input";
  * Fonctionnalités :
  * - Bouton d’upload cliquable si l'utilisateur actuel correspond à l'utilisateur cible.
  * - Ouvre une modale pour choisir un fichier et saisir une légende facultative.
- * - Upload de l'image via l’API avec `axios` et `multipart/form-data`.
+ * - Upload de l'image via l’API avec `api` et `multipart/form-data`.
  * - Gestion des erreurs de validation renvoyées par l’API.
  * - Après upload, réinitialise les champs et appelle `refreshEntries` si fourni.
  *
@@ -48,7 +48,7 @@ const EntryUpload = ({ id, entryUser, refreshEntries }) => {
     formData.append("caption", caption);
 
     try {
-      await axios.post(
+      await api.post(
         `http://localhost:8000/api/souvenir/${id}/entry/`,
         formData,
         {

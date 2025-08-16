@@ -1,6 +1,6 @@
-import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../api/api";
 
 /**
  * Context gérant l'authentification de l'utilisateur.
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
   // 1. On récupère l'utilisateur à l'initialisation
   const fetchUser = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/user", {
+      const res = await api.get("/user", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -55,8 +55,8 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem("pendingInviteToken");
       if (token) {
         localStorage.removeItem("pendingInviteToken");
-        axios
-          .get(`http://localhost:8000/api/invite/${token}`, {
+        api
+          .get(`/invite/${token}`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
@@ -73,8 +73,8 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.post(
-        "http://localhost:8000/api/logout",
+      await api.post(
+        "/logout",
         {},
         {
           headers: {

@@ -22,7 +22,7 @@ function SouvenirSetting() {
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Create shared link */}
-        <section className="bg-secondary rounded-xl shadow-md p-6 border border-primary">
+        <section className="bg-secondary rounded-xl shadow-md p-6 border border-primary text-center">
           <h2 className="text-xl font-semibold mb-4 text-text">
             Créer un lien de partage
           </h2>
@@ -32,7 +32,7 @@ function SouvenirSetting() {
         </section>
 
         {/* Update souvenir */}
-        <section className="bg-secondary rounded-xl shadow-md p-6 border border-primary">
+        <section className="bg-secondary rounded-xl shadow-md p-6 border border-primary text-center text-white">
           <h2 className="text-xl font-semibold mb-4 text-text">
             Modifier les infos du souvenir
           </h2>

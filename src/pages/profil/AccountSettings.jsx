@@ -1,10 +1,10 @@
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DeleteAccountModale from "../../components/profil/DeleteAccountModale";
 import Input from "../../components/ui/Input";
 import { useAuth } from "../../context/AuthContext";
+import api from "../../api/api";
 
 /**
  * Page de paramètres du compte utilisateur.
@@ -61,8 +61,8 @@ function AccountSettings() {
     setErrors({});
 
     try {
-      await axios.put(
-        `http://localhost:8000/api/user/${user.id}`,
+      await api.put(
+        `/user/${user.id}`,
         {
           name,
           firstname,

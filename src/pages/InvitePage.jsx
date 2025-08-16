@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import api from "../api/api";
 
 /**
  * Page gérant les invitations à un "souvenir" via un token.
@@ -23,8 +23,8 @@ export default function InvitePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/api/invite/${token}`, {
+    api
+      .get(`/invite/${token}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           Accept: "application/json",

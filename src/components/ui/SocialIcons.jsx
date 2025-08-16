@@ -22,8 +22,8 @@ function SocialIcons() {
   return (
     <div className="flex justify-center items-center gap-2">
       {socialIcons.map((icon, i) => (
-        <a rel="noneferrer noreferrer" target="_blank" href={icon.href}>
-          <Icon key={i} src={icon.src} alt={icon.alt} />
+        <a key={i} rel="noneferrer noreferrer" target="_blank" href={icon.href}>
+          <Icon src={icon.src} alt={icon.alt} />
         </a>
       ))}
     </div>

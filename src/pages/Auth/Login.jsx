@@ -1,11 +1,11 @@
 import { LockClosedIcon, UserIcon } from "@heroicons/react/24/outline";
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import panda4 from "../../assets/img/panda4.jpg";
 import Input from "../../components/ui/Input";
 import Logo from "../../components/ui/Logo";
 import { useAuth } from "../../context/AuthContext";
+import api from "../../api/api";
 
 /**
  * Page de connexion pour les utilisateurs.
@@ -42,7 +42,7 @@ function Login() {
     setErrors({});
 
     try {
-      const res = await axios.post("http://localhost:8000/api/login", {
+      const res = await api.post("/login", {
         email,
         password,
       });
@@ -50,7 +50,7 @@ function Login() {
       localStorage.setItem("token", res.data.token);
 
       // Appel manuellement l'API pour remplir le context directement
-      const userRes = await axios.get("http://localhost:8000/api/user", {
+      const userRes = await api.get("/user", {
         headers: {
           Authorization: `Bearer ${res.data.token}`,
         },

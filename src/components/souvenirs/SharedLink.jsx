@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import api from "../../api/api";
 
 /**
  * Composant pour créer et afficher un lien de partage pour un souvenir.
@@ -32,8 +32,8 @@ function SharedLink() {
     setErrors({});
 
     try {
-      const res = await axios.post(
-        `http://localhost:8000/api/souvenirs/${id}/invite`,
+      const res = await api.post(
+        `/souvenirs/${id}/invite`,
         {},
         {
           headers: {
@@ -44,7 +44,7 @@ function SharedLink() {
       setLink(res.data.invite_link);
     } catch (e) {
       if (e.response && e.response.status === 403) {
-        setErrors(e.response.data.errors);
+        setErrors(e.response.data);
       } else {
         console.error("Erreur inattendue", e);
       }
@@ -91,7 +91,7 @@ function SharedLink() {
         )}
 
         {errors.message && (
-          <p className="text-danger text-sm">{errors.message[0]}</p>
+          <p className="text-danger text-sm">{errors.message}</p>
         )}
       </div>
     </>

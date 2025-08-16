@@ -1,7 +1,7 @@
 import { LockClosedIcon } from "@heroicons/react/24/solid";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import api from "../../api/api";
 import Input from "../../components/ui/Input";
 
 /**
@@ -39,7 +39,7 @@ function Create() {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/memory-type");
+        const res = await api.get("/memory-type");
         setMemoryType(res.data);
       } catch (error) {
         console.error(error);
@@ -74,7 +74,7 @@ function Create() {
     }
 
     try {
-      await axios.post("http://localhost:8000/api/souvenir", formData, {
+      await api.post("/souvenir", formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "multipart/form-data", // nécessaire pour l'upload
@@ -121,7 +121,10 @@ function Create() {
                 </div>
               </button>
             ) : (
-              <div className="cursor-not-allowed w-80 h-28 p-4 relative overflow-hidden bg-secondary border-2 border-danger opacity-60">
+              <div
+                key={memory.id}
+                className="cursor-not-allowed w-80 h-28 p-4 relative overflow-hidden bg-secondary border-2 border-danger opacity-60"
+              >
                 <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center gap-1">
                   <LockClosedIcon className="w-6 h-6 text-white" />
                   <p className="text-white font-bold">{memory.title}</p>

@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import api from "../../api/api";
 import panda3 from "../../assets/img/panda3.jpg";
 
 /**
@@ -49,7 +49,7 @@ function List() {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/memory-type");
+        const res = await api.get("/memory-type");
         setMemoryType(res.data);
       } catch (error) {
         console.error(error);
@@ -63,12 +63,11 @@ function List() {
       setErrors({});
 
       try {
-        const res = await axios.get("http://localhost:8000/api/souvenirs", {
+        const res = await api.get("/souvenirs", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
 
         setData(res.data);
-        console.log(res.data);
       } catch (e) {
         if (e.response && e.response.status === 401) {
           setErrors(e.response.data); // <- Laravel met les erreurs ici
