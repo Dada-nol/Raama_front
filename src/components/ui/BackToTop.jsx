@@ -1,5 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
+/**
+ * Composant bouton "Retour en haut" (Back to Top).
+ *
+ * Affiche un bouton fixe lorsque l'utilisateur a fait défiler la page d'au moins
+ * la hauteur de la fenêtre moins 100 pixels. Au clic, remonte doucement en haut de la page.
+ *
+ * @component
+ *
+ * @example
+ * <BackToTop />
+ */
 function BackToTop() {
   const [showButton, setShowButton] = useState(false);
 

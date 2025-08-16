@@ -7,10 +7,30 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import panda4 from "../../assets/img/panda4.jpg";
+import Input from "../../components/ui/Input";
 import Logo from "../../components/ui/Logo";
 import { useAuth } from "../../context/AuthContext";
-import Input from "../../components/ui/Input";
 
+/**
+ * Page d'inscription pour les utilisateurs.
+ *
+ * Fonctionnalités :
+ * - Permet à un nouvel utilisateur de créer un compte avec nom, prénom, email et mot de passe.
+ * - Vérifie la confirmation du mot de passe.
+ * - Enregistre le token JWT dans le localStorage après inscription.
+ * - Remplit le contexte utilisateur avec les informations récupérées via l'API `/user`.
+ * - Redirige l'utilisateur vers la page d'accueil (`/home`) après inscription réussie.
+ * - Affiche les erreurs spécifiques aux champs (Laravel 422) et empêche l'envoi multiple.
+ * - Affiche une image illustrative sur les écrans desktop.
+ *
+ * Composants internes utilisés :
+ * - Input : champ de saisie réutilisable.
+ * - Logo : logo de l'application.
+ * - LockClosedIcon, UserIcon, EnvelopeIcon : icônes pour le formulaire.
+ *
+ * @module Register
+ * @returns {JSX.Element} Page d'inscription complète
+ */
 function Register() {
   const { setUser } = useAuth();
 

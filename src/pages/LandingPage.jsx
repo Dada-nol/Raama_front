@@ -4,6 +4,21 @@ import photo2 from "../assets/img/photo2.jpg";
 import BackToTop from "../components/ui/BackToTop";
 import Feature from "../components/ui/CardFeature";
 
+/**
+ * Page d'accueil de l'application.
+ *
+ * Cette page est composée de plusieurs composants :
+ * - Feature : pour afficher les fonctionnalités principales.
+ * - BackToTop : bouton pour remonter en haut de page.
+ *
+ * Elle contient également des sections :
+ * - Photos superposées avec halo visuel.
+ * - Section CTA pour inviter l'utilisateur à s'inscrire.
+ * - Section présentant la possibilité de créer un groupe et partager des souvenirs.
+ *
+ * @module LandingPage
+ * @returns {JSX.Element} La page d'accueil complète
+ */
 function LandingPage() {
   return (
     <main className="relative">

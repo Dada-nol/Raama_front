@@ -1,5 +1,21 @@
 import SocialIcons from "../../ui/SocialIcons";
 
+/**
+ * Composant Footer de la landing page.
+ *
+ * Affiche deux sections principales :
+ * 1. "Connect with us" avec les icônes des réseaux sociaux (via le composant SocialIcons).
+ * 2. "Contact us" avec les informations de contact : email, téléphone et adresse.
+ *
+ * La mise en page est responsive :
+ * - Colonne sur mobile (flex-col)
+ * - Ligne sur desktop (md:flex-row)
+ *
+ * @component
+ *
+ * @example
+ * <Footer />
+ */
 function Footer() {
   return (
     <footer className="flex flex-col md:flex-row justify-between items-center gap-8">

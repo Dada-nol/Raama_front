@@ -1,7 +1,16 @@
 import { Outlet } from "react-router-dom";
 import SideBar from "./app/SideBar";
-// import Footer from "./Footer";
 
+/**
+ * Composant de mise en page principal de l'application.
+ *
+ * Affiche la barre latérale (SideBar) et un conteneur principal pour les routes enfants via <Outlet />.
+ *
+ * @component
+ *
+ * @example
+ * <AppLayout />
+ */
 function AppLayout() {
   return (
     <>

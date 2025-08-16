@@ -3,6 +3,20 @@ import Delete from "./Delete";
 import SharedLink from "./SharedLink";
 import Update from "./Update";
 
+/**
+ * Composant pour gérer les paramètres d'un souvenir.
+ *
+ * Fonctionnalités :
+ * - Création d'un lien de partage via le composant <SharedLink />.
+ * - Modification des informations du souvenir via le composant <Update />.
+ * - Zone "Danger" pour la suppression du souvenir via le composant <Delete />.
+ * - Affichage responsive avec une grille sur 1 ou 2 colonnes selon la taille d'écran.
+ *
+ * @component
+ *
+ * @example
+ * <SouvenirSetting />
+ */
 function SouvenirSetting() {
   return (
     <>

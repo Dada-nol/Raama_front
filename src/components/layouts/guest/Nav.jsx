@@ -3,6 +3,21 @@ import img_panda1 from "../../../assets/img/panda1.png";
 import video_loop1 from "../../../assets/video/loop1.mp4";
 import Logo from "../../ui/Logo";
 
+/**
+ * Composant de navigation principal pour la landing page.
+ *
+ * Comportements :
+ * - Change la couleur de fond de la navbar selon le scroll (transparent ou sombre).
+ * - Change la taille du logo selon le scroll.
+ * - Affiche des liens "Log in" et "Register".
+ * - Affiche un panda en image pour mobile et une vidéo en arrière-plan pour desktop.
+ * - Affiche un message central avec un bouton "Get started".
+ *
+ * @component
+ *
+ * @example
+ * <Nav />
+ */
 function Nav() {
   const [colorNav, setColorNav] = useState("transparent");
   const [sizeLogo, setSizeLogo] = useState(true);

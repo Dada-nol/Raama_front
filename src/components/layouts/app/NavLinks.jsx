@@ -1,5 +1,25 @@
 import { NavLink } from "react-router-dom";
 
+/**
+ * Composant NavLinks
+ *
+ * Affiche les liens de navigation de la sidebar.
+ * Chaque lien est un NavLink de react-router-dom et change de style lorsqu'il est actif.
+ *
+ * Props :
+ * @param {boolean} expanded - Indique si la sidebar est étendue ou réduite.
+ *
+ * Liens inclus :
+ * - Accueil (/home)
+ * - Souvenirs (/souvenir)
+ * - Créer (/souvenir/create)
+ * - Notifications et Settings sont commentés mais peuvent être activés.
+ *
+ * @component
+ *
+ * @example
+ * <NavLinks expanded={true} />
+ */
 function NavLinks({ expanded }) {
   return (
     <div

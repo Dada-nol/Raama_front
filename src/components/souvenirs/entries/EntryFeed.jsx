@@ -1,5 +1,35 @@
 import EntryList from "./EntryList";
 
+/**
+ * Composant qui affiche le flux des entries (photos/mémoires) d'un souvenir,
+ * regroupées par date (Hier, Aujourd'hui, Demain, puis les dates plus anciennes).
+ *
+ * Fonctionnalités :
+ * - Filtrage des entries par utilisateur sélectionné.
+ * - Regroupement automatique par date et tri du plus récent au plus ancien.
+ * - Affiche des sections distinctes pour Hier, Aujourd'hui, Demain et les anciens jours.
+ * - Intègre le composant `EntryList` pour afficher les entries dans chaque section.
+ * - Adapte le layout selon le nombre de membres et l'utilisateur sélectionné.
+ *
+ * @component
+ *
+ * @param {Object[]} entries - Liste complète des entries du souvenir.
+ * @param {Object[]} members - Liste des utilisateurs membres du souvenir.
+ * @param {number|string} id - Identifiant du souvenir.
+ * @param {Object[]} filteredEntries - Liste des entries filtrées par utilisateur sélectionné.
+ * @param {number|string|null} selectedUserId - ID de l'utilisateur sélectionné pour filtrer les entries.
+ * @param {Function} refreshEntries - Fonction permettant de recharger la liste des entries après modification.
+ *
+ * @example
+ * <EntryFeed
+ *   entries={entries}
+ *   members={members}
+ *   id={souvenirId}
+ *   filteredEntries={filteredEntries}
+ *   selectedUserId={selectedUserId}
+ *   refreshEntries={fetchEntries}
+ * />
+ */
 const EntryFeed = ({
   entries,
   members,

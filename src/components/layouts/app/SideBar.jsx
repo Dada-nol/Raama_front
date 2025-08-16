@@ -4,6 +4,23 @@ import SocialIcons from "../../ui/SocialIcons";
 import NavLinks from "./NavLinks";
 import ProfilButton from "./ProfilButton";
 
+/**
+ * Composant SideBar pour l'application Pandaraama.
+ *
+ * Affiche la barre latérale avec :
+ * - Logo cliquable pour étendre/réduire la sidebar.
+ * - Bouton toggle pour ouvrir/fermer la sidebar.
+ * - Liens de navigation via le composant NavLinks.
+ * - Bouton profil via ProfilButton.
+ * - Icônes sociales via SocialIcons (affichées uniquement si la sidebar est étendue).
+ *
+ * La sidebar est animée et responsive grâce à Tailwind et aux transitions CSS.
+ *
+ * @component
+ *
+ * @example
+ * <SideBar />
+ */
 function SideBar() {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
 

@@ -2,6 +2,24 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import panda3 from "../../assets/img/panda3.jpg";
 
+/**
+ * Page listant les souvenirs de l'utilisateur.
+ *
+ * Fonctionnalités :
+ * - Récupère la liste des souvenirs via l'API `/souvenirs` avec authentification Bearer token.
+ * - Récupère les types de mémoire via l'API `/memory-type`.
+ * - Permet de trier les souvenirs par titre, date de création, points mémoire ou type de mémoire.
+ * - Permet de rechercher un souvenir ou un membre par nom.
+ * - Affiche les souvenirs sous forme de cartes avec image de couverture (ou image par défaut).
+ * - Gère les souvenirs indisponibles pour certains types de mémoire.
+ * - Gestion des erreurs de requête et affichage des messages d'erreur.
+ *
+ * Composants internes utilisés :
+ * - panda3 : image par défaut pour les souvenirs sans image.
+ *
+ * @module List
+ * @returns {JSX.Element} Liste filtrable et triable des souvenirs de l'utilisateur
+ */
 function List() {
   const [data, setData] = useState([]);
   const [memoryType, setMemoryType] = useState([]);

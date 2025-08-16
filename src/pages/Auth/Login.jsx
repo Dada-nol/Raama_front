@@ -7,6 +7,25 @@ import Input from "../../components/ui/Input";
 import Logo from "../../components/ui/Logo";
 import { useAuth } from "../../context/AuthContext";
 
+/**
+ * Page de connexion pour les utilisateurs.
+ *
+ * Fonctionnalités :
+ * - Permet à un utilisateur de se connecter avec son email et mot de passe.
+ * - Enregistre le token JWT dans le localStorage.
+ * - Remplit le contexte utilisateur avec les informations récupérées via l'API `/user`.
+ * - Redirige l'utilisateur vers la page d'accueil (`/home`) après connexion réussie.
+ * - Affiche les erreurs spécifiques aux champs (Laravel 422) ou des erreurs globales (401, autres).
+ * - Affiche une image illustrative sur les écrans desktop.
+ *
+ * Composants internes utilisés :
+ * - Input : champ de saisie réutilisable.
+ * - Logo : logo de l'application.
+ * - LockClosedIcon, UserIcon : icônes pour le formulaire.
+ *
+ * @module Login
+ * @returns {JSX.Element} Page de connexion complète
+ */
 function Login() {
   const { setUser } = useAuth();
 

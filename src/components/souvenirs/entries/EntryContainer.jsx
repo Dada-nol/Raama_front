@@ -3,6 +3,31 @@ import SouvenirSettingModale from "../SouvenirSettingModale";
 import EntryFeed from "./EntryFeed";
 import ProfileSelector from "./ProfileSelector";
 
+/**
+ * Composant qui affiche la liste des "entries" (photos/mémoires) d'un souvenir,
+ * avec la possibilité de filtrer par utilisateur et de gérer les paramètres du souvenir.
+ *
+ * Fonctionnalités :
+ * - Affiche une barre de navigation des membres si plusieurs utilisateurs sont présents.
+ * - Permet de filtrer les entries par utilisateur sélectionné.
+ * - Intègre le composant `SouvenirSettingModale` pour modifier ou supprimer le souvenir.
+ * - Affiche les entries via le composant `EntryFeed`.
+ *
+ * @component
+ *
+ * @param {Object[]} entries - Liste des entrées liées au souvenir.
+ * @param {Object[]} members - Liste des utilisateurs membres du souvenir.
+ * @param {number|string} id - Identifiant du souvenir.
+ * @param {Function} refreshEntries - Fonction pour recharger la liste des entries après modification.
+ *
+ * @example
+ * <EntryContainer
+ *   entries={entries}
+ *   members={members}
+ *   id={souvenirId}
+ *   refreshEntries={fetchEntries}
+ * />
+ */
 function EntryContainer({ entries, members, id, refreshEntries }) {
   const [selectedUserId, setSelectedUserId] = useState(null);
 

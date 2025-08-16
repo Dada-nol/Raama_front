@@ -4,6 +4,21 @@ import { useEffect, useState } from "react";
 import panda3 from "../assets/img/panda3.jpg";
 import { useAuth } from "../context/AuthContext";
 
+/**
+ * Page d'accueil de l'utilisateur après connexion.
+ *
+ * Fonctionnalités :
+ * - Affiche un message de bienvenue avec le prénom de l'utilisateur.
+ * - Affiche les souvenirs récents récupérés via l'API `/recent`.
+ * - Affiche la liste des types de souvenirs disponibles pour créer de nouveaux souvenirs.
+ * - Chaque type de souvenir peut être cliquable pour créer un nouveau souvenir ou indisponible si `isAvailable` est false.
+ *
+ * Composants internes utilisés :
+ * - LockClosedIcon pour indiquer les souvenirs indisponibles.
+ *
+ * @module Home
+ * @returns {JSX.Element} La page d'accueil avec les souvenirs récents et les options de création
+ */
 function Home() {
   const { user } = useAuth();
   const [souvenirs, setSouvenirs] = useState([]);

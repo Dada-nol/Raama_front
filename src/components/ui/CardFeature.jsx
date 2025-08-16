@@ -1,3 +1,20 @@
+/**
+ * Composant représentant une carte de fonctionnalité.
+ *
+ * Affiche une icône SVG et une description centrée.
+ *
+ * @param {Object} props
+ * @param {string} props.icon - Le path SVG de l'icône à afficher.
+ * @param {string} props.description - Le texte descriptif de la fonctionnalité.
+ *
+ * @component
+ *
+ * @example
+ * <CardFeature
+ *   icon="M10 10 H 90 V 90 H 10 Z"
+ *   description="Exemple de fonctionnalité"
+ * />
+ */
 function CardFeature({ icon, description }) {
   return (
     <div className="card-feature">

@@ -3,6 +3,20 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Input from "../ui/Input";
 
+/**
+ * Composant pour mettre à jour un souvenir existant.
+ *
+ * Fonctionnalités :
+ * - Récupère les informations actuelles du souvenir via son ID (depuis l'URL).
+ * - Permet de modifier le titre et l'image de couverture.
+ * - Gère les erreurs de validation et l'état de chargement.
+ * - Soumet les modifications via un appel API `PUT`.
+ *
+ * @component
+ *
+ * @example
+ * <Update />
+ */
 function Update() {
   const [title, setTitle] = useState("");
   const [errors, setErrors] = useState({});

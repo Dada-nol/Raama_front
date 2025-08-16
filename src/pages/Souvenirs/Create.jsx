@@ -4,6 +4,24 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Input from "../../components/ui/Input";
 
+/**
+ * Page de création d'un nouveau Souvenir.
+ *
+ * Fonctionnalités :
+ * - Permet à l'utilisateur de créer un souvenir en sélectionnant un type de mémoire disponible.
+ * - Permet de saisir un titre et d'uploader une image de couverture (max 10 Mo).
+ * - Récupère les types de mémoire depuis l'API au montage du composant.
+ * - Envoie les données via un `POST` à l'API `/souvenir` avec FormData pour l'upload.
+ * - Gestion des erreurs de validation et affichage des messages.
+ * - Redirection vers `/souvenir` après création réussie.
+ *
+ * Composants internes utilisés :
+ * - Input : champ de saisie réutilisable.
+ * - LockClosedIcon : icône pour indiquer un type de mémoire indisponible.
+ *
+ * @module Create
+ * @returns {JSX.Element} Formulaire de création d'un nouveau souvenir
+ */
 function Create() {
   const [isLoading, setIsLoading] = useState(false);
   const [title, setTitle] = useState("");

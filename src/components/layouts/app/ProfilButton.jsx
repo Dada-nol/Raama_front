@@ -2,6 +2,27 @@ import { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import LogoutButton from "../../profil/LogoutButton";
 
+/**
+ * Composant ProfilButton
+ *
+ * Affiche le bouton de profil dans la sidebar.
+ * Si la sidebar est étendue, le bouton affiche le prénom de l'utilisateur et un menu déroulant avec :
+ *  - Lien vers les paramètres du compte
+ *  - Bouton de déconnexion
+ *
+ * Le menu déroulant s'ouvre/ferme au clic sur l'icône "settings".
+ * Le texte du bouton change au survol lorsque la sidebar est étendue.
+ *
+ * Props :
+ * @param {boolean} expanded - Indique si la sidebar est étendue ou réduite.
+ *
+ * Utilise le contexte AuthContext pour récupérer l'utilisateur connecté.
+ *
+ * @component
+ *
+ * @example
+ * <ProfilButton expanded={true} />
+ */
 function ProfilButton({ expanded }) {
   const { user } = useAuth();
   const [display, setDisplay] = useState("none");

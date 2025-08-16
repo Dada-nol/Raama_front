@@ -6,6 +6,25 @@ import DeleteAccountModale from "../../components/profil/DeleteAccountModale";
 import Input from "../../components/ui/Input";
 import { useAuth } from "../../context/AuthContext";
 
+/**
+ * Page de paramètres du compte utilisateur.
+ *
+ * Fonctionnalités :
+ * - Affiche et permet de modifier les informations de l'utilisateur : nom, prénom, email.
+ * - Permet de changer le mot de passe avec validation de l'ancien mot de passe.
+ * - Gère l'affichage des erreurs de validation renvoyées par l'API (422) ou des erreurs d'authentification (401).
+ * - Utilise le contexte `AuthContext` pour récupérer les informations de l'utilisateur connecté.
+ * - Redirige l'utilisateur vers la page profil après mise à jour réussie.
+ * - Inclut un composant `DeleteAccountModale` pour la suppression du compte.
+ *
+ * Composants internes utilisés :
+ * - Input : champ de saisie réutilisable.
+ * - DeleteAccountModale : modale pour supprimer le compte utilisateur.
+ * - ExclamationTriangleIcon : icône d'avertissement pour suppression de compte.
+ *
+ * @module AccountSettings
+ * @returns {JSX.Element} Page de gestion des paramètres du compte
+ */
 function AccountSettings() {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -29,6 +48,13 @@ function AccountSettings() {
     }
   }, [user]);
 
+  /**
+   * Met à jour les informations de l'utilisateur.
+   * - Si un mot de passe est saisi, inclut la confirmation et l'ancien mot de passe.
+   * - Gère les erreurs de validation et d'authentification.
+   *
+   * @param {React.FormEvent} e - Événement de soumission du formulaire
+   */
   const UpdateUser = async (e) => {
     e.preventDefault();
     setIsLoading(true);
