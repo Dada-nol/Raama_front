@@ -46,7 +46,7 @@ function SharedLink() {
           disabled={isLoading}
           onClick={handleCreateLink}
         >
-          {isLoading ? "Loading..." : "Create a link"}
+          {isLoading ? "Chargement..." : "Créer un lien"}
         </button>
 
         {link && (

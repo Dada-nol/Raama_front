@@ -46,7 +46,7 @@ function SouvenirEntries() {
     } catch (e) {
       console.error(e);
     }
-  }, [id]); // ← 'id' est une dépendance
+  }, [id]);
 
   useEffect(() => {
     fetchEntries();
@@ -82,7 +82,7 @@ function SouvenirEntries() {
           {souvenir.memory_points} Memory points
         </li> */}
         <li className="text-gradient">
-          {souvenir.entries?.length} published photos
+          {souvenir.entries?.length} photos publiés
         </li>
         <li className="text-gradient">
           {souvenir.memory_points} memory points

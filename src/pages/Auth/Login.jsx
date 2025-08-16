@@ -96,14 +96,14 @@ function Login() {
         {globalErrors && <p className="text-danger">{globalErrors}</p>}
 
         {/* Forget password */}
-        <div className="w-full max-w-[400px] text-right">
+        {/* <div className="w-full max-w-[400px] text-right">
           <a
             className="inline-block text-gradient transition-transform duration-300 hover:scale-105"
             href="/reset-password"
           >
             Forget password ?
           </a>
-        </div>
+        </div> */}
 
         {/* Submit */}
         <button

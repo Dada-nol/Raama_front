@@ -9,7 +9,7 @@ function List() {
   const [sortOption, setSortOption] = useState("title");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const options = ["title", "created_at", "memory_type"];
+  const options = ["title", "created_at", "memory_points", "memory_type"];
 
   const handleSort = (e) => {
     setSortOption(e);
@@ -65,12 +65,12 @@ function List() {
   return (
     <>
       <h2 className="flex justify-center p-4 text-lg sm:text-xl md:text-2xl font-medium text-center">
-        My <p className="text-gradient pl-1">souvenirs</p>
+        Mes <p className="text-gradient pl-1">souvenirs</p>
       </h2>
 
       <section className="flex flex-col md:flex-row border-2 border-primary rounded-lg mx-4 md:mx-8 gap-6 md:gap-12 lg:gap-48 p-4">
         <div className="flex flex-col justify-center items-start w-full md:w-auto">
-          <h3 className="mb-2">Sort by</h3>
+          <h3 className="mb-2">Trier par</h3>
           <ul className="flex flex-wrap gap-4">
             {options.map((option) => (
               <li key={option}>
@@ -86,7 +86,7 @@ function List() {
         </div>
 
         <div className="flex flex-col justify-center items-start w-full md:w-auto">
-          <h3 className="mb-2">Search souvenir or member</h3>
+          <h3 className="mb-2">Rechercher un souvenir ou un membre</h3>
           <input
             placeholder="ex : Jhon"
             value={searchTerm}
@@ -144,15 +144,32 @@ function List() {
             </div>
           ))
         ) : (
-          <ul className="flex flex-wrap gap-4 justify-center my-8">
+          <ul className="flex flex-wrap gap-4 my-8">
             {[...filteredData]
               .sort((a, b) => {
-                if (sortOption === "title") {
-                  return a[sortOption].localeCompare(b[sortOption]);
-                } else {
-                  return new Date(b[sortOption]) - new Date(a[sortOption]);
+                const valA = a[sortOption];
+                const valB = b[sortOption];
+
+                // Texte
+                if (typeof valA === "string" && typeof valB === "string") {
+                  return valA.localeCompare(valB);
                 }
+
+                // Nombre
+                if (typeof valA === "number" && typeof valB === "number") {
+                  return valB - valA;
+                }
+
+                // Date (ou string de date)
+                const dateA = new Date(valA);
+                const dateB = new Date(valB);
+                if (!isNaN(dateA) && !isNaN(dateB)) {
+                  return dateB - dateA;
+                }
+
+                return 0; // valeurs non comparables
               })
+
               .map((souvenir) => (
                 <li
                   key={souvenir.id}

@@ -40,34 +40,40 @@ function Home() {
           Recent
         </h3>
 
-        <ul className="flex flex-wrap gap-6 items-start mb-10">
-          {souvenirs.map((souvenir) => (
-            <li
-              key={souvenir.id}
-              className="card relative group w-80 p-4 group overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient"
-            >
-              <a href={`souvenir/${souvenir.id}`}>
-                <img
-                  src={
-                    souvenir.cover_image
-                      ? `http://localhost:8000/storage/${souvenir.cover_image}`
-                      : panda3
-                  }
-                  alt="souvenir"
-                  className="w-full h-48 object-cover rounded-lg shadow-sm group-hover:shadow-md transition-all"
-                />
-                <div className="mt-3">
-                  <p className="text-lg font-medium group-hover:text-gradient transition-colors">
-                    {souvenir.title}
-                  </p>
-                  <p className="text-sm text-gray-300">
-                    {souvenir.memory_points} points
-                  </p>
-                </div>
-              </a>
-            </li>
-          ))}
-        </ul>
+        {souvenirs ? (
+          <ul className="flex flex-wrap gap-6 items-start mb-10">
+            {souvenirs.map((souvenir) => (
+              <li
+                key={souvenir.id}
+                className="card relative group w-80 p-4 group overflow-hidden rounded-xl bg-secondary hover:shadow-[0_0_5px_#64b000] transition-transform duration-300 hover:scale-105 border-2 border-primary hover:text-gradient"
+              >
+                <a href={`souvenir/${souvenir.id}`}>
+                  <img
+                    src={
+                      souvenir.cover_image
+                        ? `http://localhost:8000/storage/${souvenir.cover_image}`
+                        : panda3
+                    }
+                    alt="souvenir"
+                    className="w-full h-48 object-cover rounded-lg shadow-sm group-hover:shadow-md transition-all"
+                  />
+                  <div className="mt-3">
+                    <p className="text-lg font-medium group-hover:text-gradient transition-colors">
+                      {souvenir.title}
+                    </p>
+                    <p className="text-sm text-gray-300">
+                      {souvenir.memory_points} points
+                    </p>
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="mb-10">
+            Vous devez créer de nouveaux souvenir pour les voir s'afficher ici
+          </p>
+        )}
       </div>
 
       {/* Section Créer souvenirs */}

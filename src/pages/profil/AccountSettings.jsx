@@ -68,14 +68,14 @@ function AccountSettings() {
   return (
     <>
       <div className="w-full flex justify-center mb-8">
-        <h1 className="text-gradient text-2xl w-fit">Account settings</h1>
+        <h1 className="text-gradient text-2xl w-fit">Paramètres de compte</h1>
       </div>
 
       <form onSubmit={UpdateUser} className="space-y-8">
         {/* Infos utilisateur */}
         <section className="flex flex-col md:flex-row flex-wrap justify-center gap-6 border border-primary mx-4 md:mx-20 p-4 rounded-lg">
           <div className="flex-1 min-w-[220px]">
-            <p className="font-semibold text-sm mb-1">Name</p>
+            <p className="font-semibold text-sm mb-1">Nom</p>
             <Input
               type="text"
               value={name}
@@ -85,7 +85,7 @@ function AccountSettings() {
           </div>
 
           <div className="flex-1 min-w-[220px]">
-            <p className="font-semibold text-sm mb-1">Firstname</p>
+            <p className="font-semibold text-sm mb-1">Prénom</p>
             <Input
               type="text"
               value={firstname}
@@ -108,10 +108,12 @@ function AccountSettings() {
         </section>
 
         {/* Changement mot de passe */}
-        <h2 className="text-lg font-bold mx-4 md:mx-20">Update password</h2>
+        <h2 className="text-lg font-bold mx-4 md:mx-20">
+          Modifier le mot de passe
+        </h2>
         <section className="flex flex-col md:flex-row flex-wrap justify-center gap-6 border border-primary mx-4 md:mx-20 p-4 rounded-lg">
           <div className="flex-1 min-w-[220px]">
-            <p className="font-semibold text-sm mb-1">Previous password</p>
+            <p className="font-semibold text-sm mb-1">Ancien mot de passe</p>
             <Input
               type="password"
               value={oldPassword}
@@ -123,7 +125,7 @@ function AccountSettings() {
           </div>
 
           <div className="flex-1 min-w-[220px]">
-            <p className="font-semibold text-sm mb-1">New password</p>
+            <p className="font-semibold text-sm mb-1">Nouveau mot de passe</p>
             <Input
               type="password"
               value={password}
@@ -135,7 +137,9 @@ function AccountSettings() {
           </div>
 
           <div className="flex-1 min-w-[220px]">
-            <p className="font-semibold text-sm mb-1">Repeat new password</p>
+            <p className="font-semibold text-sm mb-1">
+              Répéter le mot de passe
+            </p>
             <Input
               type="password"
               value={password_confirmation}
@@ -165,7 +169,7 @@ function AccountSettings() {
       <section className="flex flex-col sm:flex-row items-center justify-between border border-danger p-4 mx-4 md:mx-20 my-4 rounded-lg gap-4">
         <div className="flex items-center text-center sm:text-left">
           <ExclamationTriangleIcon className="h-10 w-10 text-red-600 mr-2" />
-          <p>This action is irreversible!</p>
+          <p>Cette action est irreversible !</p>
         </div>
         <DeleteAccountModale />
       </section>

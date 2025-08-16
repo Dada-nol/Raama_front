@@ -10,7 +10,7 @@ function SouvenirSetting() {
         {/* Create shared link */}
         <section className="bg-secondary rounded-xl shadow-md p-6 border border-primary">
           <h2 className="text-xl font-semibold mb-4 text-text">
-            Create shared link
+            Créer un lien de partage
           </h2>
           <div className="flex flex-col items-center gap-4">
             <SharedLink />
@@ -20,7 +20,7 @@ function SouvenirSetting() {
         {/* Update souvenir */}
         <section className="bg-secondary rounded-xl shadow-md p-6 border border-primary">
           <h2 className="text-xl font-semibold mb-4 text-text">
-            Update Souvenir infos
+            Modifier les infos du souvenir
           </h2>
           <div className="flex flex-col items-center gap-4">
             <Update />
@@ -32,7 +32,7 @@ function SouvenirSetting() {
       <section className="mt-6 bg-secondary rounded-xl shadow-md border border-red-500 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center text-red-500">
           <ExclamationTriangleIcon className="h-10 w-10 mr-2" />
-          <p className="font-medium">This action is irreversible!</p>
+          <p className="font-medium">Cette action est irreversible !</p>
         </div>
         <Delete />
       </section>

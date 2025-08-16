@@ -11,7 +11,7 @@ function NavLinks({ expanded }) {
         to="/home"
         className={({ isActive }) =>
           `flex gap-4 justify-start ml-2 font-bold ${
-            isActive ? "text-gradient" : "text-neutral-300"
+            isActive ? "text-primary" : "text-neutral-300"
           }`
         }
       >
@@ -20,7 +20,6 @@ function NavLinks({ expanded }) {
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth="2"
-          color="#fff"
           stroke="currentColor"
           className="size-6"
         >
@@ -30,14 +29,14 @@ function NavLinks({ expanded }) {
             d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
           />
         </svg>
-        <span>Home</span>
+        <span>Accueil</span>
       </NavLink>
       <NavLink
         to="/souvenir"
         end
         className={({ isActive }) =>
           `flex gap-4 justify-start ml-2 font-bold ${
-            isActive ? "text-gradient" : "text-neutral-300"
+            isActive ? "text-primary" : "text-neutral-300"
           }`
         }
       >
@@ -47,7 +46,6 @@ function NavLinks({ expanded }) {
           viewBox="0 0 24 24"
           strokeWidth="2"
           stroke="currentColor"
-          color="#fff"
           className="size-6"
         >
           <path
@@ -62,7 +60,7 @@ function NavLinks({ expanded }) {
         to="souvenir/create"
         className={({ isActive }) =>
           `flex gap-4 justify-start ml-2 font-bold ${
-            isActive ? "text-gradient" : "text-neutral-300"
+            isActive ? "text-primary" : "text-neutral-300"
           }`
         }
       >
@@ -72,7 +70,6 @@ function NavLinks({ expanded }) {
           viewBox="0 0 24 24"
           strokeWidth="3"
           stroke="currentColor"
-          color="#fff"
           className="size-6"
         >
           <path
@@ -81,7 +78,7 @@ function NavLinks({ expanded }) {
             d="M12 4.5v15m7.5-7.5h-15"
           />
         </svg>
-        <span>Create</span>
+        <span>Créer</span>
       </NavLink>
       {/*       <Link to="/notification" className="flex gap-4 justify-start ml-2">
         <svg

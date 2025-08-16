@@ -74,7 +74,7 @@ function Update() {
     <>
       <form onSubmit={handleUpdate} className="space-y-4 w-full">
         <div>
-          <h3 className="text-lg font-medium mb-1">Title</h3>
+          <h3 className="text-lg font-medium mb-1">Titre</h3>
           <Input
             type="text"
             value={title}
