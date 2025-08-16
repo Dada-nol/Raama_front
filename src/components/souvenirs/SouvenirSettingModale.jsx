@@ -1,5 +1,6 @@
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import ReactDOM from "react-dom";
 import SouvenirSetting from "./SouvenirSetting";
 
 /**
@@ -16,16 +17,23 @@ import SouvenirSetting from "./SouvenirSetting";
  * @example
  * <SouvenirSettingModale />
  */
+
 function SouvenirSettingModale() {
   const [showModal, setShowModal] = useState(false);
 
-  const handleOverlayClick = () => {
-    setShowModal(false);
-  };
-
-  const handleModalClick = (e) => {
-    e.stopPropagation();
-  };
+  const modalContent = (
+    <div
+      className="fixed inset-0 z-[9999] flex justify-center items-center bg-black/40 backdrop-blur-sm"
+      onClick={() => setShowModal(false)}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="bg-secondary w-full sm:w-[400px] md:w-[800px] p-6 overflow-auto max-h-[80vh] shadow-xl"
+      >
+        <SouvenirSetting />
+      </div>
+    </div>
+  );
 
   return (
     <>
@@ -33,22 +41,10 @@ function SouvenirSettingModale() {
         className="w-8 h-8 text-primary absolute top-1 right-2 "
         onClick={() => setShowModal(true)}
       >
-        <EllipsisVerticalIcon></EllipsisVerticalIcon>
+        <EllipsisVerticalIcon />
       </button>
 
-      {showModal && (
-        <div
-          className="fixed inset-0 z-50 flex justify-center items-center bg-black/40 backdrop-blur-sm"
-          onClick={handleOverlayClick}
-        >
-          <div
-            onClick={handleModalClick}
-            className="bg-secondary w-full sm:w-[400px] md:w-[800px] p-6 overflow-auto max-h-[80vh] shadow-xl"
-          >
-            <SouvenirSetting></SouvenirSetting>
-          </div>
-        </div>
-      )}
+      {showModal && ReactDOM.createPortal(modalContent, document.body)}
     </>
   );
 }

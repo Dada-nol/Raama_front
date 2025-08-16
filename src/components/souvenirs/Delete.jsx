@@ -28,7 +28,7 @@ function Delete() {
 
   return (
     <button
-      className="bg-danger rounded-md px-4 py-2 hover:scale-105"
+      className="bg-danger rounded-md px-4 py-2 hover:scale-105 text-white"
       onClick={handleDelete}
     >
       Supprimer
