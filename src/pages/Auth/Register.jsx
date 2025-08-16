@@ -5,6 +5,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../../api/api";
 import panda4 from "../../assets/img/panda4.jpg";
 import Input from "../../components/ui/Input";
 import Logo from "../../components/ui/Logo";
@@ -49,7 +50,7 @@ function Register() {
     setErrors({});
 
     try {
-      const res = await axios.post("/register", {
+      const res = await api.post("/register", {
         name,
         firstname,
         email,
@@ -62,7 +63,7 @@ function Register() {
       localStorage.setItem("token", token);
 
       // 🔥 Appelle manuellement l'API pour remplir le context directement
-      const userRes = await axios.get("/user", {
+      const userRes = await api.get("/user", {
         headers: {
           Authorization: `Bearer ${res.data.token}`,
         },

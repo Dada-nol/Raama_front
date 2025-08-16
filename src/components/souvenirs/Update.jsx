@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Input from "../ui/Input";
 import api from "../../api/api";
+import Input from "../ui/Input";
 
 /**
  * Composant pour mettre à jour un souvenir existant.
@@ -71,8 +71,10 @@ function Update() {
       });
       window.location.href = `/souvenir/${id}`;
     } catch (e) {
-      if (e.response) {
+      if (e.response && e.response.status === 422) {
         setErrors(e.response.data.errors);
+      } else if (e.response && e.response.status === 403) {
+        setErrors(e.response.data);
       } else {
         console.error("Erreur inattendue", e);
       }
@@ -113,6 +115,9 @@ function Update() {
             />
           )
         )}
+        {errors.coverImage && (
+          <p className="text-danger text-sm mt-1">{errors.coverImage[0]}</p>
+        )}
 
         <button
           className={`bg-my-gradient w-36 h-10 rounded-lg text-white font-medium hover:brightness-110 hover:scale-105 transition ${
@@ -123,6 +128,10 @@ function Update() {
         >
           {isLoading ? "Chargement..." : "Modifier"}
         </button>
+
+        {errors.message && (
+          <p className="text-danger text-sm mt-1">{errors.message}</p>
+        )}
       </form>
     </>
   );

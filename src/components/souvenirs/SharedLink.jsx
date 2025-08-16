@@ -44,7 +44,7 @@ function SharedLink() {
       setLink(res.data.invite_link);
     } catch (e) {
       if (e.response && e.response.status === 403) {
-        setErrors(e.response.data.errors);
+        setErrors(e.response.data);
       } else {
         console.error("Erreur inattendue", e);
       }
@@ -91,7 +91,7 @@ function SharedLink() {
         )}
 
         {errors.message && (
-          <p className="text-danger text-sm">{errors.message[0]}</p>
+          <p className="text-danger text-sm">{errors.message}</p>
         )}
       </div>
     </>

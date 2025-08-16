@@ -1,8 +1,8 @@
 import { LockClosedIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import Input from "../../components/ui/Input";
 import api from "../../api/api";
+import Input from "../../components/ui/Input";
 
 /**
  * Page de création d'un nouveau Souvenir.
@@ -121,7 +121,10 @@ function Create() {
                 </div>
               </button>
             ) : (
-              <div className="cursor-not-allowed w-80 h-28 p-4 relative overflow-hidden bg-secondary border-2 border-danger opacity-60">
+              <div
+                key={memory.id}
+                className="cursor-not-allowed w-80 h-28 p-4 relative overflow-hidden bg-secondary border-2 border-danger opacity-60"
+              >
                 <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center gap-1">
                   <LockClosedIcon className="w-6 h-6 text-white" />
                   <p className="text-white font-bold">{memory.title}</p>

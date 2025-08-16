@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import panda3 from "../../assets/img/panda3.jpg";
 import api from "../../api/api";
+import panda3 from "../../assets/img/panda3.jpg";
 
 /**
  * Page listant les souvenirs de l'utilisateur.
@@ -68,7 +68,6 @@ function List() {
         });
 
         setData(res.data);
-        console.log(res.data);
       } catch (e) {
         if (e.response && e.response.status === 401) {
           setErrors(e.response.data); // <- Laravel met les erreurs ici
