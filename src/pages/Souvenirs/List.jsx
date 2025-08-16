@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import panda3 from "../../assets/img/panda3.jpg";
+import api from "../../api/api";
 
 /**
  * Page listant les souvenirs de l'utilisateur.
@@ -49,7 +49,7 @@ function List() {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/memory-type");
+        const res = await api.get("/memory-type");
         setMemoryType(res.data);
       } catch (error) {
         console.error(error);
@@ -63,7 +63,7 @@ function List() {
       setErrors({});
 
       try {
-        const res = await axios.get("http://localhost:8000/api/souvenirs", {
+        const res = await api.get("/souvenirs", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
 

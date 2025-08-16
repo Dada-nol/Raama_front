@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Input from "../ui/Input";
+import api from "../../api/api";
 
 /**
  * Composant pour mettre à jour un souvenir existant.
@@ -30,14 +30,11 @@ function Update() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:8000/api/souvenir/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
+        const res = await api.get(`/souvenir/${id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
         setTitle(res.data.title);
         setCoverImageUrl(res.data.cover_image);
       } catch (e) {
@@ -66,7 +63,7 @@ function Update() {
     formData.append("_method", "PUT");
 
     try {
-      await axios.post(`http://localhost:8000/api/souvenir/${id}`, formData, {
+      await api.post(`/souvenir/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "multipart/form-data",

@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import api from "../../api/api";
 
 /**
  * Composant pour afficher un bouton et une modale de suppression de compte.
@@ -29,7 +29,7 @@ const DeleteAccountModale = () => {
 
   // Method de suppression de compte
   const deleteAccount = async () => {
-    await axios.delete("http://localhost:8000/api/user", {
+    await api.delete("/user", {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
 

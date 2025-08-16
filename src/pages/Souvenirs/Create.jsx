@@ -1,8 +1,8 @@
 import { LockClosedIcon } from "@heroicons/react/24/solid";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Input from "../../components/ui/Input";
+import api from "../../api/api";
 
 /**
  * Page de création d'un nouveau Souvenir.
@@ -39,7 +39,7 @@ function Create() {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/memory-type");
+        const res = await api.get("/memory-type");
         setMemoryType(res.data);
       } catch (error) {
         console.error(error);
@@ -74,7 +74,7 @@ function Create() {
     }
 
     try {
-      await axios.post("http://localhost:8000/api/souvenir", formData, {
+      await api.post("/souvenir", formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "multipart/form-data", // nécessaire pour l'upload

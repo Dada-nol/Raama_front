@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import api from "../../api/api";
 import panda3 from "../../assets/img/panda3.jpg";
 import EntryContainer from "../../components/souvenirs/entries/EntryContainer";
 
@@ -33,8 +33,8 @@ function SouvenirEntries() {
   // Récupérer les données déjà existantes, pour les afficher dans le form
   useEffect(() => {
     const fetchData = async () => {
-      await axios
-        .get(`http://localhost:8000/api/souvenir/${id}`, {
+      await api
+        .get(`/souvenir/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -52,14 +52,11 @@ function SouvenirEntries() {
 
   const fetchEntries = useCallback(async () => {
     try {
-      const res = await axios.get(
-        `http://localhost:8000/api/souvenir/${id}/entry`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const res = await api.get(`/souvenir/${id}/entry`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       setEntries(res.data);
     } catch (e) {
       console.error(e);
