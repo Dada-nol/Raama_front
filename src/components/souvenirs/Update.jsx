@@ -25,6 +25,7 @@ function Update() {
   const [coverImageUrl, setCoverImageUrl] = useState("");
 
   const { id } = useParams(); // Pour récupérer l'id dans l'url c'est important de faire ça
+  const apiURL = process.env.REACT_APP_LARAVEL_URL;
 
   // Récupérer les données déjà existantes, pour les afficher dans le form
   useEffect(() => {
@@ -109,12 +110,13 @@ function Update() {
         ) : (
           coverImageUrl && (
             <img
-              src={`http://localhost:8000/storage/${coverImageUrl}`}
+              src={`${apiURL}/storage/${coverImageUrl}`}
               alt="cover actuelle"
-              className="mx-auto my-2 h-40 rounded-lg shadow"
+              className="mx-auto my-2 h-40 rounded-lg"
             />
           )
         )}
+
         {errors.coverImage && (
           <p className="text-danger text-sm mt-1">{errors.coverImage[0]}</p>
         )}
