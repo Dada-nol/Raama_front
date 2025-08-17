@@ -27,7 +27,6 @@ function Delete() {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
 
-      console.log("Souvenir supprimé !");
       navigate("/");
     } catch (e) {
       if (e.response && e.response.status === 403) {

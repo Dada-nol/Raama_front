@@ -41,7 +41,7 @@ function EntryContainer({ entries, members, id, refreshEntries }) {
 
   return (
     <div className="flex flex-col overflow-auto md:w-[60vw] w-full max-w-4xl m-auto rounded-md my-6 border border-primary bg-secondary">
-      {members?.length > 2 ? (
+      {members?.length >= 2 ? (
         <div className="sticky top-0 left-0 right-0 w-full border-b border-primary flex flex-wrap gap-2 mb-4 z-10 bg-secondary px-2 py-1">
           <div
             className="flex items-center cursor-pointer select-none transition-transform duration-200 ease-in-out hover:scale-105"
