@@ -6,18 +6,15 @@
  */
 const NotFound = () => {
   return (
-    <div
-      style={{
-        textAlign: "center",
-        padding: "5rem",
-        height: "80vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <div className="h-screen w-full flex flex-col justify-center items-center">
       <h1>404</h1>
       <p>Oups… cette page n'existe pas.</p>
+      <a
+        className="gradient-border my-4 px-4 py-2 shadow-md hover:shadow-lg hover:scale-105 hover:text-gradient"
+        href="/"
+      >
+        Retour sur la page d'accueil
+      </a>
     </div>
   );
 };

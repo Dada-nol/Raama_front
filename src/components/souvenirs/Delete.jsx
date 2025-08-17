@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api/api";
 
@@ -14,25 +15,40 @@ import api from "../../api/api";
  * <Delete />
  */
 function Delete() {
+  const [errors, setErrors] = useState({});
   const { id } = useParams();
   const navigate = useNavigate();
 
   const handleDelete = async () => {
-    await api.delete(`/souvenir/${id}`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-    });
+    setErrors({});
 
-    console.log("Souvenir supprimé !");
-    navigate("/");
+    try {
+      await api.delete(`/souvenir/${id}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+
+      navigate("/");
+    } catch (e) {
+      if (e.response && e.response.status === 403) {
+        setErrors(e.response.data);
+      } else {
+        console.error("Erreur innatendu", e);
+      }
+    }
   };
 
   return (
-    <button
-      className="bg-danger rounded-md px-4 py-2 hover:scale-105 text-white"
-      onClick={handleDelete}
-    >
-      Supprimer
-    </button>
+    <>
+      {errors.message && (
+        <p className="text-danger text-sm mt-1">{errors.message}</p>
+      )}
+      <button
+        className="bg-danger rounded-md px-4 py-2 hover:scale-105 text-white"
+        onClick={handleDelete}
+      >
+        Supprimer
+      </button>
+    </>
   );
 }
 

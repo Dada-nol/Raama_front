@@ -19,20 +19,6 @@ import List from "./pages/souvenirs/List";
 import SouvenirEntries from "./pages/souvenirs/SouvenirEntries";
 
 function Router() {
-  /* const staticRoutes = [
-  { path: "/Accessibilité", title: "Accessibilité" },
-  { path: "/Contact", title: "Contact" },
-  { path: "/Données-personnelles", title: "Données personnelles" },
-  { path: "/Marchés", title: "Marchés" },
-  { path: "/Mentions-légales", title: "Mentions légales" },
-  { path: "/Presse", title: "Presse" },
-  { path: "/Région", title: "Région" },
-]; */
-
-  /* {staticRoutes.map(({ path, title }) => (
-  <Route key={path} path={path} element={<PageVide title={title} />} />
-))} */
-
   const { loading } = useAuth();
   const [showLoader, setShowLoader] = useState(true);
 
